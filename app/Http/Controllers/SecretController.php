@@ -9,7 +9,7 @@ class SecretController extends Controller
 {
     public function index(Request $request)
     {
-        return Secret::all();
-//        return $request->user()->secrets;
+//        return Secret::all();
+        return $request->user()->secrets;
     }
 }
