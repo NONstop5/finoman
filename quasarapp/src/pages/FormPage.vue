@@ -1,13 +1,14 @@
 <template>
   <q-page class="flex flex-center">
-    <h1>FinoMan</h1>
+    <Login></Login>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import Login from 'components/TestForm';
 
 export default defineComponent({
-  name: 'PageIndex'
+  name: 'PageForm'
 })
 </script>

@@ -1,15 +1,20 @@
 
 const routes = [
+  // {
+  //   path: '/',
+  //   component: () => import('layouts/MainLayout.vue'),
+  //   children: [
+  //     { path: '', component: () => import('pages/Index.vue') }
+  //   ]
+  // },
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/FormLayout'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue')},
+      { path: '/login', component: () => import('pages/Login.vue')},
+      { path: '/registration', component: () => import('pages/Registration.vue')},
     ]
-  },
-  {
-    path: '/test',
-    component: () => import('components/TestForm')
   },
 
   // Always leave this as last one,
