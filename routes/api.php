@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SecretController;
-
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegistrationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,3 +25,7 @@ Route::get('/test', function (){
 });
 
 Route::get('/secrets', [SecretController::class, 'index']);
+
+Route::post('login', [LoginController::class, 'login']);
+Route::post('registration', [RegistrationController::class, 'registration']);
+

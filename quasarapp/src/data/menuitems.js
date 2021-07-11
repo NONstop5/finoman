@@ -7,4 +7,8 @@ export const menuItems = [
     displayName: 'Registration',
     link: {path: '/registration'}
   },
+  {
+    displayName: 'Secrets',
+    link: {path: '/secrets'}
+  },
 ];
