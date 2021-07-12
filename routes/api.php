@@ -24,8 +24,3 @@ Route::get('/test', function (){
     return response()->json(['success' => 'test is good']);
 });
 
-Route::get('/secrets', [SecretController::class, 'index']);
-
-Route::post('login', [LoginController::class, 'login']);
-Route::post('registration', [RegistrationController::class, 'registration']);
-
