@@ -11,6 +11,6 @@ class Secret extends Model
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('App\Secret');
+        return $this->belongsTo('App\Models\Secret');
     }
 }

@@ -1,9 +1,22 @@
 <template>
-  <div>
+  <div v-if="user">
+    <h1>Hi</h1>
+    <div v-for="secret in secrets" :key="secret.id">
+      <p v-text="secret.secret"></p>
+    </div>
+    <button @click="getSecrets">Get my secrets</button>
+    <br>
+    <button @click="getToken">Get my token</button>
+    <br>
+    <input type="text" disabled v-model="token">
+    <br>
+    <button @click="handleLogout">Logout</button>
+  </div>
+  <div v-else>
     <span v-if="loggedIn">Successfully logged in</span><br>
-    <input type="text" v-model="form.email" placeholder="Email"><br>
-    <input type="password" v-model="form.password" placeholder="Password"><br>
-    <button @click="sendForm" :disabled="pending">Login</button>
+    <input type="email" v-model="login.email" placeholder="Email" name="email"><br>
+    <input type="password" v-model="login.password" placeholder="Password" name="password"><br>
+    <button @click="handleLogin">Login</button>
   </div>
 </template>
 
@@ -15,13 +28,19 @@ export default {
   name: 'Login',
   data() {
     return {
-      pending: false,
-      loggedIn: false,
-      form: {
-        email: null,
-        password: null
-      }
+      secrets: [],
+      user: null,
+      login: {
+        email: '',
+        password: ''
+      },
+      token: ''
     }
+  },
+  created(){
+    axios.get('/sanctum/csrf-cookie').then(response => {
+      this.getUser();
+    })
   },
   methods: {
     sendForm() {
@@ -36,7 +55,35 @@ export default {
             this.pending = false;
           });
       }
+    },
+    getUser(){
+      axios.get('/api/user').then(response => {
+        this.user = response.data;
+      })
+    },
+    handleLogin(){
+      axios.post('/login', this.login).then(response => {
+        this.getUser();
+      })
+    },
+    getSecrets(){
+      axios.get('/api/secrets').then(response => {
+        this.secrets = response.data;
+      })
+    },
+    getToken(){
+      axios.post('/api/tokens/create', {
+        token_name: 'My token'
+      }).then(response => {
+        this.token = response.data.token;
+      })
+    },
+    handleLogout(){
+      axios.post('/logout', this.login).then(response => {
+        this.user = null;
+      })
     }
+
   }
 }
 </script>

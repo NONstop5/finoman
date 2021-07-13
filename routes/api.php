@@ -20,7 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function (){
-    return response()->json(['success' => 'test is good']);
-});
+Route::get('/secrets', function (Request $request){
+    return $request->user()->secrets;
+})->middleware('auth:sanctum');
+
+Route::post('/tokens/create', function(Request $request){
+    $token = $request->user()->createToken($request->token_name);
+    return ['token' => $token->plainTextToken];
+})->middleware('auth:sanctum');
 

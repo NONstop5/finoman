@@ -61,6 +61,6 @@ class User extends Authenticatable
 
     public function secrets(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany('App\Secret');
+        return $this->hasMany('App\Models\Secret');
     }
 }
