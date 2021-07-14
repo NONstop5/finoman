@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Http\Controllers\SpaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,8 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('{any}', [SpaController::class, 'index'])->where('any','.*');
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [

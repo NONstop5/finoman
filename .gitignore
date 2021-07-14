@@ -18,3 +18,7 @@ yarn-error.log
 /docker/mysql
 /docker/logs
 #docker
+
+#quasapapp
+/quasarapp/node_modules
+#quasapapp
