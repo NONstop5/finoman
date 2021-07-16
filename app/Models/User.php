@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Secret');
     }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 }
