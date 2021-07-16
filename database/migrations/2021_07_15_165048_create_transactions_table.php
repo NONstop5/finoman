@@ -40,6 +40,7 @@ class CreateTransactionsTable extends Migration
                 ->dateTime('transacted_at')
                 ->comment('Дата и время транзакции');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
