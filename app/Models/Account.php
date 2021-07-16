@@ -14,7 +14,7 @@ class Account extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function types()
+    public function type()
     {
         return $this->belongsTo(Type::class);
     }

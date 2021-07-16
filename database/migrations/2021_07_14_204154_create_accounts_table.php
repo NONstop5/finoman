@@ -21,10 +21,10 @@ class CreateAccountsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->bigInteger('types_id')
+            $table->bigInteger('type_id')
                 ->unsigned()
                 ->index();
-            $table->foreign('types_id')
+            $table->foreign('type_id')
                 ->references('id')
                 ->on('types');
             $table->string('name');
