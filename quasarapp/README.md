@@ -1,6 +1,6 @@
-# Quasar App (quasarapp)
+# Finoman (finoman)
 
-A Quasar Framework app
+
 
 ## Install the dependencies
 ```bash

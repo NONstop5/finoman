@@ -13,5 +13,5 @@
 <script>
 export default {
   // name: 'PageName',
-}
+};
 </script>

@@ -31,24 +31,24 @@
 </template>
 
 <script>
-import axios from "axios";
-import { API_LOGIN_URL } from "../data/auth";
+import axios from 'axios';
+import { API_LOGIN_URL } from '../data/auth';
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       secrets: [],
       user: null,
       login: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       },
-      token: "",
+      token: '',
     };
   },
   created() {
-    axios.get("/sanctum/csrf-cookie").then((response) => {
+    axios.get('/sanctum/csrf-cookie').then(() => {
       this.getUser();
     });
   },
@@ -58,41 +58,41 @@ export default {
         this.pending = true;
         axios
           .post(API_LOGIN_URL, this.form)
-          .then((response) => {
+          .then(() => {
             this.loggedIn = true;
           })
-          .catch((errors) => {})
+          .catch(() => {})
           .then(() => {
             this.pending = false;
           });
       }
     },
     getUser() {
-      axios.get("/api/user").then((response) => {
+      axios.get('/api/user').then((response) => {
         this.user = response.data;
       });
     },
     handleLogin() {
-      axios.post("/login", this.login).then((response) => {
+      axios.post('/login', this.login).then(() => {
         this.getUser();
       });
     },
     getSecrets() {
-      axios.get("/api/secrets").then((response) => {
+      axios.get('/api/secrets').then((response) => {
         this.secrets = response.data;
       });
     },
     getToken() {
       axios
-        .post("/api/tokens/create", {
-          token_name: "My token",
+        .post('/api/tokens/create', {
+          token_name: 'My token',
         })
         .then((response) => {
           this.token = response.data.token;
         });
     },
     handleLogout() {
-      axios.post("/logout", this.login).then((response) => {
+      axios.post('/logout', this.login).then(() => {
         this.user = null;
       });
     },

@@ -56,7 +56,6 @@
   </q-layout>
 </template>
 
-
 <script>
 // import { menuItems } from "src/data/menuitems";
 
