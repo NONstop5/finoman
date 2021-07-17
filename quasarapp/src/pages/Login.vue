@@ -14,7 +14,7 @@
   </div> -->
   <div class="form-container container">
     <h1>Finoman</h1>
-    <img src="~assets/logo.jpg"/>
+<!--    <img src="~assets/logo.jpg"/>-->
     <span v-if="loggedIn">Successfully logged in</span>
     <input type="email" v-model="login.email" placeholder="Email" name="email">
     <span v-if="err">Uncorrect password</span>
@@ -67,21 +67,20 @@ export default {
     getUser() {
       axios.get('/api/user').then((response) => {
         this.user = response.data;
-        console.log(response.data)
-      })
-
+        console.log(response.data);
+      });
     },
     handleLogin() {
       axios.post('/login', this.login).then(() => {
         this.getUser();
       })
-      .then(()=>{
-        this.$router.push('/index')
-      })
-      .catch(error => {
-        console.log(error)
-        this.err = true
-});
+        .then(() => {
+          this.$router.push('/index');
+        })
+        .catch((error) => {
+          console.log(error);
+          this.err = true;
+        });
     },
     getSecrets() {
       axios.get('/api/secrets').then((response) => {

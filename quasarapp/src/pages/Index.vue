@@ -32,13 +32,13 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'PageIndex',
-  data () {
+  data() {
     return {
       user: {
-        balanse: 500000,
-        name: "Joy Doe"
-      }
-    }
-  }
+        balance: 500000,
+        name: 'Joy Doe',
+      },
+    };
+  },
 });
 </script>
