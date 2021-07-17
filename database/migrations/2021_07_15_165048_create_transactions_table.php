@@ -36,6 +36,11 @@ class CreateTransactionsTable extends Migration
                 ->decimal('amount')
                 ->comment('Сумма транзакции');
 
+            $table
+                ->dateTime('transacted_at')
+                ->comment('Дата и время транзакции');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

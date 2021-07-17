@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransactionController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/secrets', function (Request $request){
+Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
+
+Route::get('/secrets', function (Request $request) {
     return $request->user()->secrets;
 })->middleware('auth:sanctum');
 
-Route::post('/tokens/create', function(Request $request){
+Route::post('/tokens/create', function (Request $request) {
     $token = $request->user()->createToken($request->token_name);
     return ['token' => $token->plainTextToken];
 })->middleware('auth:sanctum');
