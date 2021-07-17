@@ -59,8 +59,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function secrets(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function accounts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany('App\Models\Secret');
+        return $this->hasMany(Account::class);
     }
 }

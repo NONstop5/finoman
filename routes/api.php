@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SecretController;
@@ -28,4 +29,11 @@ Route::post('/tokens/create', function(Request $request){
     $token = $request->user()->createToken($request->token_name);
     return ['token' => $token->plainTextToken];
 })->middleware('auth:sanctum');
+
+Route::get('/reports', function (){
+    $userId = 4; //auth user
+    return User::find($userId)->accounts()->get(); // get all categories
+//    $account = \App\Models\Account::find(13);
+//    return $account->user->name;
+});
 
