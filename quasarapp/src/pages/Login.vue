@@ -1,6 +1,6 @@
 <template>
-  <div v-if="user">
-    <h1>Hi</h1>
+  <!-- <div v-if="user">
+    <h1>Hi {{user.name}}</h1>
     <div v-for="secret in secrets" :key="secret.id">
       <p v-text="secret.secret"></p>
     </div>
@@ -11,12 +11,18 @@
     <input type="text" disabled v-model="token">
     <br>
     <button @click="handleLogout">Logout</button>
-  </div>
-  <div v-else>
-    <span v-if="loggedIn">Successfully logged in</span><br>
-    <input type="email" v-model="login.email" placeholder="Email" name="email"><br>
-    <input type="password" v-model="login.password" placeholder="Password" name="password"><br>
-    <button @click="handleLogin">Login</button>
+  </div> -->
+  <div class="form-container container">
+    <h1>Finoman</h1>
+    <img src="~assets/logo.jpg"/>
+    <span v-if="loggedIn">Successfully logged in</span>
+    <input type="email" v-model="login.email" placeholder="Email" name="email">
+    <span v-if="err">Uncorrect password</span>
+    <input type="password" v-model="login.password" placeholder="Password" name="password">
+    <div class="btns-container">
+    <q-btn class="btn" @click="handleLogin">Login</q-btn>
+    <q-btn class="btn" :to="{path:'/registration'}">Sign Up</q-btn>
+    </div>
   </div>
 </template>
 
@@ -29,6 +35,7 @@ export default {
   data() {
     return {
       secrets: [],
+      err: false,
       user: null,
       login: {
         email: '',
@@ -59,12 +66,21 @@ export default {
     getUser(){
       axios.get('/api/user').then(response => {
         this.user = response.data;
+        console.log(response.data)
       })
+
     },
     handleLogin(){
       axios.post('/login', this.login).then(response => {
         this.getUser();
       })
+      .then(()=>{
+        this.$router.push('/index')
+      })
+      .catch(error => {
+        console.log(error)
+        this.err = true
+});
     },
     getSecrets(){
       axios.get('/api/secrets').then(response => {

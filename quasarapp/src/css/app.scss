@@ -1,1 +1,63 @@
 // app global css in SCSS form
+// app global css in SCSS form
+.container {
+    margin: 0 auto 70px;
+    max-width: 335px;
+}
+.bold {
+    font-weight: bold;
+}
+.form-container {
+    text-align: center;
+
+    input {
+        display: block;
+        border: 1px solid $secondary;
+        box-sizing: border-box;
+        border-radius: 10px;
+        background-color: transparent;
+        margin-bottom: 37px;
+        font-size: 24px;
+        line-height: 28px;
+        color: $primary;
+        padding: 18px 25px;
+        outline: none;
+        margin-right: 0;
+        width: 100%;
+    }
+    h1 {
+        font-weight: normal;
+        font-size: 64px;
+        line-height: 75px;
+        color: $secondary;
+    }
+    img {
+        border-radius: 50%;
+        width: 130px;
+        margin-bottom: 62px;
+    }
+    span {
+        color: $secondary;
+    }
+}
+.btns-container {
+    display: flex;
+    justify-content: space-between;
+}
+.btn {
+    min-width: 150px;
+    border-radius: 10px;
+    padding: 18px;
+    background-color: transparent;
+    border: 1px solid $secondary;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    color: $secondary;
+    cursor: pointer;
+}
+.btn:hover {
+    background: $positive;
+    transition: 0.4;
+    border-color: transparent;
+}

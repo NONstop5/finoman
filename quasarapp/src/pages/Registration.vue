@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="form-container container">
     <span v-if="registered">Successfully registered</span><br>
     <input type="text" v-model="form.name" placeholder="Name"><br>
     <input type="text" v-model="form.email" placeholder="Email"><br>
     <input type="password" v-model="form.password" placeholder="Password"><br>
     <input type="password" v-model="form.password_confirmation" placeholder="Password Confirmation"><br>
-    <button @click="sendForm" :disabled="pending">Registration</button>
+    <button class="btn " @click="sendForm" :disabled="pending">Registration</button>
   </div>
 </template>
 
@@ -35,7 +35,9 @@ export default {
           .then(response => {
             this.registered = true;
           })
-          .catch(errors => {})
+          .catch(errors => {
+            console.log(errors)
+          })
           .then(() => {
             this.pending = false;
           });
