@@ -20,7 +20,7 @@ class TransactionFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'account_from_id' => Account::query()->orderByRaw('RAND()')->first()->id,

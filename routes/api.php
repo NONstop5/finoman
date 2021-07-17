@@ -3,7 +3,9 @@
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+//use App\Http\Controllers\Auth\LoginController;
+//use App\Http\Controllers\Auth\RegistrationController;
+use \App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
+Route::apiResource('reports', ReportController::class)->middleware('auth:sanctum');
 
 Route::get('/secrets', function (Request $request) {
     return $request->user()->secrets;
@@ -29,3 +32,4 @@ Route::post('/tokens/create', function (Request $request) {
     $token = $request->user()->createToken($request->token_name);
     return ['token' => $token->plainTextToken];
 })->middleware('auth:sanctum');
+

@@ -1,15 +1,15 @@
-<template>
+<template align="center">
   <!-- <div v-if="user">
     <h1>Hi {{user.name}}</h1>
     <div v-for="secret in secrets" :key="secret.id">
       <p v-text="secret.secret"></p>
     </div>
     <button @click="getSecrets">Get my secrets</button>
-    <br>
+    <br />
     <button @click="getToken">Get my token</button>
-    <br>
-    <input type="text" disabled v-model="token">
-    <br>
+    <br />
+    <input type="text" disabled v-model="token" />
+    <br />
     <button @click="handleLogout">Logout</button>
   </div> -->
   <div class="form-container container">
@@ -39,39 +39,40 @@ export default {
       user: null,
       login: {
         email: '',
-        password: ''
+        password: '',
       },
-      token: ''
-    }
+      token: '',
+    };
   },
-  created(){
-    axios.get('/sanctum/csrf-cookie').then(response => {
+  created() {
+    axios.get('/sanctum/csrf-cookie').then(() => {
       this.getUser();
-    })
+    });
   },
   methods: {
     sendForm() {
       if (this.pending === false) {
         this.pending = true;
-        axios.post(API_LOGIN_URL, this.form)
-          .then(response => {
+        axios
+          .post(API_LOGIN_URL, this.form)
+          .then(() => {
             this.loggedIn = true;
           })
-          .catch(errors => {})
+          .catch(() => {})
           .then(() => {
             this.pending = false;
           });
       }
     },
-    getUser(){
-      axios.get('/api/user').then(response => {
+    getUser() {
+      axios.get('/api/user').then((response) => {
         this.user = response.data;
         console.log(response.data)
       })
 
     },
-    handleLogin(){
-      axios.post('/login', this.login).then(response => {
+    handleLogin() {
+      axios.post('/login', this.login).then(() => {
         this.getUser();
       })
       .then(()=>{
@@ -82,30 +83,30 @@ export default {
         this.err = true
 });
     },
-    getSecrets(){
-      axios.get('/api/secrets').then(response => {
+    getSecrets() {
+      axios.get('/api/secrets').then((response) => {
         this.secrets = response.data;
-      })
+      });
     },
-    getToken(){
-      axios.post('/api/tokens/create', {
-        token_name: 'My token'
-      }).then(response => {
-        this.token = response.data.token;
-      })
+    getToken() {
+      axios
+        .post('/api/tokens/create', {
+          token_name: 'My token',
+        })
+        .then((response) => {
+          this.token = response.data.token;
+        });
     },
-    handleLogout(){
-      axios.post('/logout', this.login).then(response => {
+    handleLogout() {
+      axios.post('/logout', this.login).then(() => {
         this.user = null;
-      })
-    }
-
-  }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 </style>
 <!--<template>-->
 <!--  <div>-->
