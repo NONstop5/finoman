@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Account;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccountFactory extends Factory
@@ -22,11 +23,11 @@ class AccountFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 6),
-            'types_id' => $this->faker->numberBetween(1,2),
+            'user_id' => User::query()->orderByRaw('RAND()')->first()->id,
+            'type_id' => $this->faker->numberBetween(1,2),
             'name' => $this->faker->name(),
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => $this->faker->dateTime(),
+            'updated_at' => $this->faker->dateTime()
         ];
     }
 }
