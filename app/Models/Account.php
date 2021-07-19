@@ -18,4 +18,10 @@ class Account extends Model
     {
         return $this->belongsTo(Type::class);
     }
+
+    protected $fillable = [
+        'name',
+        'user_id',
+        'types_id'
+    ];
 }

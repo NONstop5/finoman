@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\Auth\LoginController;
 //use App\Http\Controllers\Auth\RegistrationController;
 use \App\Http\Controllers\ReportController;
+use App\Http\Controllers\Api\AccountController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,8 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
-Route::apiResource('reports', ReportController::class)->middleware('auth:sanctum');
+Route::group(['middleware'=>['auth:sanctum']],function (){
+    Route::apiResource('account', AccountController::class);
+    Route::apiResource('transactions', TransactionController::class);
+    Route::apiResource('reports', ReportController::class);
+});
+
 
 Route::get('/secrets', function (Request $request) {
     return $request->user()->secrets;

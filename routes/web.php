@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SpaController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +18,10 @@ use App\Http\Controllers\SpaController;
 |
 */
 
-Route::get('{any}', [SpaController::class, 'index'])->where('any','.*');
+Route::get('/{any}', [SpaController::class, 'index'])->where('any','.*');
 
-Route::get('/', function () {
+
+/*Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -30,4 +32,4 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->name('dashboard');
+})->name('dashboard');*/
