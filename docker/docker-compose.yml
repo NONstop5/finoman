@@ -13,7 +13,7 @@ services:
     # монтируем директории, слева директории на основной машине, справа - куда они монтируются в контейнере
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - ../:/var/www
+      - ../api:/var/www
       - ./logs:/var/log/nginx
     # nginx должен общаться с php контейнером
     links:
@@ -28,7 +28,7 @@ services:
       - mysql
     # монтируем директорию с проектом
     volumes:
-      - ../:/var/www
+      - ../api:/var/www
   mysql:
     container_name: ${PROJECT_NAME}-mysql
     image: mysql:5.7.22
