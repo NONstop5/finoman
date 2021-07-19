@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
-Route::apiResource('reports', ReportController::class)->middleware('auth:sanctum');
+Route::get('/reports', [ReportController::class, 'index']);//->middleware('auth:sanctum');
 
 Route::get('/secrets', function (Request $request) {
     return $request->user()->secrets;
