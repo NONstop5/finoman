@@ -1,23 +1,26 @@
 <template>
-  <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
-    <div>
-      <div style="font-size: 30vh">
+  <div class="fullscreen bg-dark text-white text-center q-pa-md flex flex-center">
+    <div class="column justify-around">
+      <div style="font-size: 20px" class="text-secondary"> Your Logo can be here...</div>
+      <div style="font-size: 10em" text-color="info">
         404
       </div>
 
-      <div class="text-h2" style="opacity:.4">
-        Oops. Nothing here...
+      <div class="text-h6" style="opacity:.4">
+        Oops. Nothing here... Try to Login first?
       </div>
 
-      <q-btn
+      <div class="row justify-around"><q-btn
         class="q-mt-xl"
-        color="white"
-        text-color="blue"
+        color="dark"
+        text-color="positive"
         unelevated
-        to="/"
-        label="Go Home"
+        outline
+        to="/login"
+        label="Log in"
         no-caps
       />
+      <q-btn class="q-mt-xl" color="white" text-color="positive" no-caps outline unelevated to="/registration" label="Sign up"/></div>
     </div>
   </div>
 </template>
