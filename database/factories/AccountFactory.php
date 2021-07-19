@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Account;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,10 +25,8 @@ class AccountFactory extends Factory
     {
         return [
             'user_id' => User::query()->orderByRaw('RAND()')->first()->id,
-            'type_id' => $this->faker->numberBetween(1,2),
+            'type_id' => Type::query()->orderByRaw('RAND()')->first()->id,
             'name' => $this->faker->name(),
-            'created_at' => $this->faker->dateTime(),
-            'updated_at' => $this->faker->dateTime()
         ];
     }
 }
