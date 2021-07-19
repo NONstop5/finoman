@@ -27,9 +27,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware'=>['auth:sanctum']],function (){
     Route::apiResource('account', AccountController::class);
     Route::apiResource('transactions', TransactionController::class);
-    Route::apiResource('reports', ReportController::class);
 });
 
+Route::get('/reports', [ReportController::class, 'index'])->middleware('auth:sanctum');
 
 Route::get('/secrets', function (Request $request) {
     return $request->user()->secrets;
