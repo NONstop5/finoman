@@ -7,7 +7,19 @@
     </div>
   </q-page>
 </template>
-
+ <style lang="scss" scoped>
+  .btn {
+    min-width: 150px;
+    background-color: transparent;
+    border: 1px solid $secondary;
+    color: $secondary;
+}
+.btn:hover {
+    background: $positive;
+    transition: 0.4;
+    border-color: transparent;
+}
+ </style>
 <script>
 import { defineComponent } from 'vue';
 

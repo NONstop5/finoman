@@ -1,31 +1,42 @@
 <template align="center">
-  <!-- <div v-if="user">
-    <h1>Hi {{user.name}}</h1>
-    <div v-for="secret in secrets" :key="secret.id">
-      <p v-text="secret.secret"></p>
-    </div>
-    <button @click="getSecrets">Get my secrets</button>
-    <br />
-    <button @click="getToken">Get my token</button>
-    <br />
-    <input type="text" disabled v-model="token" />
-    <br />
-    <button @click="handleLogout">Logout</button>
-  </div> -->
-  <div class="form-container container">
-    <h1>Finoman</h1>
-<!--    <img src="~assets/logo.jpg"/>-->
+  <div class="text-center container q-mx-auto q-mt-xl">
+    <h1 class="text-h2 q-mb-lg">Finoman</h1>
+   <q-icon class="q-mb-lg"
+            name="fas fa-coins"
+            :size=" '3em'"
+        />
     <span v-if="loggedIn">Successfully logged in</span>
-    <input type="email" v-model="login.email" placeholder="Email" name="email">
-    <span v-if="err">Uncorrect password</span>
-    <input type="password" v-model="login.password" placeholder="Password" name="password">
-    <div class="btns-container">
-    <q-btn class="btn" @click="handleLogin">Login</q-btn>
-    <q-btn class="btn" :to="{path:'/registration'}">Sign Up</q-btn>
+    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1" type="email" v-model="login.email" placeholder="Email" name="email">
+    <span  v-if="err">Uncorrect password</span>
+    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1" type="password" v-model="login.password" placeholder="Password" name="password">
+    <div class="flex justify-between">
+    <q-btn class="btn cursor-pointer" @click="handleLogin">Login</q-btn>
+    <q-btn class="btn cursor-pointer" :to="{path:'/registration'}">Sign Up</q-btn>
     </div>
   </div>
 </template>
 
+ <style lang="scss" scoped>
+  .container {
+    max-width: 335px;
+  }
+  .btn {
+    min-width: 150px;
+    background-color: transparent;
+    border: 1px solid $secondary;
+    color: $secondary;
+}
+.btn:hover {
+    background: $positive;
+    transition: 0.4;
+    border-color: transparent;
+}
+input {
+    color: $primary;
+    border: 1px solid $secondary;
+    background-color: transparent;
+  }
+ </style>
 <script>
 import axios from 'axios';
 import { API_LOGIN_URL } from '../data/auth';
@@ -67,7 +78,6 @@ export default {
     getUser() {
       axios.get('/api/user').then((response) => {
         this.user = response.data;
-        console.log(response.data);
       });
     },
     handleLogin() {
@@ -77,8 +87,7 @@ export default {
         .then(() => {
           this.$router.push('/index');
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           this.err = true;
         });
     },
