@@ -6,8 +6,16 @@
 
 <script>
 import { defineComponent } from 'vue';
+import axios from 'axios';
 
 export default defineComponent({
   name: 'PageIndex',
+  setup() {
+    axios
+      .get('/sanctum/csrf-cookie')
+      .then(() => {
+        console.log(`>>> ${document.cookie}`);
+      });
+  },
 });
 </script>

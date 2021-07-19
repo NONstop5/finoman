@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { API_LOGIN_URL } from '../data/auth';
 
 export default {
@@ -41,23 +40,24 @@ export default {
       secrets: [],
       user: null,
       login: {
-        email: '',
-        password: '',
+        email: 'non_2002@mail.ru',
+        password: 'password',
       },
       token: '',
     };
   },
   created() {
-    axios.get('/sanctum/csrf-cookie').then(() => {
-      this.getUser();
+    this.$axios.get('/sanctum/csrf-cookie').then(() => {
+      console.log(`>>> ${document.cookie}`);
+      // this.getUser();
     });
   },
   methods: {
     sendForm() {
       if (this.pending === false) {
         this.pending = true;
-        axios
-          .post(API_LOGIN_URL, this.form)
+        this.$axios
+          .post('/654', this.form)
           .then(() => {
             this.loggedIn = true;
           })
@@ -68,22 +68,31 @@ export default {
       }
     },
     getUser() {
-      axios.get('/api/user').then((response) => {
+      this.$axios.get('/api/user').then((response) => {
         this.user = response.data;
       });
     },
     handleLogin() {
-      axios.post('/login', this.login).then(() => {
-        this.getUser();
+      this.$axios.get('/sanctum/csrf-cookie').then(() => {
+        this.$axios.post('/login', this.formData).then(() => {
+          console.log('User signed in!');
+          console.log(this.formData);
+        }).catch(() => console.log(this.formData)); // credentials didn't match
       });
     },
+
+    // handleLogin() {
+    //   this.$axios.post('/login', this.login).then(() => {
+    //     this.getUser();
+    //   });
+    // },
     getSecrets() {
-      axios.get('/api/secrets').then((response) => {
+      this.$axios.get('/api/secrets').then((response) => {
         this.secrets = response.data;
       });
     },
     getToken() {
-      axios
+      this.$axios
         .post('/api/tokens/create', {
           token_name: 'My token',
         })
@@ -92,7 +101,7 @@ export default {
         });
     },
     handleLogout() {
-      axios.post('/logout', this.login).then(() => {
+      this.$axios.post('/logout', this.login).then(() => {
         this.user = null;
       });
     },

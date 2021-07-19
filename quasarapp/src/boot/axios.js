@@ -7,6 +7,10 @@ import axios from 'axios';
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = process.env.API_BASE_URL;
+
 const api = axios.create({ baseURL: 'https://api.example.com' });
 
 export default boot(({ app }) => {
