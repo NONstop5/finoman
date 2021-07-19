@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 //use App\Http\Controllers\Auth\LoginController;
 //use App\Http\Controllers\Auth\RegistrationController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Api\AccountController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -20,26 +20,34 @@ use App\Http\Controllers\Api\AccountController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get(
+    '/user',
+    function (Request $request) {
+        return $request->user();
+    }
+);
 
-Route::group(['middleware'=>['auth:sanctum']],function (){
-    Route::apiResource('account', AccountController::class);
-});
+Route::group(
+    ['middleware' => ['auth:sanctum']],
+    function () {
+        Route::apiResource('account', AccountController::class);
+        Route::apiResource('transactions', TransactionController::class);
+        Route::get('/reports', [ReportController::class, 'index']);
+    }
+);
 
-// some changes3
-Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
-// some changes4
-Route::get('/reports', [ReportController::class, 'index'])->middleware('auth:sanctum');
-// some changes1
-Route::get('/secrets', function (Request $request) {
-    return $request->user()->secrets;
-})->middleware('auth:sanctum');
-// some changes2
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
-    return ['token' => $token->plainTextToken];
-})->middleware('auth:sanctum');
+Route::get(
+    '/secrets',
+    function (Request $request) {
+        return $request->user()->secrets;
+    }
+)->middleware('auth:sanctum');
 
-// some changes5
+Route::post(
+    '/tokens/create',
+    function (Request $request) {
+        $token = $request->user()->createToken($request->token_name);
+
+        return ['token' => $token->plainTextToken];
+    }
+)->middleware('auth:sanctum');
