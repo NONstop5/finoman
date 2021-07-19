@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\Auth\LoginController;
 //use App\Http\Controllers\Auth\RegistrationController;
-use \App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Api\AccountController;
 
 
@@ -26,9 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware'=>['auth:sanctum']],function (){
     Route::apiResource('account', AccountController::class);
-    Route::apiResource('transactions', TransactionController::class);
 });
 
+Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
 Route::get('/reports', [ReportController::class, 'index'])->middleware('auth:sanctum');
 
 Route::get('/secrets', function (Request $request) {
