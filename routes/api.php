@@ -20,16 +20,18 @@ use \App\Http\Controllers\ReportController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+// some changes3
 Route::apiResource('transactions', TransactionController::class)->middleware('auth:sanctum');
+// some changes4
 Route::get('/reports', [ReportController::class, 'index'])->middleware('auth:sanctum');
-
+// some changes1
 Route::get('/secrets', function (Request $request) {
     return $request->user()->secrets;
 })->middleware('auth:sanctum');
-
+// some changes2
 Route::post('/tokens/create', function (Request $request) {
     $token = $request->user()->createToken($request->token_name);
     return ['token' => $token->plainTextToken];
 })->middleware('auth:sanctum');
 
+// some changes5
