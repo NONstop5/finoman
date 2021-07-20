@@ -1,40 +1,48 @@
 <template align="center">
-  <div class="text-center container q-mx-auto q-mt-xl">
+  <div class="text-center column content-center q-mt-xl">
+    <div style="min-width: 300px">
     <span v-if="registered">Successfully registered</span><br />
-    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1" type="text" v-model="form.name" placeholder="Name" /><br />
-    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1" type="text" v-model="form.email" placeholder="Email" /><br />
-    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1"
+    <q-input
+      outlined
+      dark
+      class="q-mb-lg text-body1"
+      type="text"
+      v-model="form.name"
+      placeholder="Name" />
+    <q-input
+      outlined
+      dark
+      class="q-mb-lg text-body1"
+      type="text"
+      v-model="form.email"
+      placeholder="Email"/>
+    <q-input
+      outlined
+      dark
+      class="q-mb-lg text-body1"
       type="password"
       v-model="form.password"
-      placeholder="Password"
-    /><br />
-    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1"
+      placeholder="Password"/>
+    <q-input
+      outlined
+      dark
+      class="q-mb-lg text-body1"
       type="password"
       v-model="form.password_confirmation"
-      placeholder="Password Confirmation"
-    /><br />
-     <q-btn class="btn cursor-pointer" @click="sendForm" :disabled="pending">Registration</q-btn>
+      placeholder="Password Confirmation"/>
+     <q-btn
+      class="btn text-secondary"
+      outline
+      size="md"
+      @click="sendForm"
+      :disabled="pending">Sign up</q-btn>
+  </div>
   </div>
 </template>
- <style lang="scss" scoped>
-  .container {
-    max-width: 335px;
-  }
-  .btn {
-    min-width: 150px;
-    background-color: transparent;
-    border: 1px solid $secondary;
-    color: $secondary;
-}
-.btn:hover {
-    background: $positive;
-    transition: 0.4;
-    border-color: transparent;
-}
-input {
-    color: $primary;
-    border: 1px solid $secondary;
-    background-color: transparent;
+<style lang="scss" scoped>
+  .btn:hover {
+      background: $positive !important;
+      transition: 0.4;
   }
  </style>
 <script>

@@ -1,40 +1,48 @@
 <template align="center">
-  <div class="text-center container q-mx-auto q-mt-xl">
+  <div class="text-center column items-center q-mt-xl">
     <h1 class="text-h2 q-mb-lg">Finoman</h1>
    <q-icon class="q-mb-lg"
             name="fas fa-coins"
             :size=" '3em'"
         />
-    <span v-if="loggedIn">Successfully logged in</span>
-    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1" type="email" v-model="login.email" placeholder="Email" name="email">
-    <span  v-if="err">Uncorrect password</span>
-    <input class="full-width no-outline rounded-borders q-mb-lg q-py-sm q-px-md text-body1" type="password" v-model="login.password" placeholder="Password" name="password">
-    <div class="flex justify-between">
-    <q-btn class="btn cursor-pointer" @click="handleLogin">Login</q-btn>
-    <q-btn class="btn cursor-pointer" :to="{path:'/registration'}">Sign Up</q-btn>
+    <div style="min-width: 300px">
+      <span v-if="loggedIn">Successfully logged in</span>
+      <q-input
+        outlined
+        dark
+        class="q-mb-lg text-body1"
+        type="email"
+        v-model="login.email"
+        placeholder="Email"
+        name="email"/>
+      <span  v-if="err">Uncorrect password</span>
+      <q-input
+        outlined
+        dark
+        class="q-mb-lg text-body1"
+        type="password"
+        v-model="login.password"
+        placeholder="Password"
+        name="password"/>
+      <div class="flex justify-center">
+      <q-btn
+        class="btn text-secondary"
+        outline
+        size="md"
+        @click="handleLogin">Login</q-btn>
+      <q-btn
+        class="btn q-ml-md text-secondary"
+        outline
+        size="md"
+        :to="{path:'/registration'}">Sign Up</q-btn>
+      </div>
     </div>
   </div>
 </template>
-
  <style lang="scss" scoped>
-  .container {
-    max-width: 335px;
-  }
-  .btn {
-    min-width: 150px;
-    background-color: transparent;
-    border: 1px solid $secondary;
-    color: $secondary;
-}
-.btn:hover {
-    background: $positive;
-    transition: 0.4;
-    border-color: transparent;
-}
-input {
-    color: $primary;
-    border: 1px solid $secondary;
-    background-color: transparent;
+  .btn:hover {
+      background: $positive !important;
+      transition: 0.4;
   }
  </style>
 <script>

@@ -1,6 +1,6 @@
 <template>
   <q-page class="container main">
-    <h3>
+    <h3 class="text-primary">
       Wallets
     </h3>
     <div class="wallets-container">
@@ -14,18 +14,7 @@
   </q-page>
 </template>
 <style lang="scss" scoped>
-  .main {
-    color: #fff;
-    margin-top: 41px;
-    span {
-      color: #74757A;
-      display: block;
-    }
-    .main-header {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
+
 </style>
 <script>
 import { defineComponent } from 'vue';
