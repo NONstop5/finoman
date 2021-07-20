@@ -13,19 +13,20 @@ class AccountController extends Controller
 {
     /**
      * Вывод аккаунтов в зависиомсти от типа
-     * когда будет готов реквест надо будет
-     * расскоментировать
-     * ->where('types_id',$request->types_id)
      */
 
     public function index(Request $request): JsonResponse
     {
-    $account = Account::query()
+        $request->validate([
+            'types_id'=>['required','max:1'],
+        ]);
+
+        $account = Account::query()
         ->select('id','name')
         ->where('user_id', Auth::id())
-        /*->where('types_id',$request->types_id)*/
+        ->where('types_id',$request->types_id)
         ->get();
-    return response()->json($account);
+        return response()->json($account);
     }
 
     /**
@@ -35,7 +36,7 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>['required', 'unique:users,name'],
+            'name'=>['required', 'unique:accounts,name'],
             'user_id'=>'required',
             'types_id'=>['required','max:1'],
         ]);
@@ -45,29 +46,38 @@ class AccountController extends Controller
     /**
      * Вывод аккаунта по id
      */
-    public function show($id)
+
+    public function show(Account $account): JsonResponse
     {
-     return Account::findOrFail($id);
+        return response()->json($account->toArray());
     }
 
     /**
      * Поиск по id и изменение имени
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Account $account)
     {
-        $account = Account::findOrFail($id);
-        if (isset($request->name)) {
-            $account->name=$request->name;
-        }
-        $account->save();
-        return $account;
+        $validated = $this->validate(
+            $request,
+            [
+                'name' => ['required', 'unique:accounts,name'],
+                'user_id'=>'required',
+                'types_id'=>['required','max:1'],
+            ]
+        );
+
+        $account->update($validated);
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 
     /**
      * Удаление аккаунта.
      */
-    public function destroy($id)
+    public function destroy(Account $account)
     {
-        return Account::destroy($id);
+        $account->delete();
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }

@@ -9,6 +9,12 @@ class Account extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'user_id',
+        'types_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -19,9 +25,4 @@ class Account extends Model
         return $this->belongsTo(Type::class);
     }
 
-    protected $fillable = [
-        'name',
-        'user_id',
-        'types_id'
-    ];
 }
