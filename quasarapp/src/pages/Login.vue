@@ -1,35 +1,50 @@
 <template align="center">
-  <div v-if="user">
-    <h1>Hi</h1>
-    <div v-for="secret in secrets" :key="secret.id">
-      <p v-text="secret.secret"></p>
+  <div class="text-center column items-center q-mt-xl">
+    <h1 class="text-h2 q-mb-lg">Finoman</h1>
+   <q-icon class="q-mb-lg"
+            name="fas fa-coins"
+            :size=" '3em'"
+        />
+    <div style="min-width: 300px">
+      <span v-if="loggedIn">Successfully logged in</span>
+      <q-input
+        outlined
+        dark
+        class="q-mb-lg text-body1"
+        type="email"
+        v-model="login.email"
+        placeholder="Email"
+        name="email"/>
+      <span  v-if="err">Uncorrect password</span>
+      <q-input
+        outlined
+        dark
+        class="q-mb-lg text-body1"
+        type="password"
+        v-model="login.password"
+        placeholder="Password"
+        name="password"/>
+      <div class="flex justify-center">
+      <q-btn
+        class="btn text-secondary"
+        outline
+        size="md"
+        @click="handleLogin">Login</q-btn>
+      <q-btn
+        class="btn q-ml-md text-secondary"
+        outline
+        size="md"
+        :to="{path:'/registration'}">Sign Up</q-btn>
+      </div>
     </div>
-    <button @click="getSecrets">Get my secrets</button>
-    <br />
-    <button @click="getToken">Get my token</button>
-    <br />
-    <input type="text" disabled v-model="token" />
-    <br />
-    <button @click="handleLogout">Logout</button>
-  </div>
-  <div v-else>
-    <span v-if="loggedIn">Successfully logged in</span><br />
-    <input
-      type="email"
-      v-model="login.email"
-      placeholder="Email"
-      name="email"
-    /><br />
-    <input
-      type="password"
-      v-model="login.password"
-      placeholder="Password"
-      name="password"
-    /><br />
-    <button @click="handleLogin">Login</button>
   </div>
 </template>
-
+ <style lang="scss" scoped>
+  .btn:hover {
+      background: $positive !important;
+      transition: 0.4;
+  }
+ </style>
 <script>
 import axios from 'axios';
 import { API_LOGIN_URL } from '../data/auth';
@@ -39,6 +54,7 @@ export default {
   data() {
     return {
       secrets: [],
+      err: false,
       user: null,
       login: {
         email: '',
@@ -75,7 +91,13 @@ export default {
     handleLogin() {
       axios.post('/login', this.login).then(() => {
         this.getUser();
-      });
+      })
+        .then(() => {
+          this.$router.push('/index');
+        })
+        .catch(() => {
+          this.err = true;
+        });
     },
     getSecrets() {
       axios.get('/api/secrets').then((response) => {
