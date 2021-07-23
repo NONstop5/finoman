@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('app');
-// });
-
-// Redirect all to the front-end router
-// Route::get('/{pattern?}', function() {
-//     return view('welcome');
-// })->where('pattern', '.*');
-
-// Route::view('/', 'welcome');
 Route::view('{all}', 'app')
     ->where(['all' => '^(?!api).*$']);
