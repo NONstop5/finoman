@@ -1,6 +1,6 @@
 <template align="center">
   <div v-if="user">
-    <h1>Hi</h1>
+    <h1 class="success">Hi</h1>
     <div v-for="secret in secrets" :key="secret.id">
       <p v-text="secret.secret"></p>
     </div>
@@ -25,7 +25,8 @@
       v-model="login.password"
       placeholder="Password"
       name="password"
-    /><br />
+    />
+    <br />
     <button @click="handleLogin">Login</button>
   </div>
 </template>
@@ -40,17 +41,19 @@ export default {
       secrets: [],
       user: null,
       login: {
-        email: 'non_2002@mail.ru',
+        email: 'dylan82@example.org',
         password: 'password',
       },
       token: '',
     };
   },
   created() {
-    this.$axios.get('/sanctum/csrf-cookie').then(() => {
-      console.log(`>>> ${document.cookie}`);
-      // this.getUser();
-    });
+    this.$axios
+      .get('/sanctum/csrf-cookie')
+      .then(() => {
+        console.log(`>>> ${document.cookie}`);
+        this.getUser();
+      });
   },
   methods: {
     sendForm() {
@@ -61,31 +64,32 @@ export default {
           .then(() => {
             this.loggedIn = true;
           })
-          .catch(() => {})
+          .catch(() => {
+          })
           .then(() => {
             this.pending = false;
           });
       }
     },
     getUser() {
-      this.$axios.get('/api/user').then((response) => {
-        this.user = response.data;
-      });
+      this.$axios
+        .get('/api/user')
+        .then((response) => {
+          this.user = response.data;
+        })
+        .catch(() => {
+          alert('Not auth!');
+        });
     },
     handleLogin() {
-      this.$axios.get('/sanctum/csrf-cookie').then(() => {
-        this.$axios.post('/login', this.formData).then(() => {
-          console.log('User signed in!');
-          console.log(this.formData);
-        }).catch(() => console.log(this.formData)); // credentials didn't match
-      });
+      this.$axios.post(API_LOGIN_URL, this.login).then(() => {
+        console.log('User signed in!');
+        this.getUser();
+      })
+        .catch(() => {
+          console.log(`Fail: ${this.login}`);
+        });
     },
-
-    // handleLogin() {
-    //   this.$axios.post('/login', this.login).then(() => {
-    //     this.getUser();
-    //   });
-    // },
     getSecrets() {
       this.$axios.get('/api/secrets').then((response) => {
         this.secrets = response.data;
@@ -101,63 +105,17 @@ export default {
         });
     },
     handleLogout() {
-      this.$axios.post('/logout', this.login).then(() => {
-        this.user = null;
-      });
+      this.$axios
+        .post('/logout', this.login)
+        .then(() => {
+          this.user = null;
+          console.log('User logout!');
+        });
     },
   },
 };
 </script>
 
 <style scoped>
+
 </style>
-<!--<template>-->
-<!--  <div>-->
-<!--    <div v-if="!secrets.length" class="row">-->
-<!--      <form action="#" @submit.prevent="handleLogin">-->
-<!--        <div class="form-row">-->
-<!--          <input type="email" v-model="formData.email">-->
-<!--        </div>-->
-<!--        <div class="form-row">-->
-<!--          <input type="password" v-model="formData.password">-->
-<!--        </div>-->
-<!--        <div class="form-row">-->
-<!--          <button type="submit">Sign In</button>-->
-<!--        </div>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--import { defineComponent } from 'vue'-->
-<!--import axios from 'axios';-->
-<!--export default {-->
-<!--  name: 'Login',-->
-<!--  data () {-->
-<!--    return {-->
-<!--      secrets: [],-->
-<!--      formData: {-->
-<!--        email: '',-->
-<!--        password: ''-->
-<!--      }-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {-->
-<!--    handleLogin() {-->
-<!--      axios.get('/sanctum/csrf-cookie').then(response => {-->
-<!--        axios.post('/login', this.formData).then(response => {-->
-<!--          console.log('User signed in!');-->
-<!--          console.log(this.formData)-->
-<!--        }).catch(error => console.log(this.formData)); // credentials didn't match-->
-<!--      });-->
-<!--    },-->
-<!--    getSecrets() {-->
-<!--      axios.get('/api/secrets').then(response => this.secrets = response.data);-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style>-->
-<!--</style>-->
