@@ -1,21 +1,27 @@
 <template>
   <q-page class="flex flex-center text-primary">
     <h1>FinoMan</h1>
+    <q-btn
+      to="/login"
+    >
+      Login
+    </q-btn>
+    <q-btn v-if="!user" @click="handleLogout">Logout</q-btn>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import axios from 'axios';
 
 export default defineComponent({
   name: 'PageIndex',
-  setup() {
-    axios
-      .get('/sanctum/csrf-cookie')
-      .then(() => {
-        console.log(`>>> ${document.cookie}`);
-      });
+  data: () => ({
+    user: null,
+  }),
+  handleLogout() {
+    this.$axios.post('/logout', this.login).then(() => {
+      this.user = null;
+    });
   },
 });
 </script>
