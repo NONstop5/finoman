@@ -58,7 +58,6 @@
 
 <script>
 // import { menuItems } from "src/data/menuitems";
-
 // export default {
 //   data: () => ({
 //     menuItems,
