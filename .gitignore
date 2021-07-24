@@ -1,0 +1,13 @@
+.idea
+.vscode
+.composer
+*.log
+
+node_modules/
+vendor/
+.env
+
+#docker
+/docker/mysql
+/docker/logs
+#docker
