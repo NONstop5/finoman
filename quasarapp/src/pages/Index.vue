@@ -110,17 +110,6 @@
         </q-item>
       </q-card>
     </div>
-    <q-btn
-      to="/login"
-    >
-      Login
-    </q-btn>
-    <q-btn
-      v-if="!user"
-      @click="handleLogout"
-    >
-      Logout
-    </q-btn>
   </q-page>
 </template>
 
@@ -131,7 +120,6 @@ export default defineComponent({
   name: 'PageIndex',
   data() {
     return {
-      user: null,
       cards: [
         {
           name: 'card.name',
@@ -168,11 +156,6 @@ export default defineComponent({
         },
       ],
     };
-  },
-  handleLogout() {
-    this.$axios.post('/logout', this.login).then(() => {
-      this.user = null;
-    });
   },
 });
 </script>
