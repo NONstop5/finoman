@@ -48,9 +48,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { API_REGISTRATION_URL } from '../data/auth';
-
 export default {
   name: 'Registration',
   data() {
@@ -66,19 +63,19 @@ export default {
     };
   },
   methods: {
-    sendForm() {
-      if (this.pending === false) {
-        this.pending = true;
-        axios
-          .post(API_REGISTRATION_URL, this.form)
-          .then(() => {
-            this.registered = true;
-          })
-          .then(() => {
-            this.pending = false;
-          });
-      }
-    },
+    // sendForm() {
+    //   if (this.pending === false) {
+    //     this.pending = true;
+    //     this.$axios
+    //       .post('/api/register', this.form)
+    //       .then(() => {
+    //         this.registered = true;
+    //       })
+    //       .then(() => {
+    //         this.pending = false;
+    //       });
+    //   }
+    // },
   },
 };
 </script>
