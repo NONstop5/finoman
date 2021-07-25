@@ -23,3 +23,9 @@
   
 ### Before deploy
 - `cd quasarapp && quasar build`
+
+### Debug API
+- `composer install --optimize-autoloader --no-dev`
+- `php artisan config:clear`
+- `php artisan config:clear`
+- `php artisan route:clear`
