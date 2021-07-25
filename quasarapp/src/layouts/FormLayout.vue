@@ -15,7 +15,29 @@
           </div>
         </div>
         <q-toolbar-title class="absolute-top-right">
-          {Your name}
+          <q-btn
+            v-if="loggedIn"
+            flat
+            icon-right="account_circle"
+          >
+            <q-menu>
+              <q-item
+                v-close-popup
+                clickable
+              >
+                <q-item-section>Profile</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item
+                v-close-popup
+                clickable
+              >
+                <q-item-section @click="logout">
+                  Logout
+                </q-item-section>
+              </q-item>
+            </q-menu>
+          </q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -91,10 +113,16 @@
 </template>
 
 <script>
-// import { menuItems } from "src/data/menuitems";
-// export default {
-//   data: () => ({
-//     menuItems,
-//   }),
-// };
+import { mapActions, mapState } from 'vuex';
+
+export default {
+  name: 'FormLayout',
+  data: () => ({}),
+  computed: {
+    ...mapState('user', ['loggedIn', 'details']),
+  },
+  methods: {
+    ...mapActions('user', ['logout']),
+  },
+};
 </script>
