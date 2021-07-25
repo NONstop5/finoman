@@ -50,7 +50,7 @@ module.exports = configure((ctx) => ({
     vueRouterMode: 'history', // available values: 'hash', 'history'
 
     env: {
-      API_BASE_URL: 'http://localhost:8050',
+      API_BASE_URL: 'http://localhost',
     },
 
     // transpile: false,
@@ -80,7 +80,7 @@ module.exports = configure((ctx) => ({
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
   devServer: {
     https: false,
-    port: 8081,
+    port: 8080,
     open: true, // opens browser window automatically
   },
 
