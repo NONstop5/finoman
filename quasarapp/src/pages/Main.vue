@@ -18,12 +18,6 @@
       >
         Sign Up
       </q-btn>
-      <q-btn
-        v-if="!user"
-        @click="handleLogout"
-      >
-        Logout
-      </q-btn>
     </div>
   </q-page>
 </template>
@@ -33,16 +27,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'PageIndex',
-  data: () => ({
-    user: null,
-  }),
-  methods: {
-    handleLogout() {
-      this.$axios.post('/logout', this.login).then(() => {
-        this.user = null;
-      });
-    },
-  },
 });
 </script>
 
