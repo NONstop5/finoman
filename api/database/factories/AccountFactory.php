@@ -26,7 +26,16 @@ class AccountFactory extends Factory
         return [
             'user_id' => User::query()->orderByRaw('RAND()')->first()->id,
             'type_id' => Type::query()->orderByRaw('RAND()')->first()->id,
-            'name' => $this->faker->name(),
+            'name' => $this->faker->randomElement(
+                [
+                    'Продукты',
+                    'Кафе',
+                    'Зарплата',
+                    'Подработка',
+                    'Подарки',
+                    'Здоровье',
+                ]
+            ),
         ];
     }
 }
