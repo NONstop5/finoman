@@ -1,7 +1,7 @@
 <template>
   <q-page class="container main">
     <h3 class="text-primary">
-      Wallets
+      Transaction
     </h3>
     <div class="wallets-container">
       <div class="wallets">
