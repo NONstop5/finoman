@@ -13,7 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('{all}', 'app')
-    ->where(['all' => '^(?!api).*$']);
+Route::get('/', function () {
+    return view('welcome');
+});
 
-//Route::view('/{any}', 'app')->where('any','.*');
+// Route::view('{all}', 'app')
+//     ->where(['all' => '^(?!api).*$']);
+//
+// //Route::view('/{any}', 'app')->where('any','.*');
+//
+// Route::get('{any}', function () {
+//     return view('app');
+// })->where('any','.*');
