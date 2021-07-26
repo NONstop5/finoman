@@ -4,7 +4,7 @@
       elevated
       class="bg-dark text-primary"
       height-hint="100"
-    >
+    v-if="loggedIn">
       <q-toolbar class="full-width row justify-between">
         <div class="column absolute-top-left">
           <div class="text-secondary text-body2">
@@ -14,30 +14,9 @@
             {5000}
           </div>
         </div>
-        <q-toolbar-title class="absolute-top-right">
-          <q-btn
-            v-if="loggedIn"
-            flat
-            icon-right="account_circle"
-          >
-            <q-menu>
-              <q-item
-                v-close-popup
-                clickable
-              >
-                <q-item-section>Profile</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item
-                v-close-popup
-                clickable
-              >
-                <q-item-section @click="logout">
-                  Logout
-                </q-item-section>
-              </q-item>
-            </q-menu>
-          </q-btn>
+        <q-toolbar-title class="absolute-top-right" v-bind="details">
+          {{details.name}}
+          <q-btn @click="onSubmit" color="negative">Logout</q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -49,7 +28,7 @@
     <q-footer
       elevated
       class="bg-dark text-secondary"
-    >
+    v-if="loggedIn">
       <div class="fit column">
         <q-btn
           class="self-center"
@@ -123,6 +102,9 @@ export default {
   },
   methods: {
     ...mapActions('user', ['logout']),
+    onSubmit() {
+      this.logout();
+    },
   },
 };
 </script>

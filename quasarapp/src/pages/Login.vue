@@ -9,7 +9,6 @@
       :size=" '3em'"
     />
     <div style="min-width: 300px">
-      <span v-if="loggedIn">Successfully logged in</span>
       <q-input
         v-model="formData.email"
         outlined
@@ -19,7 +18,6 @@
         placeholder="Email"
         name="email"
       />
-      <span v-if="err">Uncorrect password</span>
       <q-input
         v-model="formData.password"
         outlined
@@ -30,22 +28,16 @@
         name="password"
       />
       <div class="flex justify-center">
-        <q-btn
-          class="btn text-secondary"
-          outline
-          size="md"
-          @click="onLogin"
-        >
-          Login
-        </q-btn>
-        <q-btn
-          class="btn q-ml-md text-secondary"
-          outline
-          size="md"
-          :to="{path:'/registration'}"
-        >
-          Sign Up
-        </q-btn>
+      <q-btn
+        class="btn text-secondary"
+        outline
+        size="md"
+        @click="onSubmit">Login</q-btn>
+      <q-btn
+        class="btn q-ml-md text-secondary"
+        outline
+        size="md"
+        :to="{path:'/api/registration'}">Sign Up</q-btn>
       </div>
     </div>
   </div>
@@ -66,7 +58,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['login']),
-    onLogin() {
+    onSubmit() {
       this.login(this.formData);
     },
   },

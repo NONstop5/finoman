@@ -1,5 +1,5 @@
-import { Loading, LocalStorage } from 'quasar';
 import axios from 'axios';
+import { Loading, LocalStorage } from 'quasar';
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -11,35 +11,36 @@ function login({ commit }, payload) {
   axios
     .get('/sanctum/csrf-cookie')
     .then(() => {
+  axios
+    .post('/api/login', {
+      email: payload.email,
+      password: payload.password,
+    }, { headers: { 'Content-Type': 'application/json' } })
+    .then(() => {
+      commit('setLoggedIn', true);
+
       axios
-        .post('/api/login', {
-          email: payload.email,
-          password: payload.password,
-        })
-        .then(() => {
-          commit('setLoggedIn', true);
+        .get('/api/user')
+        .then((response) => {
+          commit('setDetails', response.data);
 
-          axios
-            .get('/api/user')
-            .then((response) => {
-              commit('setDetails', response.data);
-
-              showSuccessNotification("You've been authenticated!");
-              this.$router.push('/');
-            })
-            .catch(() => {
-              showErrorNotification("You're not authenticated!");
-
-              commit('setLoggedIn', false);
-            });
+          showSuccessNotification("You've been authenticated!");
+          this.$router.push('/index');
         })
         .catch(() => {
-          showErrorNotification("Authentication couldn't take place!");
+          showErrorNotification("You're not authenticated!");
+
+          commit('setLoggedIn', false);
         });
     })
     .catch(() => {
       showErrorNotification("Authentication couldn't take place!");
+      this.$router.push('/api/login');
     });
+  })
+  .catch(() => {
+    showErrorNotification("Authentication couldn't take place!");
+  });
 }
 
 function logout({ commit }) {
@@ -53,6 +54,7 @@ function logout({ commit }) {
   axios
     .post('/api/logout')
     .then(() => {
+      localStorage.removeItem('user.details');
       showSuccessNotification("You've been logged out!");
       reset();
     })
