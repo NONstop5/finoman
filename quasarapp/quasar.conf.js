@@ -51,7 +51,7 @@ module.exports = configure((ctx) => ({
     vueRouterMode: 'history', // available values: 'hash', 'history'
 
     env: {
-      API_BASE_URL: 'http://finoman.loc',
+      API_BASE_URL: 'http://localhost:8050',
     },
 
     // transpile: false,
@@ -78,12 +78,13 @@ module.exports = configure((ctx) => ({
     },
     // this is a configuration passed on
     // to the underlying Webpack
-      devtool: 'source-map',
+    devtool: 'source-map',
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
   devServer: {
     https: false,
+    host: 'finoman.loc',
     port: 8081,
     open: true, // opens browser window automatically
   },
