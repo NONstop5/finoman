@@ -51,7 +51,7 @@ module.exports = configure((ctx) => ({
     vueRouterMode: 'history', // available values: 'hash', 'history'
 
     env: {
-      API_BASE_URL: 'http://localhost:8050',
+      API_BASE_URL: 'http://finoman.loc',
     },
 
     // transpile: false,
