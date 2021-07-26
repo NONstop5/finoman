@@ -17,4 +17,17 @@
 
 </style>
 <script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'PageIndex',
+  data() {
+    return {
+      user: {
+        balance: 500000,
+        name: 'Joy Doe',
+      },
+    };
+  },
+});
 </script>
