@@ -28,16 +28,22 @@
         name="password"
       />
       <div class="flex justify-center">
-      <q-btn
-        class="btn text-secondary"
-        outline
-        size="md"
-        @click="onSubmit">Login</q-btn>
-      <q-btn
-        class="btn q-ml-md text-secondary"
-        outline
-        size="md"
-        :to="{path:'/api/registration'}">Sign Up</q-btn>
+        <q-btn
+          class="btn text-secondary"
+          outline
+          size="md"
+          @click="onSubmit"
+        >
+          Login
+        </q-btn>
+        <q-btn
+          class="btn q-ml-md text-secondary"
+          outline
+          size="md"
+          :to="{path:'/api/registration'}"
+        >
+          Sign Up
+        </q-btn>
       </div>
     </div>
   </div>
