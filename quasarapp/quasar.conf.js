@@ -23,7 +23,7 @@ module.exports = configure((ctx) => ({
   // --> boot files are part of "main.js"
   // https://v2.quasar.dev/quasar-cli/boot-files
   boot: [
-    'axios',
+    'axios', 'router-auth',
   ],
 
   // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -71,6 +71,9 @@ module.exports = configure((ctx) => ({
       chain.plugin('eslint-webpack-plugin')
         .use(ESLintPlugin, [{ extensions: ['js', 'vue'] }]);
     },
+    // this is a configuration passed on
+    // to the underlying Webpack
+      devtool: 'source-map',
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -95,7 +98,12 @@ module.exports = configure((ctx) => ({
     // directives: [],
 
     // Quasar plugins
-    plugins: [],
+    plugins: [
+      'LocalStorage',
+      'SessionStorage',
+      'Loading',
+      'Notify',
+    ],
   },
 
   // animations: 'all', // --- includes all animations

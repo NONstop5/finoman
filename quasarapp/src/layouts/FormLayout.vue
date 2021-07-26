@@ -1,13 +1,14 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-dark text-primary" height-hint="100">
+    <q-header elevated class="bg-dark text-primary" height-hint="100" v-if="loggedIn">
       <q-toolbar class="full-width row justify-between">
         <div class="column absolute-top-left">
           <div class="text-secondary text-body2">Total Balance</div>
           <div class="text-subtitle2">{5000}</div>
         </div>
-        <q-toolbar-title class="absolute-top-right">
-          {Your name}
+        <q-toolbar-title class="absolute-top-right" v-bind="details">
+          {{details.name}}
+          <q-btn @click="onSubmit" color="negative">Logout</q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -16,7 +17,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated class="bg-dark text-secondary">
+    <q-footer elevated class="bg-dark text-secondary" v-if="loggedIn">
       <div class="fit column">
         <q-btn
           class="self-center"
@@ -57,10 +58,21 @@
 </template>
 
 <script>
-// import { menuItems } from "src/data/menuitems";
-// export default {
-//   data: () => ({
-//     menuItems,
-//   }),
-// };
+import { mapActions, mapState } from 'vuex';
+
+export default {
+  // created: {
+  //   const storedState = 
+  // },
+  computed: {
+    ...mapState('user', ['loggedIn']),
+    ...mapState('user', ['details']),
+  },
+  methods: {
+    ...mapActions('user', ['logout']),
+    onSubmit() {
+      this.logout();
+    },
+  },
+};
 </script>
