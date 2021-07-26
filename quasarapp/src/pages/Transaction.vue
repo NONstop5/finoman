@@ -4,17 +4,16 @@
       Transaction
     </h3>
     <div class="wallets-container">
-      <div class="wallets">
-
-      </div>
+      <div class="wallets" />
     </div>
-    <div>
-
-    </div>
+    <div />
   </q-page>
 </template>
+
+<script>
+
+</script>
+
 <style lang="scss" scoped>
 
 </style>
-<script>
-</script>
