@@ -17,6 +17,8 @@
 ### How to run this project
 - `git clone git@github.com:NONstop5/finoman.git`
 - `cd finoman/api && composer install`
+- `cp .env.example .env`
+- `php artisan key:generate`
 - `php artisan migrate --seed`
 - `cd .. && cd quasarapp && yarn`
 - `quasar dev`
