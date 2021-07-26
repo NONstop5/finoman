@@ -1,10 +1,11 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header
+      v-if="loggedIn"
       elevated
       class="bg-dark text-primary"
       height-hint="100"
-    v-if="loggedIn">
+    >
       <q-toolbar class="full-width row justify-between">
         <div class="column absolute-top-left">
           <div class="text-secondary text-body2">
@@ -14,9 +15,17 @@
             {5000}
           </div>
         </div>
-        <q-toolbar-title class="absolute-top-right" v-bind="details">
-          {{details.name}}
-          <q-btn @click="onSubmit" color="negative">Logout</q-btn>
+        <q-toolbar-title
+          class="absolute-top-right"
+          v-bind="details"
+        >
+          {{ details.name }}
+          <q-btn
+            color="negative"
+            @click="onSubmit"
+          >
+            Logout
+          </q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -26,9 +35,10 @@
     </q-page-container>
 
     <q-footer
+      v-if="loggedIn"
       elevated
       class="bg-dark text-secondary"
-    v-if="loggedIn">
+    >
       <div class="fit column">
         <q-btn
           class="self-center"
