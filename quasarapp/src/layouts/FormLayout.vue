@@ -1,14 +1,31 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-dark text-primary" height-hint="100" v-if="loggedIn">
+    <q-header
+      v-if="loggedIn"
+      elevated
+      class="bg-dark text-primary"
+      height-hint="100"
+    >
       <q-toolbar class="full-width row justify-between">
         <div class="column absolute-top-left">
-          <div class="text-secondary text-body2">Total Balance</div>
-          <div class="text-subtitle2">{5000}</div>
+          <div class="text-secondary text-body2">
+            Total Balance
+          </div>
+          <div class="text-subtitle2">
+            {5000}
+          </div>
         </div>
-        <q-toolbar-title class="absolute-top-right" v-bind="details">
-          {{details.name}}
-          <q-btn @click="onSubmit" color="negative">Logout</q-btn>
+        <q-toolbar-title
+          class="absolute-top-right"
+          v-bind="details"
+        >
+          {{ details.name }}
+          <q-btn
+            color="negative"
+            @click="onSubmit"
+          >
+            Logout
+          </q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -17,7 +34,11 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated class="bg-dark text-secondary" v-if="loggedIn">
+    <q-footer
+      v-if="loggedIn"
+      elevated
+      class="bg-dark text-secondary"
+    >
       <div class="fit column">
         <q-btn
           class="self-center"
@@ -25,33 +46,56 @@
           to="/transaction"
           outline
           round
-          @click="linkClick"
           glossy
           color="positive"
-          ><q-icon name="fas fa-plus-circle"
-        /></q-btn>
+          @click="linkClick"
+        >
+          <q-icon
+            name="fas fa-plus-circle"
+          />
+        </q-btn>
       </div>
       <q-tabs class="row col-12 col-md-auto justify-center">
-        <q-route-tab to="/" label="Home" class="col"
-          ><q-icon name="fas fa-home" :size="$q.screen.gt.sm ? '3em' : '1.5em'"
-        /></q-route-tab>
-        <q-route-tab to="/category" label="Category" class="col">
+        <q-route-tab
+          to="/"
+          label="Home"
+          class="col"
+        >
+          <q-icon
+            name="fas fa-home"
+            :size="$q.screen.gt.sm ? '3em' : '1.5em'"
+          />
+        </q-route-tab>
+        <q-route-tab
+          to="/category"
+          label="Category"
+          class="col"
+        >
           <q-icon
             name="fas fa-list"
             :size="$q.screen.gt.sm ? '3em' : '1.5em'"
           />
         </q-route-tab>
-        <q-route-tab to="/transaction" label="Transaction" class="col">
+        <q-route-tab
+          to="/transaction"
+          label="Transaction"
+          class="col"
+        >
           <q-icon
             name="fas fa-money-check-alt"
             :size="$q.screen.gt.sm ? '3em' : '1.5em'"
           />
         </q-route-tab>
-        <q-route-tab to="/history" label="History" class="col">
+        <q-route-tab
+          to="/history"
+          label="History"
+          class="col"
+        >
           <q-icon
             name="fas fa-history"
             :size="$q.screen.gt.sm ? '3em' : '1.5em'"
-        /></q-route-tab>
+          />
+        </q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -61,12 +105,10 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  // created: {
-  //   const storedState = 
-  // },
+  name: 'FormLayout',
+  data: () => ({}),
   computed: {
-    ...mapState('user', ['loggedIn']),
-    ...mapState('user', ['details']),
+    ...mapState('user', ['loggedIn', 'details']),
   },
   methods: {
     ...mapActions('user', ['logout']),

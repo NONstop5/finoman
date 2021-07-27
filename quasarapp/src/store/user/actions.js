@@ -3,43 +3,44 @@ import { Loading, LocalStorage } from 'quasar';
 import {
   showErrorNotification,
   showSuccessNotification,
-} from '../../functions/function-show-notifications';
+} from 'src/functions/function-show-notifications';
 
 function login({ commit }, payload) {
   Loading.show();
-  // axios
-  //   .get('/sanctum/csrf-cookie')
-  //   .then(() => {
+
   axios
-    .post('/login', {
-      email: payload.email,
-      password: payload.password,
-    }, { headers: { 'Content-Type': 'application/json' } })
+    .get('/sanctum/csrf-cookie')
     .then(() => {
-      commit('setLoggedIn', true);
-
       axios
-        .get('/api/user')
-        .then((response) => {
-          commit('setDetails', response.data);
+        .post('/api/login', {
+          email: payload.email,
+          password: payload.password,
+        }, { headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
+          commit('setLoggedIn', true);
 
-          showSuccessNotification("You've been authenticated!");
-          this.$router.push('/index');
+          axios
+            .get('/api/user')
+            .then((response) => {
+              commit('setDetails', response.data);
+
+              showSuccessNotification("You've been authenticated!");
+              this.$router.push('/index');
+            })
+            .catch(() => {
+              showErrorNotification("You're not authenticated!");
+
+              commit('setLoggedIn', false);
+            });
         })
         .catch(() => {
-          showErrorNotification("You're not authenticated!");
-
-          commit('setLoggedIn', false);
+          showErrorNotification("Authentication couldn't take place!");
+          this.$router.push('/api/login');
         });
     })
     .catch(() => {
       showErrorNotification("Authentication couldn't take place!");
-      this.$router.push('/login');
     });
-  // })
-  // .catch(() => {
-  //   showErrorNotification("Authentication couldn't take place!");
-  // });
 }
 
 function logout({ commit }) {
@@ -51,7 +52,7 @@ function logout({ commit }) {
   Loading.show();
 
   axios
-    .post('/logout')
+    .post('/api/logout')
     .then(() => {
       localStorage.removeItem('user.details');
       showSuccessNotification("You've been logged out!");

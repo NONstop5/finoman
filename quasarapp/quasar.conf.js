@@ -23,7 +23,8 @@ module.exports = configure((ctx) => ({
   // --> boot files are part of "main.js"
   // https://v2.quasar.dev/quasar-cli/boot-files
   boot: [
-    'axios', 'router-auth',
+    'axios',
+    'router-auth',
   ],
 
   // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -49,6 +50,10 @@ module.exports = configure((ctx) => ({
   build: {
     vueRouterMode: 'history', // available values: 'hash', 'history'
 
+    env: {
+      API_BASE_URL: 'http://finoman.loc',
+    },
+
     // transpile: false,
 
     // Add dependencies for transpiling with Babel (Array of string/regex)
@@ -73,13 +78,14 @@ module.exports = configure((ctx) => ({
     },
     // this is a configuration passed on
     // to the underlying Webpack
-      devtool: 'source-map',
+    devtool: 'source-map',
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
   devServer: {
     https: false,
-    port: 8080,
+    host: 'finoman.loc',
+    port: 8081,
     open: true, // opens browser window automatically
   },
 
