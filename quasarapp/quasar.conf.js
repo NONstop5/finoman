@@ -50,9 +50,7 @@ module.exports = configure((ctx) => ({
   build: {
     vueRouterMode: 'history', // available values: 'hash', 'history'
 
-    env: {
-      API_BASE_URL: 'http://finoman.loc',
-    },
+    env: require('dotenv').config().parsed,
 
     // transpile: false,
 
@@ -84,8 +82,8 @@ module.exports = configure((ctx) => ({
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
   devServer: {
     https: false,
-    host: 'finoman.loc',
-    port: 8081,
+    host: process.env.DEV_SERVER_HOST,
+    port: process.env.DEV_SERVER_PORT,
     open: true, // opens browser window automatically
   },
 
