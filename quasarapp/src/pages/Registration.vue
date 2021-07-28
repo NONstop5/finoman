@@ -48,13 +48,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'Registration',
   data() {
     return {
-      pending: false,
-      registered: false,
-      form: {
+      formData: {
         name: null,
         email: null,
         password: null,
@@ -63,6 +62,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions('user', ['registration']),
+    sendForm() {
+      this.registration(this.formData);
+    },
     // sendForm() {
     //   if (this.pending === false) {
     //     this.pending = true;
