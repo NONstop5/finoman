@@ -1,70 +1,131 @@
 <template align="center">
   <div class="text-center column content-center q-mt-xl">
     <div style="min-width: 300px">
-      <span v-if="registered">Successfully registered</span><br>
-      <q-input
-        v-model="form.name"
-        outlined
-        dark
-        class="q-mb-lg text-body1"
-        type="text"
-        placeholder="Name"
-      />
-      <q-input
-        v-model="form.email"
-        outlined
-        dark
-        class="q-mb-lg text-body1"
-        type="text"
-        placeholder="Email"
-      />
-      <q-input
-        v-model="form.password"
-        outlined
-        dark
-        class="q-mb-lg text-body1"
-        type="password"
-        placeholder="Password"
-      />
-      <q-input
-        v-model="form.password_confirmation"
-        outlined
-        dark
-        class="q-mb-lg text-body1"
-        type="password"
-        placeholder="Password Confirmation"
-      />
-      <q-btn
-        class="btn text-secondary"
-        outline
-        size="md"
-        :disabled="pending"
-        @click="sendForm"
-      >
-        Sign up
-      </q-btn>
+      <q-form>
+        <q-input
+          v-model="formData.name"
+          outlined
+          dark
+          class="q-mb-lg text-body1"
+          type="text"
+          placeholder="Name"
+        />
+        <div
+          v-for="error of v$.formData.name.$silentErrors"
+          :key="error.$message"
+        >
+          <div>{{ error.$message }}</div>
+        </div>
+        <q-input
+          v-model="formData.email"
+          outlined
+          dark
+          class="q-mb-lg text-body1"
+          type="text"
+          placeholder="Email"
+        />
+        <div
+          v-for="error of v$.formData.email.$silentErrors"
+          :key="error.$message"
+        >
+          <div>{{ error.$message }}</div>
+        </div>
+        <q-input
+          v-model="formData.password"
+          outlined
+          dark
+          class="q-mb-lg text-body1"
+          type="password"
+          placeholder="Password"
+        />
+        <div
+          v-for="error of v$.formData.password.$silentErrors"
+          :key="error.$message"
+        >
+          <div>{{ error.$message }}</div>
+        </div>
+        <q-input
+          v-model="formData.password_confirmation"
+          outlined
+          dark
+          class="q-mb-lg text-body1"
+          type="password"
+          placeholder="Password Confirmation"
+        />
+        <div
+          v-for="error of v$.formData.password_confirmation.$silentErrors"
+          :key="error.$message"
+        >
+          <div>{{ error.$message }}</div>
+        </div>
+        <q-btn
+          class="btn text-secondary"
+          outline
+          size="md"
+          :disabled="pending"
+          @click="sendForm"
+        >
+          Sign up
+        </q-btn>
+      </q-form>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import useVuelidate from '@vuelidate/core';
+import {
+  required,
+  email,
+  minLength,
+  maxLength,
+  sameAs,
+  alphaNum,
+} from '@vuelidate/validators';
+
 export default {
-  name: 'Registration',
+  name: 'Register',
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
       formData: {
-        name: null,
-        email: null,
-        password: null,
-        password_confirmation: null,
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+      },
+    };
+  },
+  validations() {
+    return {
+      formData: {
+        name: {
+          required,
+          minLength: minLength(1),
+          alphaNum,
+        },
+        email: {
+          required,
+          email,
+        },
+        password: {
+          required,
+          minLength: minLength(8),
+          maxLenght: maxLength(32),
+        },
+        password_confirmation: {
+          sameAsPassword: sameAs(this.password),
+        },
       },
     };
   },
   methods: {
-    ...mapActions('user', ['registration']),
+    ...mapActions('user', ['register']),
     sendForm() {
-      this.registration(this.formData);
+      this.register(this.formData);
     },
     // sendForm() {
     //   if (this.pending === false) {
@@ -87,5 +148,8 @@ export default {
 .btn:hover {
   background: $positive !important;
   transition: 0.4;
+}
+div {
+  color: $negative;
 }
 </style>

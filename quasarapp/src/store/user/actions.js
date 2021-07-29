@@ -71,22 +71,32 @@ function getState({ commit }) {
   commit('setLoggedIn', loggedIn);
   commit('setDetails', details);
 }
-function registrartion( payload ) {
-  Loading.show()
+function register({ commit }, payload) {
+  Loading.show();
   axios
-    .post('api/register', {
-      name: payload.name,
-      email: payload.name,
-      password: payload.password,
-      password_confirmation: payload.password_confirmation,
-    }, { headers: { 'Content-Type': 'application/json' } })
+    .get('/sanctum/csrf-cookie')
     .then(() => {
-      showSuccessNotification("You've been registered!");
-      this.$router.push('/login');
+      axios
+        .post('/api/register', {
+          name: payload.name,
+          email: payload.email,
+          password: payload.password,
+          password_confirmation: payload.password_confirmation,
+        }, { headers: { 'Content-Type': 'application/json' } })
+        .then(() => {
+          showSuccessNotification("You've been registered!");
+          this.$router.push('/login');
+        })
+        .catch(() => {
+          showErrorNotification("Registration could't take place.");
+          commit();
+        });
     })
     .catch(() => {
-      showErrorNotification("Registration could't take place.");
+      showErrorNotification("Registration couldn't take place!");
     });
 }
 
-export { login, logout, getState, registrartion };
+export {
+  login, logout, getState, register,
+};
