@@ -83,6 +83,7 @@ import {
   sameAs,
   alphaNum,
 } from '@vuelidate/validators';
+import { showErrorNotification } from '../functions/function-show-notifications';
 
 export default {
   name: 'Register',
@@ -117,7 +118,7 @@ export default {
           maxLenght: maxLength(32),
         },
         password_confirmation: {
-          sameAsPassword: sameAs(this.password),
+          sameAsPassword: sameAs(this.formData.password),
         },
       },
     };
@@ -125,7 +126,12 @@ export default {
   methods: {
     ...mapActions('user', ['register']),
     sendForm() {
-      this.register(this.formData);
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        this.register(this.formData);
+      } else {
+        showErrorNotification('Form failed validation');
+      }
     },
     // sendForm() {
     //   if (this.pending === false) {
