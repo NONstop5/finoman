@@ -105,8 +105,8 @@ export default {
       formData: {
         name: {
           required,
-          minLength: minLength(1),
           alphaNum,
+          maxLength: maxLength(16),
         },
         email: {
           required,
@@ -118,6 +118,7 @@ export default {
           maxLenght: maxLength(32),
         },
         password_confirmation: {
+          required,
           sameAsPassword: sameAs(this.formData.password),
         },
       },
