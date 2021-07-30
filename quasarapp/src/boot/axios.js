@@ -8,7 +8,9 @@ import axios from 'axios';
 // "export default () => {}" function below (which runs individually
 // for each client)
 
-axios.defaults.withCredentials = true;
+axios.defaults.headers.common = {
+  'Content-Type': 'application/json',
+};
 axios.defaults.baseURL = process.env.API_BASE_URL;
 
 const api = axios.create({ baseURL: process.env.API_BASE_URL });
@@ -25,4 +27,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export { axios, api };

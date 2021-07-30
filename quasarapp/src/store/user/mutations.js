@@ -11,6 +11,13 @@ function setDetails(state, payload) {
 
   LocalStorage.set('user.details', payload);
 }
+
+function setToken(state, value) {
+  state.token = value;
+
+  LocalStorage.set('user.token', value);
+}
+
 function ADD_WALLET(state, wallet) {
   state.wallets.push(wallet);
 }
@@ -36,6 +43,7 @@ function DELETE_WALLET(state, wallet) {
 export {
   setLoggedIn,
   setDetails,
+  setToken,
   ADD_WALLET,
   GET_WALLETS,
   UPDATE_WALLET,

@@ -1,109 +1,100 @@
-import axios from 'axios';
+import { api } from 'boot/axios';
 import { Loading, LocalStorage } from 'quasar';
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from 'src/functions/function-show-notifications';
+import { showErrorNotification, showSuccessNotification } from 'src/functions/function-show-notifications';
 import { dataService } from '../api/data.service';
 import { GET_WALLETS, ADD_WALLET, DELETE_WALLET, UPDATE_WALLET } from './mutations';
 
 function login({ commit }, payload) {
   Loading.show();
 
-  axios
-    .get('/sanctum/csrf-cookie')
-    .then(() => {
-      axios
-        .post('/api/login', {
-          email: payload.email,
-          password: payload.password,
-        }, { headers: { 'Content-Type': 'application/json' } })
-        .then(() => {
-          commit('setLoggedIn', true);
+  api
+    .post('/api/login',
+      {
+        email: payload.email,
+        password: payload.password,
+      },
+      { headers: { 'Content-Type': 'application/json' } })
+    .then((response) => {
+      commit('setLoggedIn', true);
+      commit('setDetails', response.data.user);
+      commit('setToken', response.data.token);
 
-          axios
-            .get('/api/user')
-            .then((response) => {
-              commit('setDetails', response.data);
-
-              showSuccessNotification("You've been authenticated!");
-              this.$router.push('/index');
-            })
-            .catch(() => {
-              showErrorNotification("You're not authenticated!");
-
-              commit('setLoggedIn', false);
-            });
-        })
-        .catch(() => {
-          showErrorNotification("Authentication couldn't take place!");
-          this.$router.push('/login');
-        });
+      showSuccessNotification('You\'ve been authenticated!');
+      this.$router.push('/index');
     })
     .catch(() => {
-      showErrorNotification("Authentication couldn't take place!");
+      showErrorNotification('You\'re not authenticated!');
+
+      commit('setLoggedIn', false);
+    })
+    .catch(() => {
+      showErrorNotification('Authentication couldn\'t take place!');
+      this.$router.push('/login');
     });
 }
 
-function logout({ commit }) {
-  const reset = () => {
-    commit('setLoggedIn', false);
-    this.$router.replace('/login');
-  };
-
+function logout({ commit, state }) {
   Loading.show();
 
-  axios
-    .post('/api/logout')
+  api
+    .post('/api/logout', {}, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${state.token}`,
+      },
+    })
     .then(() => {
-      localStorage.removeItem('user.details');
-      showSuccessNotification("You've been logged out!");
-      reset();
+      showSuccessNotification('You\'ve been logged out!');
     })
     .catch(() => {
       showErrorNotification('Session expired!');
-      reset();
+    })
+    .finally(() => {
+      commit('setLoggedIn', false);
+      commit('setDetails', {});
+      commit('setToken', '');
+
+      this.$router.replace('/login');
     });
 }
 
 function getState({ commit }) {
   const loggedIn = LocalStorage.getItem('user.loggedIn') || false;
   const details = LocalStorage.getItem('user.details') || {};
+  const token = LocalStorage.getItem('user.token') || {};
 
   commit('setLoggedIn', loggedIn);
   commit('setDetails', details);
+  commit('setToken', token);
 }
+
 function register({ commit }, payload) {
   Loading.show();
-  axios
-    .get('/sanctum/csrf-cookie')
+
+  api
+    .post('/api/register', {
+      name: payload.name,
+      email: payload.email,
+      password: payload.password,
+      password_confirmation: payload.password_confirmation,
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then(() => {
-      axios
-        .post('/api/register', {
-          name: payload.name,
-          email: payload.email,
-          password: payload.password,
-          password_confirmation: payload.password_confirmation,
-        }, { headers: { 'Content-Type': 'application/json' } })
-        .then(() => {
-          showSuccessNotification("You've been registered!");
-          this.$router.push('/login');
-        })
-        .catch(() => {
-          showErrorNotification("Registration could't take place.");
-          commit();
-        });
+      showSuccessNotification('You\'ve been registered!');
+      this.$router.push('/login');
     })
     .catch(() => {
-      showErrorNotification("Registration couldn't take place!");
+      showErrorNotification('Registration could\'t take place.');
+      commit();
     });
 }
+
 // function GET_WALLET({ commit }) {
 //   axios
 //     .get('/api/accounts', {
 //       user_id: state.details.user_id,
 //     })
 // }
+
 async function addWalletAction({ commit }, wallet) {
   const addedWallet = await dataService.addWallet(wallet);
   commit(ADD_WALLET, addedWallet);

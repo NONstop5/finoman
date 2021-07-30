@@ -1,12 +1,27 @@
-export function userLoggedIn(state) {
+function userLoggedIn(state) {
   return state.loggedIn;
 }
-export function WALLETS(state) {
+
+function getToken(state) {
+  return state.token;
+}
+
+function WALLETS(state) {
   return state.wallets;
 }
-export function CATEGORY_PROFIT(state) {
+
+function CATEGORY_PROFIT(state) {
   return state.category_profit;
 }
-export function CATEGORY_LOSE(state) {
+
+function CATEGORY_LOSE(state) {
   return state.category_lose;
 }
+
+export {
+  userLoggedIn,
+  getToken,
+  WALLETS,
+  CATEGORY_PROFIT,
+  CATEGORY_LOSE,
+};
