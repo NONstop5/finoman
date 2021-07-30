@@ -87,7 +87,7 @@
           />
         </q-route-tab>
         <q-route-tab
-          to="/history"
+          to="/report"
           label="History"
           class="col"
         >
