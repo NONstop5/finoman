@@ -18,4 +18,39 @@ function setToken(state, value) {
   LocalStorage.set('user.token', value);
 }
 
-export { setLoggedIn, setDetails, setToken };
+function ADD_WALLET(state, wallet) {
+  state.wallets.push(wallet);
+}
+
+function GET_WALLETS(state, wallets) {
+  state.wallets = wallets;
+}
+
+function UPDATE_WALLET(state, wallet) {
+  const index = state.wallets.findIndex((h) => h.id === wallet.id);
+  state.wallets.splice(index, 1, wallet);
+  state.wallets = [...state.wallets];
+}
+
+function DELETE_WALLET(state, wallet) {
+  state.wallets = [...state.wallets.filter((p) => p.id !== wallet.id)];
+}
+
+// export default {
+//   SET_WALLET: (state, payload) => {
+//     state.wallets = payload;
+//   },
+//   ADD_WALLET: (state, payload) => {
+//     state.wallets.push(payload);
+//   }
+// }
+
+export {
+  setLoggedIn,
+  setDetails,
+  setToken,
+  ADD_WALLET,
+  GET_WALLETS,
+  UPDATE_WALLET,
+  DELETE_WALLET,
+};
