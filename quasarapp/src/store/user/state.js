@@ -1,7 +1,6 @@
-export default function () {
-  return {
-    loggedIn: false,
-    permissions: [],
-    details: {},
-  };
-}
+export default () => ({
+  loggedIn: false,
+  permissions: [],
+  details: {},
+  token: '',
+});

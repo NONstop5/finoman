@@ -12,4 +12,10 @@ function setDetails(state, payload) {
   LocalStorage.set('user.details', payload);
 }
 
-export { setLoggedIn, setDetails };
+function setToken(state, value) {
+  state.token = value;
+
+  LocalStorage.set('user.token', value);
+}
+
+export { setLoggedIn, setDetails, setToken };
