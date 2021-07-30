@@ -57,7 +57,7 @@
       </div>
       <q-tabs class="row col-12 col-md-auto justify-center">
         <q-route-tab
-          to="/"
+          to="/index"
           label="Home"
           class="col"
         >
