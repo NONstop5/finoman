@@ -6,18 +6,18 @@
       </h4>
       <div class="flex items-center">
         <q-card
-          v-for="card in cards"
-          :key="card.name"
+          v-for="wallet in wallets"
+          :key="wallet.userid"
           class="text-white q-mr-md"
           style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%);
             max-width: 222px"
         >
           <q-card-section>
             <div class="text-h6">
-              {{ card.name }}
+              {{ wallet.type_id }}
             </div>
             <div class="text-subtitle2">
-              {{ card.balanse }}
+              {{ wallet.userid }}
             </div>
           </q-card-section>
         </q-card>
@@ -115,6 +115,7 @@
 
 <script>
 import { defineComponent } from 'vue';
+import { mapActions, mapState } from 'vuex';
 
 export default defineComponent({
   name: 'PageIndex',
@@ -126,7 +127,6 @@ export default defineComponent({
           balanse: 'card.balanse',
         },
       ],
-      accounts: null,
       categories: [
         {
           title: 'Product',
@@ -156,6 +156,18 @@ export default defineComponent({
         },
       ],
     };
+  },
+  computed: {
+    ...mapState('user', ['wallets']),
+  },
+  async created() {
+    await this.loadWallets();
+  },
+  methods: {
+    ...mapActions('user', ['getWalletsAction']),
+    async loadWallets() {
+      await this.getWalletsAction(1);
+    },
   },
 });
 </script>
