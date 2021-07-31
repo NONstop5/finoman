@@ -1,60 +1,59 @@
-import * as axios from 'axios';
+import axios from 'axios';
+import { showErrorNotification } from 'src/functions/function-show-notifications';
 
 export const parseItem = (response, code) => {
-  if (response.status !== code) throw Error(response.message);
+  if (response.status !== code) {
+    throw Error(response.message);
+  }
   let item = response.data;
   if (typeof item !== 'object') {
     item = undefined;
   }
   return item;
 };
-const getWallets = async function () {
+const getWallets = async () => {
   try {
-    const response = await axios.get('/api/accounts');
-    return response;
+    return await axios.get('/api/accounts');
     //  filter might be needed here
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return [];
   }
 };
-const getWallet = async function (typeId) {
+const getWallet = async (typeId) => {
   try {
     const response = await axios.get(`/api/accounts/${typeId}`);
-    const wallet = parseItem(response, 200);
-    return wallet;
+    return parseItem(response, 200);
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 };
-const updateWallet = async function (wallet) {
+const updateWallet = async (wallet) => {
   try {
     const response = await axios.put(`/api/accounts/${wallet.id}`, wallet);
-    const updatedWallet = parseItem(response, 200);
-    return updatedWallet;
+    return parseItem(response, 200);
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 };
-const addWallet = async function (wallet) {
+const addWallet = async (wallet) => {
   try {
     const response = await axios.post('api/accounts', wallet);
-    const addedWallet = parseItem(response, 200);
-    return addedWallet;
+    return parseItem(response, 200);
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 };
-const deleteWallet = async function (wallet) {
+const deleteWallet = async (wallet) => {
   try {
     const response = await axios.delete(`api/accounts/${wallet.id}`);
     parseItem(response, 200);
     return wallet.id;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 };
