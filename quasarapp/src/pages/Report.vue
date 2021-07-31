@@ -22,17 +22,17 @@
               class="row items-center justify-end q-gutter-sm"
             >
               <q-btn
+                v-close-popup
                 label="Cancel"
                 color="secondary"
                 flat
-                v-close-popup
               />
               <q-btn
+                v-close-popup
                 label="OK"
                 color="secondary"
                 flat
                 @click="save"
-                v-close-popup
               />
             </div>
           </q-date>
