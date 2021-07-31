@@ -18,9 +18,9 @@ const getWallets = async function () {
     return [];
   }
 };
-const getWallet = async function (type_id) {
+const getWallet = async function (typeId) {
   try {
-    const response = await axios.get(`/api/accounts/${type_id}`);
+    const response = await axios.get(`/api/accounts/${typeId}`);
     const wallet = parseItem(response, 200);
     return wallet;
   } catch (error) {
