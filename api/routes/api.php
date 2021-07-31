@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +23,9 @@ Route::post('/login', [UserController::class, 'login']);
 Route::group(
     ['middleware' => ['auth:sanctum']],
     function () {
-        Route::apiResource('account', AccountController::class);
+        Route::apiResource('wallets', WalletController::class);
+        Route::apiResource('categories', CategoryController::class);
         Route::apiResource('transactions', TransactionController::class);
-        Route::get('/reports', [ReportController::class, 'index']);
 
         Route::get(
             '/user',
