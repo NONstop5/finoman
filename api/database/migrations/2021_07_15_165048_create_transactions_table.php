@@ -17,16 +17,32 @@ class CreateTransactionsTable extends Migration
             $table->id();
 
             $table
-                ->unsignedBigInteger('account_from_id')
-                ->comment('Связь с accounts');
+                ->unsignedBigInteger('transaction_type_id')
+                ->comment('Связь с типами транзакций');
             $table
-                ->foreign('account_from_id')
+                ->foreign('transaction_type_id')
                 ->references('id')
-                ->on('accounts');
+                ->on('transaction_types');
 
             $table
-                ->unsignedBigInteger('account_to_id')
-                ->comment('Связь с accounts');
+                ->unsignedBigInteger('wallet1_id')
+                ->comment('Связь с кошельками');
+            $table
+                ->foreign('wallet1_id')
+                ->references('id')
+                ->on('wallets');
+
+            $table
+                ->unsignedBigInteger('wallet2_id')
+                ->comment('Связь с кошельками');
+            $table
+                ->foreign('wallet2_id')
+                ->references('id')
+                ->on('wallets');
+
+            $table
+                ->unsignedBigInteger('category_id')
+                ->comment('Связь с категориями');
             $table
                 ->foreign('account_to_id')
                 ->references('id')
