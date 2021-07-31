@@ -7,13 +7,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from 'src/functions/function-show-notifications';
-import { dataService } from '../api/data.service';
-import {
-  ADD_WALLET,
-  DELETE_WALLET,
-  GET_WALLETS,
-  UPDATE_WALLET,
-} from './mutations';
+import { dataService } from '../api/dataservice';
 
 function login({ commit }, payload) {
   Loading.show();
@@ -99,31 +93,29 @@ function register({ commit }, payload) {
     });
 }
 
-// function GET_WALLET({ commit }) {
-//   axios
-//     .get('/api/accounts', {
-//       user_id: state.details.user_id,
-//     })
-// }
-
 async function addWalletAction({ commit }, wallet) {
   const addedWallet = await dataService.addWallet(wallet);
-  commit(ADD_WALLET, addedWallet);
+  commit('ADD_WALLET', addedWallet);
 }
 
 async function getWalletsAction({ commit }) {
   const wallets = await dataService.getWallets();
-  commit(GET_WALLETS, wallets);
+  commit('GET_WALLETS', wallets);
 }
 
 async function deleteWalletAction({ commit }, wallet) {
   const deletedWalletId = await dataService.deleteWallet(wallet);
-  commit(DELETE_WALLET, deletedWalletId);
+  commit('DELETE_WALLET', deletedWalletId);
 }
 
 async function updateWalletAction({ commit }, wallet) {
   const updatedWallet = await dataService.updateWallet(wallet);
-  commit(UPDATE_WALLET, updatedWallet);
+  commit('UPDATE_WALLET', updatedWallet);
+}
+
+async function getTransactionsAction({ commit }) {
+  const transactions = await dataService.getTran();
+  commit('GET_TRANSACTIONS', transactions);
 }
 
 export {
@@ -131,6 +123,7 @@ export {
   logout,
   getState,
   register,
+  getTransactionsAction,
   addWalletAction,
   getWalletsAction,
   deleteWalletAction,

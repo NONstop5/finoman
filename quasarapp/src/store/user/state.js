@@ -1,14 +1,12 @@
+import { LocalStorage } from 'quasar';
+
 export default () => ({
-  loggedIn: false,
+  loggedIn: LocalStorage.getItem('user.loggedIn'),
   permissions: [],
   details: {},
-  wallets: [
-    {
-      userid: 1,
-      type_id: 1,
-    },
-  ],
+  wallets: [],
   category_profit: {},
   category_lose: {},
   token: '',
+  transactions: [],
 });
