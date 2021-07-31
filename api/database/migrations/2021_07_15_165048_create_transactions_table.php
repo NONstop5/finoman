@@ -17,6 +17,16 @@ class CreateTransactionsTable extends Migration
             $table->id();
 
             $table
+                ->bigInteger('user_id')
+                ->unsigned()
+                ->index()
+                ->comment('Связь с пользователями');
+            $table
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users');
+
+            $table
                 ->unsignedBigInteger('transaction_type_id')
                 ->comment('Связь с типами транзакций');
             $table
