@@ -35,16 +35,9 @@ function UPDATE_WALLET(state, wallet) {
 function DELETE_WALLET(state, wallet) {
   state.wallets = [...state.wallets.filter((p) => p.id !== wallet.id)];
 }
-
-// export default {
-//   SET_WALLET: (state, payload) => {
-//     state.wallets = payload;
-//   },
-//   ADD_WALLET: (state, payload) => {
-//     state.wallets.push(payload);
-//   }
-// }
-
+function GET_TRANSACTIONS(state, payload) {
+  state.transactions = payload;
+}
 export {
   setLoggedIn,
   setDetails,
@@ -53,4 +46,5 @@ export {
   GET_WALLETS,
   UPDATE_WALLET,
   DELETE_WALLET,
+  GET_TRANSACTIONS,
 };
