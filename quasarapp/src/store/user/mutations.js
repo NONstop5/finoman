@@ -1,9 +1,9 @@
 import { LocalStorage } from 'quasar';
 
 function setLoggedIn(state, value) {
-  state.loggedIn = value;
-
   LocalStorage.set('user.loggedIn', value);
+
+  state.loggedIn = value;
 }
 
 function setDetails(state, payload) {

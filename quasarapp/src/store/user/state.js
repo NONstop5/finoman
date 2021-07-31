@@ -1,5 +1,7 @@
+import { LocalStorage } from 'quasar';
+
 export default () => ({
-  loggedIn: false,
+  loggedIn: LocalStorage.getItem('user.loggedIn'),
   permissions: [],
   details: {},
   wallets: [],
