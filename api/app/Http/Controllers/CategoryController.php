@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
@@ -27,7 +27,8 @@ class CategoryController extends Controller
             ]
         );
 
-        $qb = Category::query();
+        $qb = Category::query()
+            ->where('user_id', Auth::id());
 
         if (isset($validated['category_type_id'])) {
             $qb->where('category_type_id', $validated['category_type_id']);
@@ -43,7 +44,7 @@ class CategoryController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
+     * @return void
      */
     public function store(Request $request)
     {
@@ -55,7 +56,7 @@ class CategoryController extends Controller
      *
      * @param Category $category
      *
-     * @return Response
+     * @return void
      */
     public function show(Category $category)
     {
@@ -68,7 +69,7 @@ class CategoryController extends Controller
      * @param Request $request
      * @param Category $category
      *
-     * @return Response
+     * @return void
      */
     public function update(Request $request, Category $category)
     {
@@ -80,7 +81,7 @@ class CategoryController extends Controller
      *
      * @param Category $category
      *
-     * @return Response
+     * @return void
      */
     public function destroy(Category $category)
     {
