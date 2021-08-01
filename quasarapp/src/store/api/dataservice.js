@@ -1,4 +1,5 @@
 import * as axios from 'axios';
+import { showErrorNotification } from 'src/functions/function-show-notifications';
 
 export const parseItem = (response, code) => {
   if (response.status !== code) throw Error(response.message);
@@ -26,7 +27,7 @@ async function getWallets() {
     //  filter might be needed here
     return data;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return [];
   }
 }
@@ -36,7 +37,7 @@ async function getWallet(id) {
     const wallet = parseItem(response, 200);
     return wallet;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 }
@@ -46,7 +47,7 @@ async function updateWallet(wallet) {
     const updatedWallet = parseItem(response, 200);
     return updatedWallet;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 }
@@ -56,7 +57,7 @@ async function addWallet(wallet) {
     const addedWallet = parseItem(response, 200);
     return addedWallet;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 }
@@ -66,7 +67,7 @@ async function deleteWallet(wallet) {
     parseItem(response, 200);
     return wallet.id;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return null;
   }
 }
@@ -76,7 +77,7 @@ async function getTran() {
     const transactions = parseItem(response, 200);
     return transactions;
   } catch (error) {
-    console.error(error);
+    showErrorNotification(error);
     return {};
   }
 }
