@@ -28,7 +28,7 @@ const parseList = (response) => {
 
 const getWallets = async () => {
   try {
-    const response = await axios.get('/api/accounts');
+    const response = await axios.get('/api/wallets');
     return parseList(response);
     // const wallets = data.map(w => )
     //  filter might be needed here
@@ -40,7 +40,7 @@ const getWallets = async () => {
 
 const getWallet = async (typeId) => {
   try {
-    const response = await axios.get(`/api/accounts/${typeId}`);
+    const response = await axios.get(`/api/wallets/${typeId}`);
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -50,7 +50,7 @@ const getWallet = async (typeId) => {
 
 const updateWallet = async (wallet) => {
   try {
-    const response = await axios.put(`/api/accounts/${wallet.id}`, wallet);
+    const response = await axios.put(`/api/wallets/${wallet.id}`, wallet);
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -60,7 +60,7 @@ const updateWallet = async (wallet) => {
 
 const addWallet = async (wallet) => {
   try {
-    const response = await axios.post('api/accounts', wallet);
+    const response = await axios.post('api/wallets', wallet);
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -70,7 +70,7 @@ const addWallet = async (wallet) => {
 
 const deleteWallet = async (wallet) => {
   try {
-    const response = await axios.delete(`api/accounts/${wallet.id}`);
+    const response = await axios.delete(`api/wallets/${wallet.id}`);
     parseItem(response, 200);
     return wallet.id;
   } catch (error) {
