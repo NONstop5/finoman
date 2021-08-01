@@ -39,7 +39,7 @@ class CreateCategoriesTable extends Migration
                     ->comment('Название категории');
 
                 $table
-                    ->string('budget')
+                    ->float('budget')
                     ->comment('Бюджет категории');
 
                 $table
