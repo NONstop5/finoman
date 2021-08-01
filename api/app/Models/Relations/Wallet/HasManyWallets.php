@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Relations\User;
+namespace App\Models\Relations\Wallet;
 
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Relations\HasMany;
