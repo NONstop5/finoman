@@ -44,6 +44,7 @@ class CreateTransactionsTable extends Migration
 
             $table
                 ->unsignedBigInteger('wallet_to_id')
+                ->nullable()
                 ->comment('Связь с кошельками');
             $table
                 ->foreign('wallet_to_id')
@@ -52,6 +53,7 @@ class CreateTransactionsTable extends Migration
 
             $table
                 ->unsignedBigInteger('category_id')
+                ->nullable()
                 ->comment('Связь с категориями');
             $table
                 ->foreign('category_id')
