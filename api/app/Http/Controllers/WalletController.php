@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Wallet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class WalletController extends Controller
@@ -28,7 +28,8 @@ class WalletController extends Controller
             ]
         );
 
-        $qb = Category::query();
+        $qb = Category::query()
+            ->where('user_id', Auth::id());
 
         if (isset($validated['wallet_type_id'])) {
             $qb->where('wallet_type_id', $validated['wallet_type_id']);
@@ -44,7 +45,7 @@ class WalletController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
+     * @return void
      */
     public function store(Request $request)
     {
@@ -56,7 +57,7 @@ class WalletController extends Controller
      *
      * @param Wallet $wallet
      *
-     * @return Response
+     * @return void
      */
     public function show(Wallet $wallet)
     {
@@ -69,7 +70,7 @@ class WalletController extends Controller
      * @param Request $request
      * @param Wallet $wallet
      *
-     * @return Response
+     * @return void
      */
     public function update(Request $request, Wallet $wallet)
     {
@@ -81,7 +82,7 @@ class WalletController extends Controller
      *
      * @param Wallet $wallet
      *
-     * @return Response
+     * @return void
      */
     public function destroy(Wallet $wallet)
     {
