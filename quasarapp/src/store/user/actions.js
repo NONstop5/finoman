@@ -118,12 +118,30 @@ async function getTransactionsAction({ commit }) {
   commit('GET_TRANSACTIONS', transactions);
 }
 
+async function addTransactionAction({ commit }, transaction) {
+  const addedTransaction = await dataService.addTran(transaction);
+  commit('ADD_TRANSACTION', addedTransaction);
+}
+
+async function deleteTransactionAction({ commit }, transaction) {
+  const deletedTransaction = await dataService.deleteTran(transaction);
+  commit('DELETE_TRANSACTION', deletedTransaction);
+}
+
+async function updateTransactionAction({ commit }, transaction) {
+  const updatedTransaction = await dataService.updateTran(transaction);
+  commit('UPDATE_TRANSACTION', updatedTransaction);
+}
+
 export {
   login,
   logout,
   getState,
   register,
   getTransactionsAction,
+  addTransactionAction,
+  updateTransactionAction,
+  deleteTransactionAction,
   addWalletAction,
   getWalletsAction,
   deleteWalletAction,
