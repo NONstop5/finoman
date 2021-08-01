@@ -1,9 +1,9 @@
 import { LocalStorage } from 'quasar';
 
 function setLoggedIn(state, value) {
-  state.loggedIn = value;
-
   LocalStorage.set('user.loggedIn', value);
+
+  state.loggedIn = value;
 }
 
 function setDetails(state, payload) {
@@ -35,16 +35,20 @@ function UPDATE_WALLET(state, wallet) {
 function DELETE_WALLET(state, wallet) {
   state.wallets = [...state.wallets.filter((p) => p.id !== wallet.id)];
 }
-
-// export default {
-//   SET_WALLET: (state, payload) => {
-//     state.wallets = payload;
-//   },
-//   ADD_WALLET: (state, payload) => {
-//     state.wallets.push(payload);
-//   }
-// }
-
+function GET_TRANSACTIONS(state, payload) {
+  state.transactions = payload;
+}
+function ADD_TRANSACTION(state, transaction) {
+  state.transactions.push(transaction);
+}
+function UPDATE_TRANSACTION(state, transaction) {
+  const index = state.transactions.findIndex((h) => h.id === transaction.id);
+  state.transactions.splice(index, 1, transaction);
+  state.transactions = [...state.transactions];
+}
+function DELETE_TRANSACTION(state, transaction) {
+  state.transactions = [...state.transactions.filter((p) => p.id !== transaction.id)];
+}
 export {
   setLoggedIn,
   setDetails,
@@ -53,4 +57,8 @@ export {
   GET_WALLETS,
   UPDATE_WALLET,
   DELETE_WALLET,
+  GET_TRANSACTIONS,
+  ADD_TRANSACTION,
+  UPDATE_TRANSACTION,
+  DELETE_TRANSACTION,
 };

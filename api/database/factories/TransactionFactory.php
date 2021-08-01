@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Account;
+use App\Models\Category;
 use App\Models\Transaction;
+use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory
@@ -23,8 +25,11 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'account_from_id' => Account::query()->orderByRaw('RAND()')->first()->id,
-            'account_to_id' => Account::query()->orderByRaw('RAND()')->first()->id,
+            'user_id' => User::query()->orderByRaw('RAND()')->first()->id,
+            'transaction_type_id' => $this->faker->numberBetween(1, 3),
+            'wallet_from_id' => Wallet::query()->orderByRaw('RAND()')->first()->id,
+            'wallet_to_id' => Wallet::query()->orderByRaw('RAND()')->first()->id,
+            'category_id' => Category::query()->orderByRaw('RAND()')->first()->id,
             'amount' => $this->faker->randomFloat(2, 0, 8),
             'transacted_at' => $this->faker->dateTime(),
         ];
