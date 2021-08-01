@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Relations\User\HasManyWallets;
+use App\Models\Relations\Wallet\HasManyWallets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

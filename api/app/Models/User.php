@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Relations\User\HasManyCategories;
-use App\Models\Relations\User\HasManyWallets;
+use App\Models\Relations\Category\HasManyCategories;
+use App\Models\Relations\Wallet\HasManyWallets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
