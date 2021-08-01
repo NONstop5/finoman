@@ -7,7 +7,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from 'src/functions/function-show-notifications';
-import { dataService } from '../api/data.service';
+import { dataService } from '../api/dataservice';
 
 function login({ commit }, payload) {
   Loading.show();
@@ -93,13 +93,6 @@ function register({ commit }, payload) {
     });
 }
 
-// function GET_WALLET({ commit }) {
-//   axios
-//     .get('/api/accounts', {
-//       user_id: state.details.user_id,
-//     })
-// }
-
 async function addWalletAction({ commit }, wallet) {
   const addedWallet = await dataService.addWallet(wallet);
   commit('ADD_WALLET', addedWallet);
@@ -120,11 +113,17 @@ async function updateWalletAction({ commit }, wallet) {
   commit('UPDATE_WALLET', updatedWallet);
 }
 
+async function getTransactionsAction({ commit }) {
+  const transactions = await dataService.getTran();
+  commit('GET_TRANSACTIONS', transactions);
+}
+
 export {
   login,
   logout,
   getState,
   register,
+  getTransactionsAction,
   addWalletAction,
   getWalletsAction,
   deleteWalletAction,

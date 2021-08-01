@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import axios from 'axios';
+import { LocalStorage } from 'quasar';
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -10,6 +11,7 @@ import axios from 'axios';
 
 axios.defaults.headers.common = {
   'Content-Type': 'application/json',
+  Authorization: `Bearer ${LocalStorage.getItem('user.token')}`,
 };
 axios.defaults.baseURL = process.env.API_BASE_URL;
 
