@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Account;
+use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,8 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(5)->create();
-        Account::factory(10)->create();
-        Transaction::factory(10)->create();
+        User::factory(2)->create();
+        Wallet::factory(5)->create(['user_id' => 1]);
+        Category::factory(5)->create(['user_id' => 1]);
+        Transaction::factory(20)->create(['user_id' => 1]);
     }
 }
