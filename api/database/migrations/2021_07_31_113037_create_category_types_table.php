@@ -26,8 +26,20 @@ class CreateCategoryTypesTable extends Migration
             }
         );
 
-        DB::table('category_types')->insert(['name' => 'Доходная']);
-        DB::table('category_types')->insert(['name' => 'Расходная']);
+        DB::table('category_types')->insert(
+            [
+                'name' => 'Доходная',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        DB::table('category_types')->insert(
+            [
+                'name' => 'Расходная',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
     }
 
     /**

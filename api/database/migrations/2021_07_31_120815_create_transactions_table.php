@@ -17,9 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->id();
 
             $table
-                ->bigInteger('user_id')
-                ->unsigned()
-                ->index()
+                ->unsignedBigInteger('user_id')
                 ->comment('Связь с пользователями');
             $table
                 ->foreign('user_id')
@@ -58,7 +56,7 @@ class CreateTransactionsTable extends Migration
             $table
                 ->foreign('category_id')
                 ->references('id')
-                ->on('accounts');
+                ->on('categories');
 
             $table
                 ->decimal('amount')

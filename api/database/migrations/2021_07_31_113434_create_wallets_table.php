@@ -19,9 +19,7 @@ class CreateWalletsTable extends Migration
                 $table->id();
 
                 $table
-                    ->bigInteger('user_id')
-                    ->unsigned()
-                    ->index()
+                    ->unsignedBigInteger('user_id')
                     ->comment('Связь с пользователями');
                 $table
                     ->foreign('user_id')
@@ -29,9 +27,7 @@ class CreateWalletsTable extends Migration
                     ->on('users');
 
                 $table
-                    ->bigInteger('currency_id')
-                    ->unsigned()
-                    ->index()
+                    ->unsignedBigInteger('currency_id')
                     ->comment('Связь с валютами');
                 $table
                     ->foreign('currency_id')
@@ -39,9 +35,7 @@ class CreateWalletsTable extends Migration
                     ->on('currencies');
 
                 $table
-                    ->bigInteger('wallet_type_id')
-                    ->unsigned()
-                    ->index()
+                    ->unsignedBigInteger('wallet_type_id')
                     ->comment('Связь с типами кошельков');
                 $table
                     ->foreign('wallet_type_id')
@@ -54,11 +48,11 @@ class CreateWalletsTable extends Migration
 
                 $table
                     ->string('balance')
-                    ->comment('Баланс кошелька');
+                    ->comment('Начальный баланс кошелька');
 
                 $table
                     ->string('balance_date')
-                    ->comment('Дата баланса кошелька');
+                    ->comment('Дата начального баланса кошелька');
 
                 $table
                     ->string('icon')

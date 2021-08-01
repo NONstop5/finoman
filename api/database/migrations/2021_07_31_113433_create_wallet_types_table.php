@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionTypesTable extends Migration
+class CreateWalletTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,35 +14,28 @@ class CreateTransactionTypesTable extends Migration
     public function up()
     {
         Schema::create(
-            'transaction_types',
+            'wallet_types',
             function (Blueprint $table) {
                 $table->id();
 
                 $table
                     ->string('name')
-                    ->comment('Название типа транзакции');
+                    ->comment('Название типа кошелька');
 
                 $table->timestamps();
             }
         );
 
-        DB::table('transaction_types')->insert(
+        DB::table('wallet_types')->insert(
             [
-                'name' => 'Доход',
+                'name' => 'Дебетовый',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
-        DB::table('transaction_types')->insert(
+        DB::table('wallet_types')->insert(
             [
-                'name' => 'Расход',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-        DB::table('transaction_types')->insert(
-            [
-                'name' => 'Перевод',
+                'name' => 'Кредитовый',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
@@ -56,6 +49,6 @@ class CreateTransactionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_types');
+        Schema::dropIfExists('wallet_types');
     }
 }

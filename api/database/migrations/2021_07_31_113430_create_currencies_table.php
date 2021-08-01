@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWalletTypesTable extends Migration
+class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,20 +14,28 @@ class CreateWalletTypesTable extends Migration
     public function up()
     {
         Schema::create(
-            'wallet_types',
+            'currencies',
             function (Blueprint $table) {
                 $table->id();
 
                 $table
                     ->string('name')
-                    ->comment('Название типа кошелька');
+                    ->comment('Название валюты');
+
+                $table
+                    ->string('code')
+                    ->comment('Код валюты');
 
                 $table->timestamps();
             }
         );
 
-        DB::table('wallet_types')->insert(['name' => 'Дебетовый']);
-        DB::table('wallet_types')->insert(['name' => 'Кредитовый']);
+        DB::table('currencies')->insert(
+            [
+                'name' => 'Рубль',
+                'code' => '643',
+            ]
+        );
     }
 
     /**
@@ -37,6 +45,6 @@ class CreateWalletTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wallet_types');
+        Schema::dropIfExists('currencies');
     }
 }

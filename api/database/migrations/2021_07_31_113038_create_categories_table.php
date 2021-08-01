@@ -19,9 +19,7 @@ class CreateCategoriesTable extends Migration
                 $table->id();
 
                 $table
-                    ->bigInteger('user_id')
-                    ->unsigned()
-                    ->index()
+                    ->unsignedBigInteger('user_id')
                     ->comment('Связь с пользователями');
                 $table
                     ->foreign('user_id')
@@ -29,9 +27,7 @@ class CreateCategoriesTable extends Migration
                     ->on('users');
 
                 $table
-                    ->bigInteger('category_type_id')
-                    ->unsigned()
-                    ->index()
+                    ->unsignedBigInteger('category_type_id')
                     ->comment('Связь с типами категорий');
                 $table
                     ->foreign('category_type_id')
