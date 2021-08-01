@@ -34,16 +34,18 @@ class TransactionController extends Controller
             ->select(
                 [
                     'id',
-                    'account_from_id',
-                    'account_to_id',
+                    'wallet_from_id',
+                    'wallet_to_id',
+                    'category_id',
                     'amount',
                     'transacted_at',
                 ]
             )
             ->with(
                 [
-                    'accountFrom:id,name',
-                    'accountTo:id,name',
+                    'walletFrom:id,name',
+                    'walletTo:id,name',
+                    'category:id,name',
                 ]
             )
             ->whereHas(

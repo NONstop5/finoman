@@ -17,6 +17,7 @@
             v-model="proxyDate"
             color="secondary"
             class="text-secondary"
+            model-value=""
           >
             <div
               class="row items-center justify-end q-gutter-sm"

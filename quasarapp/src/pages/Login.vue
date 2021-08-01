@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       formData: {
-        email: 'psawayn@example.net',
+        email: 'john_doe@finoman.ru.com',
         password: 'password',
       },
     };
