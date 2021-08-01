@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Wallet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,7 +27,7 @@ class WalletController extends Controller
             ]
         );
 
-        $qb = Category::query()
+        $qb = Wallet::query()
             ->where('user_id', Auth::id());
 
         if (isset($validated['wallet_type_id'])) {
