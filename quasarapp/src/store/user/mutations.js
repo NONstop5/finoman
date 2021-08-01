@@ -47,7 +47,7 @@ function UPDATE_TRANSACTION(state, transaction) {
   state.transactions = [...state.transactions];
 }
 function DELETE_TRANSACTION(state, transaction) {
-  state.transactions = [...state.transactions.filter((p) => p.id !==transaction.id)];
+  state.transactions = [...state.transactions.filter((p) => p.id !== transaction.id)];
 }
 export {
   setLoggedIn,
