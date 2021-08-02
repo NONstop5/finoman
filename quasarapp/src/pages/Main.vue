@@ -6,7 +6,7 @@
         class="btn text-secondary"
         outline
         size="md"
-        :to="{path:'/login'}"
+        to="/login"
       >
         Login
       </q-btn>
@@ -14,7 +14,7 @@
         class="btn q-ml-md text-secondary"
         outline
         size="md"
-        :to="{path:'/registration'}"
+        to="/register"
       >
         Sign Up
       </q-btn>
