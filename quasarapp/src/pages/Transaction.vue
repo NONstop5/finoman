@@ -1,8 +1,8 @@
 <template>
   <q-page class="container main">
-    <h3 class="text-secondary">
+    <h4 class="text-secondary">
       Transaction
-    </h3>
+    </h4>
     <div class="wallets-container">
     <div class="q-pa-md">
       <q-form
