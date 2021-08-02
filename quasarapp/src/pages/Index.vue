@@ -158,15 +158,15 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState('user', ['transactions']),
+    ...mapState('user', ['wallets']),
   },
   async created() {
     await this.loadWallets();
   },
   methods: {
-    ...mapActions('user', ['getTransactionsAction']),
+    ...mapActions('user', ['getWalletsAction']),
     async loadWallets() {
-      await this.getTransactionsAction();
+      await this.getWalletsAction();
     },
   },
 });
