@@ -34,7 +34,7 @@
       <div class="flex items-center q-mt-xl">
         <div
           v-for="category in categories"
-          :key="category.name"
+          :key="category.id"
           class="text-center q-mr-lg q-mb-md"
         >
           <q-icon
@@ -42,7 +42,7 @@
             :size="'1.5em'"
           />
           <div class="text-h6">
-            {{ category.title }}
+            {{ category.budget }}
           </div>
         </div>
         <q-btn
@@ -124,22 +124,22 @@ export default defineComponent({
       cards: [
         {
           name: 'card.name',
-          balanse: 'card.balanse',
+          balanse: 'card.balance',
         },
       ],
       categories: [
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
+        // {
+        //   title: 'Product',
+        //   name: 'fas fa-hamburger',
+        // },
+        // {
+        //   title: 'Product',
+        //   name: 'fas fa-hamburger',
+        // },
+        // {
+        //   title: 'Product',
+        //   name: 'fas fa-hamburger',
+        // },
       ],
       transactions: [
         {
@@ -158,15 +158,17 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState('user', ['wallets']),
+    ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
   async created() {
-    await this.loadWallets();
+    await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getWalletsAction']),
-    async loadWallets() {
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
+    async loadInfo() {
       await this.getWalletsAction();
+      await this.getCategoriesAction();
+      await this.getTransactionsAction();
     },
   },
 });

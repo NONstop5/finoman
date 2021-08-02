@@ -33,7 +33,7 @@ const getWallets = async () => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${state.token}`,
-      }
+      },
     });
     return parseList(response);
     // const wallets = data.map(w => )
@@ -86,7 +86,11 @@ const deleteWallet = async (wallet) => {
 };
 async function getCategories() {
   try {
-    const response = await axios.get('api/categories')
+    const response = await axios.get('api/categories');
+    return parseList(response);
+  } catch (error) {
+    showErrorNotification(error);
+    return [];
   }
 }
 async function getTran() {
@@ -95,7 +99,7 @@ async function getTran() {
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
-    return {};
+    return [];
   }
 }
 
@@ -105,6 +109,7 @@ export const dataService = {
   updateWallet,
   addWallet,
   deleteWallet,
+  getCategories,
   getTran,
   parseItem,
   parseList,

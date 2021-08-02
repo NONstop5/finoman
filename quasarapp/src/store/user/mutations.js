@@ -31,7 +31,7 @@ function UPDATE_WALLET(state, wallet) {
 function DELETE_WALLET(state, wallet) {
   state.wallets = [...state.wallets.filter((p) => p.id !== wallet.id)];
 }
-function GET_CATEGORiES(state, categories) {
+function GET_CATEGORIES(state, categories) {
   state.categories = categories;
 }
 function ADD_CATEGORY(state, category) {
@@ -67,7 +67,7 @@ export {
   GET_WALLETS,
   UPDATE_WALLET,
   DELETE_WALLET,
-  GET_CATEGORiES,
+  GET_CATEGORIES,
   ADD_CATEGORY,
   UPDATE_CATEGORY,
   DELETE_CATEGORY,
