@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { showErrorNotification } from 'src/functions/function-show-notifications';
+import state from '../user/state';
 
 const parseItem = (response, code) => {
   if (response.status !== code) {
@@ -28,7 +29,12 @@ const parseList = (response) => {
 
 const getWallets = async () => {
   try {
-    const response = await axios.get('/api/wallets');
+    const response = await axios.get('/api/wallets', {}, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${state.token}`,
+      },
+    });
     return parseList(response);
     // const wallets = data.map(w => )
     //  filter might be needed here
@@ -78,14 +84,22 @@ const deleteWallet = async (wallet) => {
     return null;
   }
 };
-
+async function getCategories() {
+  try {
+    const response = await axios.get('api/categories');
+    return parseList(response);
+  } catch (error) {
+    showErrorNotification(error);
+    return [];
+  }
+}
 async function getTran() {
   try {
     const response = await axios.get('api/transactions/1'); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
-    return {};
+    return [];
   }
 }
 
@@ -95,6 +109,7 @@ export const dataService = {
   updateWallet,
   addWallet,
   deleteWallet,
+  getCategories,
   getTran,
   parseItem,
   parseList,

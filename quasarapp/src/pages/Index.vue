@@ -192,14 +192,16 @@ export default defineComponent({
     ],
   }),
   computed: {
-    ...mapState('user', ['transactions']),
+    ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
   async created() {
-    // await this.loadWallets();
+    await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getTransactionsAction']),
-    async loadWallets() {
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
+    async loadInfo() {
+      await this.getWalletsAction();
+      await this.getCategoriesAction();
       await this.getTransactionsAction();
     },
   },
