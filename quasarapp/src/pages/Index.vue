@@ -26,6 +26,7 @@
           round
           color="secondary"
           icon="fas fa-plus"
+          @click="addWallet"
         />
       </div>
       <q-separator
@@ -119,86 +120,91 @@ import {
 export default defineComponent({
   name: 'Index',
   data: () => ({
-    wallets: [
-      {
-        id: 1,
-        name: 'Cash',
-        icon: 'fas fa-wallet',
-      },
-      {
-        id: 2,
-        name: 'Card VTB',
-        icon: 'fas fa-credit-card',
-      },
-      {
-        id: 3,
-        name: 'Card SBER',
-        icon: 'fas fa-credit-card',
-      },
-    ],
-    categories: [
-      {
-        id: 1,
-        name: 'Food',
-        icon: 'fas fa-shopping-cart',
-      },
-      {
-        id: 2,
-        name: 'Pets',
-        icon: 'fas fa-paw',
-      },
-      {
-        id: 3,
-        name: 'Transport',
-        icon: 'fas fa-car',
-      },
-    ],
-    transactions: [
-      {
-        id: 1,
-        name: 'Food',
-        date: '10 Jan, 10:55',
-        price: 1500,
-        spending: true,
-      },
-      {
-        id: 2,
-        name: 'Transport',
-        date: '10 Jan, 10:55',
-        price: 1500,
-        spending: false,
-      },
-      {
-        id: 3,
-        name: 'Pets',
-        date: '10 Jan, 10:55',
-        price: 1500,
-        spending: false,
-      },
-      {
-        id: 4,
-        name: 'Food',
-        date: '10 Jan, 10:55',
-        price: 1500,
-        spending: true,
-      },
-      {
-        id: 5,
-        name: 'Transport',
-        date: '10 Jan, 10:55',
-        price: 1500,
-        spending: false,
-      },
-    ],
+    // wallets: [
+    //   // {
+    //   //   id: wallet.id,
+    //   //   name: wallet.name,
+    //   //   icon: 'fas fa-wallet',
+    //   // },
+    //   // {
+    //   //   id: 2,
+    //   //   name: 'Card VTB',
+    //   //   icon: 'fas fa-credit-card',
+    //   // },
+    //   // {
+    //   //   id: 3,
+    //   //   name: 'Card SBER',
+    //   //   icon: 'fas fa-credit-card',
+    //   // },
+    // ],
+    // categories: [
+    //   {
+    //     id: 1,
+    //     name: 'Food',
+    //     icon: 'fas fa-shopping-cart',
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Pets',
+    //     icon: 'fas fa-paw',
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Transport',
+    //     icon: 'fas fa-car',
+    //   },
+    // ],
+    // transactions: [
+    //   {
+    //     id: 1,
+    //     name: 'Food',
+    //     date: '10 Jan, 10:55',
+    //     price: 1500,
+    //     spending: true,
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Transport',
+    //     date: '10 Jan, 10:55',
+    //     price: 1500,
+    //     spending: false,
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Pets',
+    //     date: '10 Jan, 10:55',
+    //     price: 1500,
+    //     spending: false,
+    //   },
+    //   {
+    //     id: 4,
+    //     name: 'Food',
+    //     date: '10 Jan, 10:55',
+    //     price: 1500,
+    //     spending: true,
+    //   },
+    //   {
+    //     id: 5,
+    //     name: 'Transport',
+    //     date: '10 Jan, 10:55',
+    //     price: 1500,
+    //     spending: false,
+    //   },
+    // ],
   }),
+  components: {
+    async created() {
+    await this.loadInfo();
+   },
+  },
+  
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
-  async created() {
-    await this.loadInfo();
-  },
+  
   methods: {
     ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
+    
     async loadInfo() {
       await this.getWalletsAction();
       await this.getCategoriesAction();
@@ -206,6 +212,7 @@ export default defineComponent({
     },
   },
 });
+
 </script>
 
 <style lang="scss" scoped>

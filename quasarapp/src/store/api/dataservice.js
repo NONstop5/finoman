@@ -95,7 +95,7 @@ async function getCategories() {
 }
 async function getTran() {
   try {
-    const response = await axios.get('api/transactions/1'); // test change last part of url later
+    const response = await axios.get('api/transactions'); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
