@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
@@ -33,7 +31,8 @@ class TransactionController extends Controller
         $qb = Transaction::query()
             ->select(
                 [
-                    'id',
+                    'transactions.id',
+                    'transaction_type_id',
                     'wallet_from_id',
                     'wallet_to_id',
                     'category_id',
@@ -43,17 +42,13 @@ class TransactionController extends Controller
             )
             ->with(
                 [
-                    'walletFrom:id,name',
-                    'walletTo:id,name',
-                    'category:id,name',
+                    'transactionType:transaction_types.id,transaction_types.name',
+                    'walletFrom:wallets.id,wallets.name',
+                    'walletTo:wallets.id,wallets.name',
+                    'category:categories.id,categories.name',
                 ]
             )
-            ->whereHas(
-                'accountFrom',
-                function (Builder $query) {
-                    $query->where('user_id', Auth::id());
-                }
-            );
+            ->join('users', 'users.id', '=', 'transactions.user_id');
 
         if (isset($validated['date-from'])) {
             $qb->whereDate('transacted_at', '>=', $validated['date-from']);
