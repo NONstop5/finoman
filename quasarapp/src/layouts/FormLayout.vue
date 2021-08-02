@@ -43,6 +43,7 @@
       elevated
     >
       <q-btn
+        to="/transaction"
         round
         glossy
         size="lg"
