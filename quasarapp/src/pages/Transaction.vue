@@ -1,6 +1,6 @@
 <template>
   <q-page class="container main">
-    <h3 class="text-primary">
+    <h3 class="text-secondary">
       Transaction
     </h3>
     <div class="wallets-container">
@@ -20,8 +20,7 @@
       />
       <div>
         <q-select
-          dark
-          class="text-primary q-my-lg"
+          class="text-secondary q-my-lg"
           outlined
           v-model="model"
           :options="options"
@@ -32,8 +31,7 @@
       <div>
         <q-input
           :rules="[ val => val && val.length > 0 || 'Please type something']"
-          dark
-          class="text-primary q-my-lg"
+          class="text-secondary q-my-lg"
           outlined
           v-model="text"
           label="Value"
@@ -41,8 +39,7 @@
       </div>
       <div>
         <q-input
-          dark
-          class="text-primary q-my-lg"
+          class="text-secondary q-my-lg"
           outlined
           v-model="date"
           mask="date"
