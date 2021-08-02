@@ -157,6 +157,7 @@ export {
   addTransactionAction,
   updateTransactionAction,
   deleteTransactionAction,
+  getCategoryAction,
   addWalletAction,
   getWalletsAction,
   deleteWalletAction,
