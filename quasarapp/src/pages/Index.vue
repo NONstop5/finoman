@@ -24,6 +24,7 @@
         <q-space />
         <q-btn
           round
+          glossy
           color="secondary"
           icon="fas fa-plus"
         />
@@ -48,6 +49,7 @@
         <q-space />
         <q-btn
           round
+          glossy
           color="secondary"
           icon="fas fa-plus"
         />
@@ -69,39 +71,54 @@
           <q-item-section avatar>
             <q-avatar>
               <q-icon
-                v-if="transaction.spending"
+                v-if="transaction.transaction_type.id === transactionType.INCOME"
+                class="text-positive"
+                name="fas fa-chevron-down"
+                :size="'1.5em'"
+              />
+              <q-icon
+                v-else-if="transaction.transaction_type.id === transactionType.EXPENSE"
                 class="text-negative"
                 name="fas fa-chevron-up"
                 :size="'1.5em'"
               />
               <q-icon
                 v-else
-                class="text-positive"
-                name="fas fa-chevron-down"
+                class="text-grey"
+                name="fas fa-exchange-alt"
                 :size="'1.5em'"
               />
             </q-avatar>
           </q-item-section>
-
           <q-item-section>
-            <q-item-label>{{ transaction.name }}</q-item-label>
+            <q-item-label
+              v-if="transaction.transaction_type.id !== transactionType.TRANSFER"
+            >
+              {{ transaction.category.name }}
+            </q-item-label>
             <q-item-label class="text-secondary">
-              {{ transaction.date }}
+              {{ transaction.transacted_at }}
             </q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-label
-            v-if="transaction.spending"
+            v-if="transaction.transaction_type_id === transactionType.INCOME"
+            class="q-pt-sm text-positive"
+          >
+            +{{ transaction.amount }} ₽
+          </q-item-label>
+          <q-item-label
+            v-else-if="transaction.transaction_type_id === transactionType.EXPENSE"
             class="q-pt-sm text-negative"
           >
-            -{{ transaction.price }} ₽
+            -{{ transaction.amount }} ₽
           </q-item-label>
           <q-item-label
             v-else
-            class="q-pt-sm text-positive"
+            class="q-pt-sm text-grey"
           >
-            +{{ transaction.price }} ₽
+            {{ transaction.amount }} ₽
           </q-item-label>
         </q-item>
       </q-card>
@@ -116,80 +133,16 @@ import {
   mapState,
 } from 'vuex';
 
+const transactionType = {
+  INCOME: 1,
+  EXPENSE: 2,
+  TRANSFER: 3,
+};
+
 export default defineComponent({
   name: 'Index',
   data: () => ({
-    // wallets: [
-    //   // {
-    //   //   id: wallet.id,
-    //   //   name: wallet.name,
-    //   //   icon: 'fas fa-wallet',
-    //   // },
-    //   // {
-    //   //   id: 2,
-    //   //   name: 'Card VTB',
-    //   //   icon: 'fas fa-credit-card',
-    //   // },
-    //   // {
-    //   //   id: 3,
-    //   //   name: 'Card SBER',
-    //   //   icon: 'fas fa-credit-card',
-    //   // },
-    // ],
-    // categories: [
-    //   {
-    //     id: 1,
-    //     name: 'Food',
-    //     icon: 'fas fa-shopping-cart',
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'Pets',
-    //     icon: 'fas fa-paw',
-    //   },
-    //   {
-    //     id: 3,
-    //     name: 'Transport',
-    //     icon: 'fas fa-car',
-    //   },
-    // ],
-    // transactions: [
-    //   {
-    //     id: 1,
-    //     name: 'Food',
-    //     date: '10 Jan, 10:55',
-    //     price: 1500,
-    //     spending: true,
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'Transport',
-    //     date: '10 Jan, 10:55',
-    //     price: 1500,
-    //     spending: false,
-    //   },
-    //   {
-    //     id: 3,
-    //     name: 'Pets',
-    //     date: '10 Jan, 10:55',
-    //     price: 1500,
-    //     spending: false,
-    //   },
-    //   {
-    //     id: 4,
-    //     name: 'Food',
-    //     date: '10 Jan, 10:55',
-    //     price: 1500,
-    //     spending: true,
-    //   },
-    //   {
-    //     id: 5,
-    //     name: 'Transport',
-    //     date: '10 Jan, 10:55',
-    //     price: 1500,
-    //     spending: false,
-    //   },
-    // ],
+    transactionType,
   }),
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
