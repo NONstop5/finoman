@@ -26,7 +26,6 @@
           round
           color="secondary"
           icon="fas fa-plus"
-          @click="addWallet"
         />
       </div>
       <q-separator
@@ -192,19 +191,14 @@ export default defineComponent({
     //   },
     // ],
   }),
-  components: {
-    async created() {
-    await this.loadInfo();
-   },
-  },
-  
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
-  
+  async created() {
+    await this.loadInfo();
+  },
   methods: {
     ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
-    
     async loadInfo() {
       await this.getWalletsAction();
       await this.getCategoriesAction();
@@ -212,7 +206,6 @@ export default defineComponent({
     },
   },
 });
-
 </script>
 
 <style lang="scss" scoped>
