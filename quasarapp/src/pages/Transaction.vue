@@ -1,6 +1,6 @@
 <template>
   <q-page class="container main">
-    <h3 class="text-primary">
+    <h3 class="text-primary q-mx-lg">
       Transaction
     </h3>
     <div class="wallets-container">
