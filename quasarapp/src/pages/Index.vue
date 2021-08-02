@@ -7,17 +7,17 @@
       <div class="flex items-center">
         <q-card
           v-for="wallet in wallets"
-          :key="wallet.userid"
+          :key="wallet.id"
           class="text-white q-mr-md"
           style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%);
             max-width: 222px"
         >
           <q-card-section>
             <div class="text-h6">
-              {{ wallet.type_id }}
+              {{ wallet.name }}
             </div>
             <div class="text-subtitle2">
-              {{ wallet.userid }}
+              {{ wallet.balance }}
             </div>
           </q-card-section>
         </q-card>

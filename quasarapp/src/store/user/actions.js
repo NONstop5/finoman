@@ -112,7 +112,22 @@ async function updateWalletAction({ commit }, wallet) {
   const updatedWallet = await dataService.updateWallet(wallet);
   commit('UPDATE_WALLET', updatedWallet);
 }
-
+async function getCategoriesAction({commit}) {
+  const categories = await dataService.getCategories();
+  commit('GET_CATEGORiES', categories);
+}
+async function addCategoriesAction({commit}, category) {
+  const addedCategory = await dataService.addCategory(category);
+  commit('ADD_CATEGORY', addedCategory);
+}
+async function updateCategoryAction({commit}, category) {
+  const updatedCategory = await dataService.updateCategory(category);
+  commit('UPDATE_CATEGORY', updatedCategory);
+}
+async function deleteCategoryAction({commit}, category) {
+  const deletedCategory = await dataService.deletedCategory(category);
+  commit('DELETE_CATEGORY', deletedCategory);
+}
 async function getTransactionsAction({ commit }) {
   const transactions = await dataService.getTran();
   commit('GET_TRANSACTIONS', transactions);
@@ -146,4 +161,8 @@ export {
   getWalletsAction,
   deleteWalletAction,
   updateWalletAction,
+  getCategoriesAction,
+  addCategoriesAction,
+  updateCategoryAction,
+  deleteCategoryAction,
 };
