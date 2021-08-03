@@ -15,7 +15,6 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
 {
-    private $transaction;
     /**
      * Display a listing of the resource.
      *
@@ -24,53 +23,6 @@ class TransactionController extends Controller
      * @return JsonResponse
      * @throws ValidationException
      */
-//    public function index(Request $request): JsonResponse
-//    {
-//        $validated = $this->validate(
-//            $request,
-//            [
-//                'date-from' => 'nullable|date',
-//                'date-to' => 'nullable|date',
-//            ]
-//        );
-//
-//        $qb = Transaction::query()
-//            ->select(
-//                [
-//                    'id',
-//                    'wallet_from_id',
-//                    'wallet_to_id',
-//                    'category_id',
-//                    'amount',
-//                    'transacted_at',
-//                ]
-//            )
-//            ->with(
-//                [
-//                    'walletFrom:id,name',
-//                    'walletTo:id,name',
-//                    'category:id,name',
-//                ]
-//            )
-//            ->whereHas(
-//                'accountFrom',
-//                function (Builder $query) {
-//                    $query->where('user_id', 1);
-//                }
-//            );
-//
-//        if (isset($validated['date-from'])) {
-//            $qb->whereDate('transacted_at', '>=', $validated['date-from']);
-//        }
-//
-//        if (isset($validated['date-to'])) {
-//            $qb->whereDate('transacted_at', '<=', $validated['date-to']);
-//        }
-//
-//        $transactionList = $qb->get();
-//
-//        return response()->json($transactionList);
-//    }
 
     public function index(TransactionFilter $filters)
     {
