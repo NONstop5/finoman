@@ -1,64 +1,58 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header
-      v-if="loggedIn"
       elevated
-      class="bg-dark text-primary"
-      height-hint="100"
     >
-      <q-toolbar class="full-width row justify-between">
-        <div class="column absolute-top-left">
-          <div class="text-secondary text-body2">
-            Total Balance
-          </div>
-          <div class="text-subtitle2">
-            {5000}
-          </div>
-        </div>
-        <q-toolbar-title
-          class="absolute-top-right"
-          v-bind="details"
-        >
+      <q-toolbar v-if="loggedIn">
+        <q-icon
+          class="q-mr-sm"
+          name="fas fa-coins"
+          size="1.5rem"
+        />
+        <q-toolbar-title>Finoman</q-toolbar-title>
+        <q-space />
+        <div class="q-mr-sm text-bold text-no-wrap">
           {{ details.name }}
-          <q-btn
-            color="negative"
-            @click="onSubmit"
-          >
-            Logout
-          </q-btn>
-        </q-toolbar-title>
+        </div>
+        <q-separator
+          class="q-mr-sm"
+          vertical
+          inset="true"
+          color="white"
+        />
+        <q-btn
+          flat
+          dense
+          size="sm"
+          @click="onSubmit"
+        >
+          <q-icon
+            name="fas fa-sign-out-alt"
+          />
+        </q-btn>
       </q-toolbar>
     </q-header>
 
-    <q-page-container>
+    <q-page-container class="q-px-md">
       <router-view />
     </q-page-container>
 
     <q-footer
       v-if="loggedIn"
+      class="text-center"
       elevated
-      class="bg-dark text-secondary"
     >
-      <div class="fit column">
-        <q-btn
-          class="self-center"
-          align="center"
-          to="/transaction"
-          outline
-          round
-          glossy
-          color="positive"
-          @click="linkClick"
-        >
-          <q-icon
-            name="fas fa-plus-circle"
-          />
-        </q-btn>
-      </div>
-      <q-tabs class="row col-12 col-md-auto justify-center">
+      <q-btn
+        round
+        glossy
+        size="lg"
+        icon="fas fa-plus"
+        color="secondary"
+      />
+      <q-tabs class="row justify-center">
         <q-route-tab
           to="/index"
-          label="Home"
+          label="Main"
           class="col"
         >
           <q-icon
@@ -67,8 +61,18 @@
           />
         </q-route-tab>
         <q-route-tab
-          to="/category"
-          label="Category"
+          to="/wallets"
+          label="Wallets"
+          class="col"
+        >
+          <q-icon
+            name="fas fa-wallet"
+            :size="$q.screen.gt.sm ? '3em' : '1.5em'"
+          />
+        </q-route-tab>
+        <q-route-tab
+          to="/categories"
+          label="Categories"
           class="col"
         >
           <q-icon
@@ -77,17 +81,7 @@
           />
         </q-route-tab>
         <q-route-tab
-          to="/transaction"
-          label="Transaction"
-          class="col"
-        >
-          <q-icon
-            name="fas fa-money-check-alt"
-            :size="$q.screen.gt.sm ? '3em' : '1.5em'"
-          />
-        </q-route-tab>
-        <q-route-tab
-          to="/report"
+          to="/history"
           label="History"
           class="col"
         >
@@ -98,11 +92,21 @@
         </q-route-tab>
       </q-tabs>
     </q-footer>
+    <q-footer
+      v-else
+      class="text-center"
+      elevated
+    >
+      Finoman 2021г.
+    </q-footer>
   </q-layout>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import {
+  mapActions,
+  mapState,
+} from 'vuex';
 
 export default {
   name: 'FormLayout',
