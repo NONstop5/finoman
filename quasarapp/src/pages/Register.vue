@@ -1,14 +1,14 @@
-<template align="center">
-  <div class="text-center column content-center q-mt-xl">
-    <div style="min-width: 300px">
+<template>
+  <q-page class="row justify-center items-center content-center">
+    <div class="col-xs-12 col-sm-6 q-gutter-lg col-md-3 text-center">
       <q-form>
         <q-input
           v-model="formData.name"
           outlined
-          dark
           class="q-mb-lg text-body1"
           type="text"
           placeholder="Name"
+          :model-value="formData.name"
         />
         <div
           v-for="error of v$.formData.name.$silentErrors"
@@ -19,10 +19,10 @@
         <q-input
           v-model="formData.email"
           outlined
-          dark
           class="q-mb-lg text-body1"
           type="text"
           placeholder="Email"
+          :model-value="formData.email"
         />
         <div
           v-for="error of v$.formData.email.$silentErrors"
@@ -33,10 +33,10 @@
         <q-input
           v-model="formData.password"
           outlined
-          dark
           class="q-mb-lg text-body1"
           type="password"
           placeholder="Password"
+          :model-value="formData.password"
         />
         <div
           v-for="error of v$.formData.password.$silentErrors"
@@ -47,10 +47,10 @@
         <q-input
           v-model="formData.password_confirmation"
           outlined
-          dark
           class="q-mb-lg text-body1"
           type="password"
           placeholder="Password Confirmation"
+          :model-value="formData.password_confirmation"
         />
         <div
           v-for="error of v$.formData.password_confirmation.$silentErrors"
@@ -59,9 +59,8 @@
           <div>{{ error.$message }}</div>
         </div>
         <q-btn
-          class="btn text-secondary"
-          outline
-          size="md"
+          color="primary"
+          size="lg"
           :disabled="pending"
           @click="sendForm"
         >
@@ -69,7 +68,7 @@
         </q-btn>
       </q-form>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -115,7 +114,7 @@ export default {
         password: {
           required,
           minLength: minLength(8),
-          maxLenght: maxLength(32),
+          maxLength: maxLength(32),
         },
         password_confirmation: {
           required,
@@ -134,29 +133,10 @@ export default {
         showErrorNotification('Form failed validation');
       }
     },
-    // sendForm() {
-    //   if (this.pending === false) {
-    //     this.pending = true;
-    //     this.$axios
-    //       .post('/api/register', this.form)
-    //       .then(() => {
-    //         this.registered = true;
-    //       })
-    //       .then(() => {
-    //         this.pending = false;
-    //       });
-    //   }
-    // },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.btn:hover {
-  background: $positive !important;
-  transition: 0.4;
-}
-div {
-  color: $negative;
-}
+
 </style>

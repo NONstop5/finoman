@@ -19,7 +19,7 @@
 - `cd finoman/api && composer install`
 - `cp .env.example .env`
 - `php artisan key:generate`
-- `php artisan migrate --seed`
+- `php artisan migrate --seed` (`php artisan migrate:fresh --seed`)
 - `cd .. && cd quasarapp && yarn`
 - `quasar dev`
   
@@ -28,3 +28,20 @@
 
 ### Debug API
 - `php artisan optimize:clear`
+
+### Generate separate fake data
+- Generate all. Generate 2 random users + 5 random wallets, 5 random categories, 20 random transactions for `user_id=1`
+
+  `php artisan db:seed`
+- Generate 5 random users
+
+  `php artisan db:seed --class=UserSeeder` 
+- Generate 5 random wallets
+
+  `php artisan db:seed --class=WalletSeeder`
+- Generate 5 random categories
+
+  `php artisan db:seed --class=CategorySeeder`
+- Generate 20 random transactions
+
+  `php artisan db:seed --class=TransactionSeeder` 

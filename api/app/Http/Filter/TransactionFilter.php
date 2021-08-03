@@ -37,4 +37,14 @@ class TransactionFilter extends QueryFilter
         return $this->builder->limit($amount);
     }
 
+    public function dateFrom($date)
+    {
+        return $this->builder->whereDate('transacted_at', '>=', $date);
+    }
+
+    public function dateTo($date)
+    {
+        return $this->builder->whereDate('transacted_at', '<=', $date);
+    }
+
 }

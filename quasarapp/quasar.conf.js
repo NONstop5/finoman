@@ -17,7 +17,7 @@ module.exports = configure((ctx) => ({
   supportTS: false,
 
   // https://v2.quasar.dev/quasar-cli/prefetch-feature
-  // preFetch: true,
+  preFetch: true,
 
   // app boot file (/src/boot)
   // --> boot files are part of "main.js"
@@ -107,6 +107,7 @@ module.exports = configure((ctx) => ({
       'SessionStorage',
       'Loading',
       'Notify',
+      'Dialog',
     ],
   },
 

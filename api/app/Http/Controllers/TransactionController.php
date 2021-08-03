@@ -15,16 +15,8 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     * @throws ValidationException
-     */
 
-    public function index(TransactionFilter $filters)
+    public function index(TransactionFilter $filters): JsonResponse
     {
         $transactions = Transaction::filter($filters)->select(
             [

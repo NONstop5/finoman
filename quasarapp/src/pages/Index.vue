@@ -1,111 +1,124 @@
 <template>
-  <q-page class="fit row wrap justify-center items-center content-start">
-    <div class="col-10">
-      <h4 class="text-primary">
-        Wallets
+  <q-page class="row justify-center items-center content-start">
+    <div class="col">
+      <h4 class="text-primary q-my-sm">
+        Summary
       </h4>
-      <div class="flex items-center">
+      <q-separator
+        class="q-mb-lg"
+      />
+      <div class="flex items-center q-gutter-sm q-mb-lg">
         <q-card
           v-for="wallet in wallets"
-          :key="wallet.userid"
-          class="text-white q-mr-md"
-          style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%);
-            max-width: 222px"
-        >
-          <q-card-section>
-            <div class="text-h6">
-              {{ wallet.type_id }}
-            </div>
-            <div class="text-subtitle2">
-              {{ wallet.userid }}
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-btn
-          round
-          color="secondary"
+          :key="wallet.id"
+          class="text-center bg-primary glossy text-white q-pa-xs"
         >
           <q-icon
-            name="fas fa-plus"
+            :name="wallet.icon"
             :size="'1.5em'"
           />
-        </q-btn>
-      </div>
-      <div class="flex items-center q-mt-xl">
-        <div
-          v-for="category in categories"
-          :key="category.name"
-          class="text-center q-mr-lg q-mb-md"
-        >
-          <q-icon
-            :name="category.name"
-            :size="'1.5em'"
-          />
-          <div class="text-h6">
-            {{ category.title }}
+          <div class="text-subtitle2">
+            {{ wallet.name }}
           </div>
-        </div>
+        </q-card>
+        <q-space />
         <q-btn
           round
-          outline
+          glossy
           color="secondary"
+          icon="fas fa-plus"
+        />
+      </div>
+      <q-separator
+        class="q-mb-lg"
+      />
+      <div class="flex items-center q-gutter-sm q-mb-lg">
+        <q-card
+          v-for="category in categories"
+          :key="category.id"
+          class="text-center q-pa-xs"
         >
           <q-icon
-            name="fas fa-plus"
+            :name="category.icon"
             :size="'1.5em'"
           />
-        </q-btn>
+          <div class="text-subtitle2">
+            {{ category.name }}
+          </div>
+        </q-card>
+        <q-space />
+        <q-btn
+          round
+          glossy
+          color="secondary"
+          icon="fas fa-plus"
+        />
       </div>
-      <div class="flex justify-between items-center">
-        <h4 class="text-primary">
-          Last transaction
-        </h4>
-        <div
-          class="text-secondary cursor-pointer"
-        >
-          All >
-        </div>
-      </div>
+      <q-separator
+        class="q-mb-lg"
+      />
+      <h5 class="text-primary q-mb-sm q-mt-none">
+        Last transaction
+      </h5>
       <q-card
         v-for="transaction in transactions"
-        :key="transaction.name"
-        class="bg-dark flex justify-between items-center q-mb-lg"
+        :key="transaction.id"
+        flat
+        bordered
+        class="flex justify-between items-center q-mb-sm"
       >
         <q-item>
           <q-item-section avatar>
             <q-avatar>
               <q-icon
-                v-if="transaction.spending"
+                v-if="transaction.transaction_type.id === transactionType.INCOME"
+                class="text-positive"
                 name="fas fa-chevron-down"
                 :size="'1.5em'"
               />
               <q-icon
-                v-else
+                v-else-if="transaction.transaction_type.id === transactionType.EXPENSE"
+                class="text-negative"
                 name="fas fa-chevron-up"
+                :size="'1.5em'"
+              />
+              <q-icon
+                v-else
+                class="text-grey"
+                name="fas fa-exchange-alt"
                 :size="'1.5em'"
               />
             </q-avatar>
           </q-item-section>
-
           <q-item-section>
-            <q-item-label>{{ transaction.name }}</q-item-label>
+            <q-item-label
+              v-if="transaction.transaction_type.id !== transactionType.TRANSFER"
+            >
+              {{ transaction.category.name }}
+            </q-item-label>
             <q-item-label class="text-secondary">
-              {{ transaction.date }}
+              {{ transaction.transacted_at }}
             </q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-label
-            v-if="transaction.spending"
-            class="q-pt-sm"
+            v-if="transaction.transaction_type_id === transactionType.INCOME"
+            class="q-pt-sm text-positive"
           >
-            -{{ transaction.price }} ₽
+            +{{ transaction.amount }} ₽
+          </q-item-label>
+          <q-item-label
+            v-else-if="transaction.transaction_type_id === transactionType.EXPENSE"
+            class="q-pt-sm text-negative"
+          >
+            -{{ transaction.amount }} ₽
           </q-item-label>
           <q-item-label
             v-else
-            class="q-pt-sm text-positive"
+            class="q-pt-sm text-grey"
           >
-            +{{ transaction.price }} ₽
+            {{ transaction.amount }} ₽
           </q-item-label>
         </q-item>
       </q-card>
@@ -115,57 +128,33 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { mapActions, mapState } from 'vuex';
+import {
+  mapActions,
+  mapState,
+} from 'vuex';
+
+const transactionType = {
+  INCOME: 1,
+  EXPENSE: 2,
+  TRANSFER: 3,
+};
 
 export default defineComponent({
-  name: 'PageIndex',
-  data() {
-    return {
-      cards: [
-        {
-          name: 'card.name',
-          balanse: 'card.balanse',
-        },
-      ],
-      categories: [
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-      ],
-      transactions: [
-        {
-          name: 'Products',
-          date: '10 Jan, 10:55',
-          price: 1500,
-          spending: true,
-        },
-        {
-          name: 'Products',
-          date: '10 Jan, 10:55',
-          price: 1500,
-          spending: false,
-        },
-      ],
-    };
-  },
+  name: 'Index',
+  data: () => ({
+    transactionType,
+  }),
   computed: {
-    ...mapState('user', ['transactions']),
+    ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
   async created() {
-    await this.loadWallets();
+    await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getTransactionsAction']),
-    async loadWallets() {
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
+    async loadInfo() {
+      await this.getWalletsAction();
+      await this.getCategoriesAction();
       await this.getTransactionsAction();
     },
   },
