@@ -1,8 +1,11 @@
 <template>
   <q-page class="container main">
-    <h3 class="text-secondary">
+    <h4 class="text-primary q-my-sm">
       Transaction
-    </h3>
+    </h4>
+    <q-separator
+      class="q-mb-lg"
+    />
     <div class="wallets-container">
       <div class="q-pa-md">
         <q-form
@@ -18,67 +21,138 @@
               {label: 'Outcome', value: 2}
             ]"
           />
-          <div>
-            <q-select
-              v-model="model"
-              class="text-secondary q-my-lg"
-              outlined
-              :options="options"
-              label="Select category"
-              :rules="[ val => val && val.length > 0 || 'Please type something']"
-            />
-          </div>
-          <div>
-            <q-input
-              v-model="text"
-              :rules="[ val => val && val.length > 0 || 'Please type something']"
-              class="text-secondary q-my-lg"
-              outlined
-              label="Value"
-            />
-          </div>
-          <div>
-            <q-input
-              v-model="date"
-              class="text-secondary q-my-lg"
-              outlined
-              mask="date"
-              :rules="['date']"
-            >
-              <q-icon
-                name="event"
-                size="md"
-                class="cursor-pointer q-pt-md"
+          <div v-if="transaction_types_id === 1||transaction_types_id ===2">
+            <div>
+              <q-select
+                v-model="model"
+                class="text-secondary q-my-lg"
+                outlined
+                :options="optionsWal"
+                label="Select wallet"
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+            </div>
+            <div>
+              <q-select
+                v-model="model2"
+                class="text-secondary q-my-lg"
+                outlined
+                :options="optionsCat"
+                label="Select category"
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+            </div>
+            <div>
+              <q-input
+                v-model="text"
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+                class="text-secondary q-my-lg"
+                outlined
+                label="Value"
+              />
+            </div>
+            <div>
+              <q-input
+                v-model="date"
+                class="text-secondary q-my-lg"
+                outlined
+                mask="##-##-####"
+                :rules="[ val => val && val.length > 9 || 'Incorrect date']"
               >
-                <q-popup-proxy
-                  ref="qDateProxy"
-                  transition-show="scale"
-                  transition-hide="scale"
+                <q-icon
+                  name="event"
+                  size="md"
+                  class="cursor-pointer q-pt-md"
                 >
-                  <q-date
-                    v-model="date"
-                    color="secondary"
-                    class="text-secondary"
+                  <q-popup-proxy
+                    ref="qDateProxy"
+                    transition-show="scale"
+                    transition-hide="scale"
                   >
-                    <div class="row items-center justify-end">
-                      <q-btn
-                        v-close-popup
-                        label="Close"
-                        color="secondary"
-                        flat
-                      />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </q-input>
+                    <q-date
+                      v-model="date"
+                      v-close-popup
+                      color="secondary"
+                      class="text-secondary"
+                    />
+                  </q-popup-proxy>
+                </q-icon>
+              </q-input>
+            </div>
+            <div>
+              <q-btn
+                label="Submit"
+                type="submit"
+                color="secondary"
+              />
+            </div>
           </div>
-          <div>
-            <q-btn
-              label="Submit"
-              type="submit"
-              color="secondary"
-            />
+          <div v-if="transaction_types_id === 3">
+            <div>
+              <q-select
+                v-model="model"
+                class="text-secondary q-my-lg"
+                outlined
+                :options="optionsWal"
+                label="Select wallet"
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+            </div>
+            <div>
+              <q-select
+                v-model="model3"
+                class="text-secondary q-my-lg"
+                outlined
+                :options="optionsWal"
+                label="Select wallet"
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+            </div>
+            <div>
+              <q-input
+                v-model="text"
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+                class="text-secondary q-my-lg"
+                outlined
+                label="Value"
+              />
+            </div>
+            <div>
+              <q-input
+                v-model="date"
+                class="text-secondary q-my-lg"
+                outlined
+                mask="##-##-####"
+                :rules="[ val => val && val.length > 9 || 'Incorrect date']"
+              >
+                <q-icon
+                  name="event"
+                  size="md"
+                  class="cursor-pointer q-pt-md"
+                >
+                  <q-popup-proxy
+                    ref="qDateProxy"
+                    transition-show="scale"
+                    transition-hide="scale"
+                  >
+                    <q-date
+                      v-model="date"
+                      v-close-popup
+                      mask="DD-MM-YYYY"
+                      color="secondary"
+                      class="text-secondary"
+                    />
+                  </q-popup-proxy>
+                </q-icon>
+              </q-input>
+            </div>
+            <div>
+              <q-btn
+                label="Submit"
+                type="submit"
+                color="secondary"
+              />
+            </div>
           </div>
         </q-form>
       </div>
@@ -97,10 +171,15 @@ export default {
     return {
       transaction_types_id: ref(1),
       model: ref(null),
+      model2: ref(null),
+      model3: ref(null),
       text: ref(''),
-      date: ref('2019/02/01'),
-      options: [
+      date: ref('04/08/2021'),
+      optionsCat: [
         'Продукты', 'Транспорт', 'Здоровье',
+      ],
+      optionsWal: [
+        'Сбер', 'ВТБ', 'Тинькоф',
       ],
       onSubmit() {
         $q.notify({
