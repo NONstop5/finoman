@@ -74,6 +74,7 @@
                       v-close-popup
                       color="secondary"
                       class="text-secondary"
+                      mask="DD-MM-YYYY"
                     />
                   </q-popup-proxy>
                 </q-icon>
@@ -174,7 +175,7 @@ export default {
       model2: ref(null),
       model3: ref(null),
       text: ref(''),
-      date: ref('04/08/2021'),
+      date: ref('04-08-2021'),
       optionsCat: [
         'Продукты', 'Транспорт', 'Здоровье',
       ],
