@@ -1,218 +1,126 @@
 <template>
-  <div class="q-pa-sm q-mt-md row justify-center">
-    <form class="q-gutter-md">
-      <base-text-field
-        filled
-        :val="$v.form.password"
-        v-model="form.password"
-        normalize-bottom
-        label="Password"
-        icon="mdi-card"
-        clearable
-        @input="$v.form.password.$touch"
-        @blur="$v.form.password.$touch"
-        autofocus
-        type="password"
-        hide-show-password
-      >
-        <template v-slot:prepend>
-          <q-icon name="mdi-account-key"/>
-        </template>
-      </base-text-field>
-      <base-select-field
-        filled
-        v-model="form.type"
-        :options="transTypeOptions"
-        :val="$v.form.type"
-        label="Transaction Type"
-        normalize-bottom
-        emit-value
-        map-options
-        hide-dropdown-icon
-        clearable
-        @input="$v.form.type.$touch"
-        @blur="$v.form.type.$touch"
-      >
-        <template v-slot:prepend>
-          <q-icon name="mdi-cash-usd"/>
-        </template>
-      </base-select-field>
-      <base-text-field
-        filled
-        :val="$v.form.account"
-        v-model="form.account"
-        normalize-bottom
-        label="Account Number"
-        icon="mdi-card"
-        clearable
-        @input="$v.form.account.$touch"
-        @blur="$v.form.account.$touch"
-      >
-        <template v-slot:prepend>
-          <q-icon name="mdi-account-card-details"/>
-        </template>
-      </base-text-field>
-      <base-text-field
-        filled
-        :val="$v.form.description"
-        v-model="form.description"
-        normalize-bottom
-        label="Description"
-        clearable
-        @input="$v.form.description.$touch"
-        @blur="$v.form.description.$touch"
-      >
-        <template v-slot:prepend>
-          <q-icon name="mdi-home-floor-b"/>
-        </template>
-      </base-text-field>
-
-      <base-currency-input
-        filled
-        label="Amount"
-        :val="$v.form.amount"
-        v-model="form.amount"
-        normalize-bottom
-        clearable
-        :local-messages="{ checkAmt: 'must be greater than zero.' }"
-        @input="$v.form.amount.$touch"
-        @blur="$v.form.amount.$touch"
-      >
-        <template v-slot:prepend>
-          <q-icon name="mdi-cash"/>
-        </template>
-      </base-currency-input>
-
-      <other-currency-input
-        filled
-        label="Other Currency Format"
-        :val="$v.form.amount2"
-        v-model="form.amount2"
-        normalize-bottom
-        clearable
-        :local-messages="{ checkAmt: 'must be greater than zero.' }"
-        @input="$v.form.amount2.$touch"
-        @blur="$v.form.amount2.$touch"
-      >
-        <template v-slot:prepend>
-          <q-icon name="mdi-cash"/>
-        </template>
-      </other-currency-input>
-
-      <base-text-field
-        filled
-        v-model="form.uppercase"
-        normalize-bottom
-        label="Custom upper-case prop"
-        clearable
-        upper-case
-      />
-
-      <custom-input v-model="form.uppercase" upper-case label="Custom Uppercase Input"/>
-
-      <div>
-        <q-btn
-          label="Post"
-          type="submit"
-          color="primary"
-          class="full-width"
-          :loading="payBtnLoading"
-          :disable="payBtnState"
-          @click.prevent="showPayNotif"
+  <!-- notice dialogRef here -->
+  <q-dialog
+    ref="dialogRef"
+    @hide="onDialogHide"
+  >
+    <q-card class="q-dialog-plugin">
+      <!--
+        ...content
+        ... use q-card-section for it?
+      -->
+      <div class="row q-mb-md">
+        <q-input
+          v-model="form.username"
+          type="text"
+          float-label="Your username"
         />
       </div>
-    </form>
-  </div>
-</template>
-<script>
-import { required } from 'vuelidate/lib/validators'
-import { validationMixin } from 'vuelidate'
+      <div class="row q-mb-md">
+        <q-input
+          v-model="form.email"
+          type="email"
+          float-label="Your email"
+        />
+      </div>
+      <div class="row q-mb-md">
+        <q-input
+          v-model="form.password"
+          type="password"
+          float-label="Your password"
+        />
+      </div>
+      <div class="row">
+        <q-input
+          v-model="form.confirmpassword"
+          type="password"
+          float-label="Confirm your password"
+        />
+      </div>
 
-const checkAmt = (value, vm) => value > 0
+      <!-- buttons example -->
+      <q-card-actions align="right">
+        <q-btn
+          color="secondary"
+          label="OK"
+          @click="onOKClick"
+        />
+        <q-btn
+          color="secondary"
+          label="Cancel"
+          @click="onCancelClick"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+import { useDialogPluginComponent } from 'quasar';
+
 export default {
-  props: ['formData'],
+  name: 'DialogForm',
+  props: {
+    // ...your custom props
+  },
+  emits: [
+    // REQUIRED; need to specify some events that your
+    // component will emit through useDialogPluginComponent()
+    ...useDialogPluginComponent.emits,
+  ],
+
+  setup() {
+    // REQUIRED; must be called inside of setup()
+    const {
+      dialogRef, onDialogHide, onDialogOK, onDialogCancel,
+    } = useDialogPluginComponent();
+    // dialogRef      - Vue ref to be applied to QDialog
+    // onDialogHide   - Function to be used as handler for @hide on QDialog
+    // onDialogOK     - Function to call to settle dialog with "ok" outcome
+    //                    example: onDialogOK() - no payload
+    //                    example: onDialogOK({ /*.../* }) - with payload
+    // onDialogCancel - Function to call to settle dialog with "cancel" outcome
+
+    return {
+      // This is REQUIRED;
+      // Need to inject these (from useDialogPluginComponent() call)
+      // into the vue scope for the vue html template
+      dialogRef,
+      onDialogHide,
+
+      // other methods that we used in our vue html template;
+      // these are part of our example (so not required)
+      onOKClick() {
+        // on OK, it is REQUIRED to
+        // call onDialogOK (with optional payload)
+        onDialogOK({ dialogRef });
+        this.displaydata();
+        console.log(this.data);
+        console.log(this.data.form);
+        console.log(this.displaydata);
+        // or with payload: onDialogOK({ ... })
+        // ...and it will also hide the dialog automatically
+      },
+      // we can passthrough onDialogCancel directly
+      onCancelClick: onDialogCancel,
+    };
+  },
   data() {
     return {
-      fullName: '',
-      transTypeOptions: [
-        {
-          value: 'Loans',
-          label: 'Loan Payment'
-        },
-        {
-          value: 'Savings',
-          label: 'Cash Deposit'
-        }
-      ],
-      payBtnState: false,
-      payBtnLoading: false,
-      localNotify: () => {},
+      showDialog: false,
       form: {
-        amount2: null,
-        account: '',
-        description: '',
-        type: '',
-        uppercase: '',
-        password: ''
+        username: null,
+        email: null,
+        password: null,
+        confirmpassword: null,
       },
-      localMode: this.mode
-    }
-  },
-  validations: {
-    form: {
-      amount: { required, checkAmt },
-      amount2: { required, checkAmt },
-      account: { required },
-      description: { required },
-      type: { required },
-      password: { required }
-    }
+    };
   },
   methods: {
-    showPayNotif() {
-      this.$v.form.$touch()
-      if (this.$v.form.$error) {
-        return
-      }
-      this.localNotify()
-      this.payBtnState = true
-      this.localNotify = this.$q.notify({
-        color: 'warning',
-        message: 'Continue with payment?',
-        position: 'bottom',
-        multiLine: false,
-        actions: [
-          {
-            label: 'Cancel',
-            color: 'warning',
-            handler: () => {
-              this.payBtnState = false
-            }
-          },
-          {
-            label: 'OK',
-            color: 'primary',
-            handler: () => {
-              this.$emit('form-update', this.form)
-            }
-          }
-        ],
-        timeout: 2500,
-        onDismiss: () => {
-          validationMixin
-          this.payBtnState = false
-        }
-      })
-    }
+    displaydata() {
+      this.$q.notify(JSON.stringify(this.form));
+    },
   },
-  created() {
-    if (this.formData) {
-      this.form = this.formData
-    }
-  }
-}
+
+};
 </script>
-
-<style>
-</style>
-

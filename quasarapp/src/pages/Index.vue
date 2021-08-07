@@ -1,5 +1,6 @@
 <template>
   <q-page class="fit row wrap justify-center items-center content-start">
+    <profile-dialog />
     <div class="col-10">
       <h4 class="text-primary">
         Wallets
@@ -24,6 +25,8 @@
         <q-btn
           round
           color="secondary"
+          label="Add Wallet"
+          @click="openDialog"
         >
           <q-icon
             name="fas fa-plus"
@@ -116,47 +119,39 @@
 <script>
 import { defineComponent } from 'vue';
 import { mapActions, mapState } from 'vuex';
+import { useQuasar } from 'quasar';
+import DialogForm from '../components/appDialog/DialogForm.vue';
+// import DialogForm from '../components/appDialog/DialogForm.vue';
 
 export default defineComponent({
   name: 'PageIndex',
+  // setup() {
+  //   const $q = useQuasar();
+  //   $q.dialog({
+  //     component: DialogForm,
+
+  //     // props forwarded to your custom component
+  //     componentProps: {
+  //       text: 'something',
+  //     // ...more..props...
+  //     },
+  //   }).onOk(() => {
+  //     console.log('OK');
+  //   }).onCancel(() => {
+  //     console.log('Cancel');
+  //   }).onDismiss(() => {
+  //     console.log('Called on OK or Cancel');
+  //   });
+  // },
   data() {
     return {
-      cards: [
-        {
-          name: 'card.name',
-          balanse: 'card.balance',
-        },
-      ],
-      categories: [
-        // {
-        //   title: 'Product',
-        //   name: 'fas fa-hamburger',
-        // },
-        // {
-        //   title: 'Product',
-        //   name: 'fas fa-hamburger',
-        // },
-        // {
-        //   title: 'Product',
-        //   name: 'fas fa-hamburger',
-        // },
-      ],
-      transactions: [
-        {
-          name: 'Products',
-          date: '10 Jan, 10:55',
-          price: 1500,
-          spending: true,
-        },
-        {
-          name: 'Products',
-          date: '10 Jan, 10:55',
-          price: 1500,
-          spending: false,
-        },
-      ],
+      dialogEnabled: false,
+      addData: {
+        wallet_type_id: '',
+      },
     };
   },
+
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
@@ -164,11 +159,30 @@ export default defineComponent({
     await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction', 'addWalletAction']),
     async loadInfo() {
       await this.getWalletsAction();
       await this.getCategoriesAction();
       await this.getTransactionsAction();
+    },
+    async openDialog() {
+      const $q = useQuasar();
+      $q.dialog({
+        component: DialogForm,
+        parent: this,
+        componentProps: {
+          text: 'something',
+          // ...more..props...
+        },
+      }).onOk(() => {
+        console.log('OK');
+
+        this.addWalletAction(); // place where data should be sent to API
+      }).onCancel(() => {
+        console.log('Cancel');
+      }).onDismiss(() => {
+        console.log('Called on OK or Cancel');
+      });
     },
   },
 });

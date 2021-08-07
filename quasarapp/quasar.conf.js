@@ -107,6 +107,7 @@ module.exports = configure((ctx) => ({
       'SessionStorage',
       'Loading',
       'Notify',
+      'Dialog',
     ],
   },
 
