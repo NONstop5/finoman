@@ -13,6 +13,18 @@ const parseItem = (response, code) => {
   return item;
 };
 
+const parseItemConfig = (response, code) => {
+  if (response.status !== code) {
+    throw Error(response.message);
+  }
+  let item = JSON.parse(response.config.data);
+  debugger;
+  if (typeof item !== 'object') {
+    item = undefined;
+  }
+  return item;
+};
+
 const parseList = (response) => {
   if (response.status !== 200) {
     throw Error(response.message);
@@ -93,6 +105,18 @@ async function getCategories() {
     return [];
   }
 }
+
+const updateCategory = async (category) => {
+  try {
+    const response = await axios.put(`/api/categories/${category.id}`, category);
+    debugger;
+    return parseItemConfig(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return null;
+  }
+};
+
 async function getTran() {
   try {
     const response = await axios.get('api/transactions'); // test change last part of url later
@@ -110,6 +134,7 @@ export const dataService = {
   addWallet,
   deleteWallet,
   getCategories,
+  updateCategory,
   getTran,
   parseItem,
   parseList,
