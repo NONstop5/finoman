@@ -35,6 +35,7 @@ class TransactionController extends Controller
                     'walletFrom:id,name',
                     'walletTo:id,name',
                     'category:id,name',
+                    'transactionType:id,name'
                 ]
             )
             ->where('user_id', Auth::id())
