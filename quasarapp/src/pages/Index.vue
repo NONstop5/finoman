@@ -121,7 +121,6 @@ import { defineComponent } from 'vue';
 import { mapActions, mapState } from 'vuex';
 import { useQuasar } from 'quasar';
 import DialogForm from '../components/appDialog/DialogForm.vue';
-// import DialogForm from '../components/appDialog/DialogForm.vue';
 
 export default defineComponent({
   name: 'PageIndex',
