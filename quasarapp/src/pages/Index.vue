@@ -1,6 +1,5 @@
 <template>
   <q-page class="fit row wrap justify-center items-center content-start">
-    <profile-dialog />
     <div class="col-10">
       <h4 class="text-primary">
         Wallets
