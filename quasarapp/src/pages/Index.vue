@@ -26,8 +26,14 @@
           round
           glossy
           color="secondary"
-          icon="fas fa-plus"
-        />
+          label="Add Wallet"
+          @click="openDialog"
+        >
+          <q-icon
+            name="fas fa-plus"
+            :size="'1.5em'"
+          />
+        </q-btn>
       </div>
       <q-separator
         class="q-mb-lg"
@@ -36,12 +42,13 @@
         <q-card
           v-for="category in categories"
           :key="category.id"
-          class="text-center q-pa-xs"
+          class="text-center q-mr-lg q-mb-md"
         >
           <q-icon
             :name="category.icon"
             :size="'1.5em'"
           />
+
           <div class="text-subtitle2">
             {{ category.name }}
           </div>
@@ -128,10 +135,9 @@
 
 <script>
 import { defineComponent } from 'vue';
-import {
-  mapActions,
-  mapState,
-} from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import { useQuasar } from 'quasar';
+import DialogForm from '../components/appDialog/DialogForm.vue';
 
 const transactionType = {
   INCOME: 1,
@@ -140,6 +146,7 @@ const transactionType = {
 };
 
 export default defineComponent({
+
   name: 'Index',
   data: () => ({
     transactionType,
@@ -156,6 +163,24 @@ export default defineComponent({
       await this.getWalletsAction();
       await this.getCategoriesAction();
       await this.getTransactionsAction();
+    },
+    async openDialog() {
+      const $q = useQuasar();
+      $q.dialog({
+        component: DialogForm,
+        parent: this,
+        componentProps: {
+          text: 'something',
+          // ...more..props...
+        },
+      }).onOk(() => {
+        console.log('OK');
+        // place where data should be sent to API
+      }).onCancel(() => {
+        console.log('Cancel');
+      }).onDismiss(() => {
+        console.log('Called on OK or Cancel'); // DELETE CONSOLE AFTER UPDATE WITH FORM VERIFICATION
+      });
     },
   },
 });

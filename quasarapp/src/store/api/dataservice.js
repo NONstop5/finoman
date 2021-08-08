@@ -67,7 +67,7 @@ const updateWallet = async (wallet) => {
 const addWallet = async (wallet) => {
   try {
     const response = await axios.post('api/wallets', wallet);
-    return parseItem(response, 200);
+    return response;// parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return null;

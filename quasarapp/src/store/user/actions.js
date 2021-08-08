@@ -94,8 +94,9 @@ function register({ commit }, payload) {
 }
 
 async function addWalletAction({ commit }, wallet) {
-  const addedWallet = await dataService.addWallet(wallet);
-  commit('ADD_WALLET', addedWallet);
+  // const addedWallet =
+  await dataService.addWallet(wallet);
+  commit('ADD_WALLET', wallet);
 }
 
 async function getWalletsAction({ commit }) {
