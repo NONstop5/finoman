@@ -125,33 +125,6 @@ import DialogForm from '../components/appDialog/DialogForm.vue';
 
 export default defineComponent({
   name: 'PageIndex',
-  // setup() {
-  //   const $q = useQuasar();
-  //   $q.dialog({
-  //     component: DialogForm,
-
-  //     // props forwarded to your custom component
-  //     componentProps: {
-  //       text: 'something',
-  //     // ...more..props...
-  //     },
-  //   }).onOk(() => {
-  //     console.log('OK');
-  //   }).onCancel(() => {
-  //     console.log('Cancel');
-  //   }).onDismiss(() => {
-  //     console.log('Called on OK or Cancel');
-  //   });
-  // },
-  data() {
-    return {
-      dialogEnabled: false,
-      addData: {
-        wallet_type_id: '',
-      },
-    };
-  },
-
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
@@ -159,7 +132,7 @@ export default defineComponent({
     await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction', 'addWalletAction']),
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
     async loadInfo() {
       await this.getWalletsAction();
       await this.getCategoriesAction();
@@ -176,12 +149,11 @@ export default defineComponent({
         },
       }).onOk(() => {
         console.log('OK');
-
-        this.addWalletAction(); // place where data should be sent to API
+        // place where data should be sent to API
       }).onCancel(() => {
         console.log('Cancel');
       }).onDismiss(() => {
-        console.log('Called on OK or Cancel');
+        console.log('Called on OK or Cancel'); // DELETE CONSOLE AFTER UPDATE WITH FORM VERIFICATION
       });
     },
   },

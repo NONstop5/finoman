@@ -9,35 +9,33 @@
         ...content
         ... use q-card-section for it?
       -->
+      <q-select
+        v-model="form.options"
+        :options="options"
+        label="Standard"
+        emit-value
+        map-options
+      />
       <div class="row q-mb-md">
         <q-input
-          v-model="form.username"
+          v-model="form.name"
           type="text"
-          float-label="Your username"
+          float-label="Name of new wallet"
         />
       </div>
       <div class="row q-mb-md">
         <q-input
-          v-model="form.email"
-          type="email"
-          float-label="Your email"
+          v-model="form.icon"
+          float-label="Icon for new wallet"
         />
       </div>
       <div class="row q-mb-md">
         <q-input
-          v-model="form.password"
-          type="password"
-          float-label="Your password"
+          v-model="form.ballance"
+          type="number"
+          float-label="Balance of new wallet"
         />
       </div>
-      <div class="row">
-        <q-input
-          v-model="form.confirmpassword"
-          type="password"
-          float-label="Confirm your password"
-        />
-      </div>
-
       <!-- buttons example -->
       <q-card-actions align="right">
         <q-btn
@@ -56,7 +54,8 @@
 </template>
 
 <script>
-import { useDialogPluginComponent } from 'quasar';
+import { mapActions } from 'vuex';
+import { ref } from 'vue';
 
 export default {
   name: 'DialogForm',
@@ -64,63 +63,68 @@ export default {
     // ...your custom props
   },
   emits: [
-    // REQUIRED; need to specify some events that your
-    // component will emit through useDialogPluginComponent()
-    ...useDialogPluginComponent.emits,
+    // REQUIRED
+    'ok', 'hide', 'data',
   ],
-
   setup() {
-    // REQUIRED; must be called inside of setup()
-    const {
-      dialogRef, onDialogHide, onDialogOK, onDialogCancel,
-    } = useDialogPluginComponent();
-    // dialogRef      - Vue ref to be applied to QDialog
-    // onDialogHide   - Function to be used as handler for @hide on QDialog
-    // onDialogOK     - Function to call to settle dialog with "ok" outcome
-    //                    example: onDialogOK() - no payload
-    //                    example: onDialogOK({ /*.../* }) - with payload
-    // onDialogCancel - Function to call to settle dialog with "cancel" outcome
-
     return {
-      // This is REQUIRED;
-      // Need to inject these (from useDialogPluginComponent() call)
-      // into the vue scope for the vue html template
-      dialogRef,
-      onDialogHide,
-
-      // other methods that we used in our vue html template;
-      // these are part of our example (so not required)
-      onOKClick() {
-        // on OK, it is REQUIRED to
-        // call onDialogOK (with optional payload)
-        onDialogOK({ dialogRef });
-        this.displaydata();
-        console.log(this.data);
-        console.log(this.data.form);
-        console.log(this.displaydata);
-        // or with payload: onDialogOK({ ... })
-        // ...and it will also hide the dialog automatically
-      },
-      // we can passthrough onDialogCancel directly
-      onCancelClick: onDialogCancel,
+      options: [{ label: 'Debit', value: '1' }, { label: 'Credit', value: '2' }],
     };
   },
   data() {
     return {
       showDialog: false,
       form: {
-        username: null,
-        email: null,
-        password: null,
-        confirmpassword: null,
+        options: ref(null),
+        name: null,
+        icon: null,
+        ballance: null,
+        ballance_date: Date.now(),
       },
     };
   },
+
   methods: {
+    ...mapActions('user', ['addWalletAction']),
     displaydata() {
       this.$q.notify(JSON.stringify(this.form));
+      console.log(this.form);
+      this.addWalletAction(JSON.stringify(this.form));
+    },
+    // following method is REQUIRED
+    // (don't change its name --> "show")
+    show() {
+      this.$refs.dialogRef.show();
+    },
+
+    // following method is REQUIRED
+    // (don't change its name --> "hide")
+    hide() {
+      this.$refs.dialogRef.hide();
+    },
+
+    onDialogHide() {
+      // required to be emitted
+      // when QDialog emits "hide" event
+      this.$emit('hide');
+    },
+
+    onOKClick() {
+      // on OK, it is REQUIRED to
+      // emit "ok" event (with optional payload)
+      // before hiding the QDialog
+      this.displaydata(); // DELETE AFTER CONFIREMED VERSION FOR DEMO ONLY
+      this.$emit('ok');
+      // or with payload: this.$emit('ok', { ... })
+
+      // then hiding dialog
+      this.hide();
+    },
+
+    onCancelClick() {
+      // we just need to hide the dialog
+      this.hide();
     },
   },
-
 };
 </script>
