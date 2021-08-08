@@ -139,19 +139,18 @@ import { mapActions, mapState } from 'vuex';
 import { useQuasar } from 'quasar';
 import DialogForm from '../components/appDialog/DialogForm.vue';
 
+const transactionType = {
+  INCOME: 1,
+  EXPENSE: 2,
+  TRANSFER: 3,
+};
+
 export default defineComponent({
 
   name: 'Index',
   data: () => ({
     transactionType,
   }),
-
-  const transactionType = {
-    INCOME: 1,
-    EXPENSE: 2,
-    TRANSFER: 3,
-  };
-
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
   },
