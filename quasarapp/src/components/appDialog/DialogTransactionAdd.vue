@@ -2,7 +2,7 @@
   <!-- notice dialogRef here -->
   <div>
     <q-dialog
-      ref="categoryAddRef"
+      ref="transactionAddRef"
       @hide="onDialogHide"
     >
       <div
@@ -11,12 +11,12 @@
       >
         <q-card class="q-dialog-plugin">
           <q-card-section class="justify-center items-center content-center">
-            <div>Adding new Category</div>
+            <div>Transaction</div>
             <q-select
               v-model="form.category_type_id"
               class="row q-mb-md"
               :options="category_type_id"
-              label="Type of new category"
+              label="Test"
               emit-value
               map-options
               :rules="[val => !!val || 'Field is required']"
@@ -24,7 +24,7 @@
             <q-input
               v-model="form.name"
               class="row q-mb-md"
-              label="Name of new category"
+              label="test"
               type="text"
               float-label="Name of new category"
               :rules="[val => !!val || 'Field is required']"
@@ -32,7 +32,7 @@
             <q-input
               v-model="form.budget"
               class="row q-mb-md"
-              label="Enter budget for new category"
+              label="test"
               type="number"
               float-label="Budget of new category"
               required
@@ -101,13 +101,13 @@ export default {
     ...mapActions('user', ['addCategoryAction']),
     displaydata() {
       this.$q.notify(JSON.stringify(this.form));
-      this.addCategoryAction(JSON.stringify(this.form));
+      this.addTransactionAction(JSON.stringify(this.form));
     },
     show() {
-      this.$refs.categoryAddRef.show();
+      this.$refs.transactionAddRef.show();
     },
     hide() {
-      this.$refs.categoryAddRef.hide();
+      this.$refs.transactionAddRef.hide();
     },
     onDialogHide() {
       this.$emit('hide');

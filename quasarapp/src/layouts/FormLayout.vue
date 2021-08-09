@@ -48,6 +48,7 @@
         size="lg"
         icon="fas fa-plus"
         color="secondary"
+        @click="newTransaction"
       />
       <q-tabs class="row justify-center">
         <q-route-tab
@@ -107,6 +108,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
+import DialogTransactionAdd from '../components/appDialog/DialogTransactionAdd.vue';
 
 export default {
   name: 'FormLayout',
@@ -118,6 +120,12 @@ export default {
     ...mapActions('user', ['logout']),
     onSubmit() {
       this.logout();
+    },
+    newTransaction() {
+      this.$q.dialog({
+        component: DialogTransactionAdd,
+        parent: this,
+      });
     },
   },
 };

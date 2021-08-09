@@ -93,6 +93,15 @@ async function getCategories() {
     return [];
   }
 }
+async function addCategory() {
+  try {
+    const response = await axios.post('api/categories');
+    return response; // parseItem(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return null;
+  }
+}
 async function getTran() {
   try {
     const response = await axios.get('api/transactions'); // test change last part of url later
@@ -110,6 +119,7 @@ export const dataService = {
   addWallet,
   deleteWallet,
   getCategories,
+  addCategory,
   getTran,
   parseItem,
   parseList,

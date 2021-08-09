@@ -26,7 +26,6 @@
           round
           glossy
           color="secondary"
-          label="Add Wallet"
           @click="openDialog"
         >
           <q-icon
@@ -102,7 +101,8 @@
             <q-item-label
               v-if="transaction.transaction_type_id !== transactionType.TRANSFER"
             >
-              <!-- {{ transaction.category.name }} accessing sucessfully but throw error?-->
+              {{ transaction.category.name }}
+              <!-- //accessing sucessfully but throw error? -->
             </q-item-label>
             <q-item-label
               v-else

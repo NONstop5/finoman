@@ -17,9 +17,9 @@
           <q-card-section class="justify-center items-center content-center">
             <div>Adding new Wallet</div>
             <q-select
-              v-model="form.options"
+              v-model="form.wallet_type_id"
               class="row q-mb-md"
-              :options="options"
+              :options="wallet_type_id"
               label="Type of new wallet"
               emit-value
               map-options
@@ -34,10 +34,10 @@
               :rules="[val => !!val || 'Field is required']"
             />
             <q-select
-              v-model="form.icons"
+              v-model="form.icon"
               class="row q-mb-md"
               label="Choose an icon"
-              :options="icons"
+              :options="icon"
               emit-value
               map-options
               float-label="Icon for new wallet"
@@ -93,17 +93,17 @@ export default {
   setup() {
     return {
       v$: useVuelidate(),
-      options: [{ label: 'Debit', value: '1' }, { label: 'Credit', value: '2' }],
-      icons: [{ label: 'Cash', value: 'fas fa-money-bill-wave' }, { label: 'Card', value: 'far fa-credit-card' }, { label: 'Bank Account', value: 'fas fa-university' }, { label: 'Savings', value: 'fas fa-piggy-bank' }],
+      wallet_type_id: [{ label: 'Debit', value: '1' }, { label: 'Credit', value: '2' }],
+      icon: [{ label: 'Cash', value: 'fas fa-money-bill-wave' }, { label: 'Card', value: 'far fa-credit-card' }, { label: 'Bank Account', value: 'fas fa-university' }, { label: 'Savings', value: 'fas fa-piggy-bank' }],
     };
   },
   data() {
     return {
       showDialog: false,
       form: {
-        options: ref(null),
+        wallet_type_id: ref(null),
         name: null,
-        icons: ref(null),
+        icon: ref(null),
         ballance: null,
         ballance_date: Date.now(),
       },
@@ -112,9 +112,9 @@ export default {
   validations() {
     return {
       form: {
-        options: { required },
+        wallet_type_id: { required },
         name: { required },
-        icons: { required },
+        icon: { required },
         ballance: { required },
       },
     };
