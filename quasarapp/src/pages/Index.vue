@@ -78,13 +78,13 @@
           <q-item-section avatar>
             <q-avatar>
               <q-icon
-                v-if="transaction.transaction_type.id === transactionType.INCOME"
+                v-if="transaction.transaction_type_id === 1"
                 class="text-positive"
                 name="fas fa-chevron-down"
                 :size="'1.5em'"
               />
               <q-icon
-                v-else-if="transaction.transaction_type.id === transactionType.EXPENSE"
+                v-else-if="transaction.transaction_type_id === 2"
                 class="text-negative"
                 name="fas fa-chevron-up"
                 :size="'1.5em'"
@@ -99,9 +99,12 @@
           </q-item-section>
           <q-item-section>
             <q-item-label
-              v-if="transaction.transaction_type.id !== transactionType.TRANSFER"
+              v-if="transaction.transaction_type_id !== transactionType.TRANSFER"
             >
               {{ transaction.category.name }}
+            </q-item-label>
+            <q-item-label
+              v-else> Transfer
             </q-item-label>
             <q-item-label class="text-secondary">
               {{ transaction.transacted_at }}
@@ -110,13 +113,13 @@
         </q-item>
         <q-item>
           <q-item-label
-            v-if="transaction.transaction_type_id === transactionType.INCOME"
+            v-if="transaction.transaction_type_id === 1"
             class="q-pt-sm text-positive"
           >
             +{{ transaction.amount }} ₽
           </q-item-label>
           <q-item-label
-            v-else-if="transaction.transaction_type_id === transactionType.EXPENSE"
+            v-else-if="transaction.transaction_type_id === 2"
             class="q-pt-sm text-negative"
           >
             -{{ transaction.amount }} ₽
@@ -136,7 +139,6 @@
 <script>
 import { defineComponent } from 'vue';
 import { mapActions, mapState } from 'vuex';
-import { useQuasar } from 'quasar';
 import DialogForm from '../components/appDialog/DialogForm.vue';
 
 const transactionType = {
@@ -146,7 +148,6 @@ const transactionType = {
 };
 
 export default defineComponent({
-
   name: 'Index',
   data: () => ({
     transactionType,
@@ -164,22 +165,10 @@ export default defineComponent({
       await this.getCategoriesAction();
       await this.getTransactionsAction();
     },
-    async openDialog() {
-      const $q = useQuasar();
-      $q.dialog({
+    openDialog() {
+      this.$q.dialog({
         component: DialogForm,
         parent: this,
-        componentProps: {
-          text: 'something',
-          // ...more..props...
-        },
-      }).onOk(() => {
-        console.log('OK');
-        // place where data should be sent to API
-      }).onCancel(() => {
-        console.log('Cancel');
-      }).onDismiss(() => {
-        console.log('Called on OK or Cancel'); // DELETE CONSOLE AFTER UPDATE WITH FORM VERIFICATION
       });
     },
   },

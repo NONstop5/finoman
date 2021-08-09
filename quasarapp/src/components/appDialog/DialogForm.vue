@@ -1,56 +1,60 @@
 <template>
   <!-- notice dialogRef here -->
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
-    <q-card class="q-dialog-plugin">
-      <!--
+  <div>
+    <q-dialog
+      ref="dialogRef"
+      @hide="onDialogHide"
+    >
+      <div>
+        <q-card class="q-dialog-plugin">
+          <!--
         ...content
         ... use q-card-section for it?
       -->
-      <q-select
-        v-model="form.options"
-        :options="options"
-        label="Standard"
-        emit-value
-        map-options
-      />
-      <div class="row q-mb-md">
-        <q-input
-          v-model="form.name"
-          type="text"
-          float-label="Name of new wallet"
-        />
+          <q-select
+            v-model="form.options"
+            :options="options"
+            label="Standard"
+            emit-value
+            map-options
+          />
+          <div class="row q-mb-md">
+            <q-input
+              v-model="form.name"
+              type="text"
+              float-label="Name of new wallet"
+            />
+          </div>
+          <div class="row q-mb-md">
+            <q-input
+              v-model="form.icon"
+              float-label="Icon for new wallet"
+            />
+          </div>
+          <div class="row q-mb-md">
+            <q-input
+              v-model="form.ballance"
+              type="number"
+              float-label="Balance of new wallet"
+            />
+          </div>
+          <!-- buttons example -->
+          <q-card-actions align="right">
+            <q-btn
+              color="secondary"
+              label="OK"
+              @click="onOKClick"
+            />
+            <q-btn
+              color="secondary"
+              label="Cancel"
+              @click="onCancelClick"
+            />
+          </q-card-actions>
+        </q-card>
       </div>
-      <div class="row q-mb-md">
-        <q-input
-          v-model="form.icon"
-          float-label="Icon for new wallet"
-        />
-      </div>
-      <div class="row q-mb-md">
-        <q-input
-          v-model="form.ballance"
-          type="number"
-          float-label="Balance of new wallet"
-        />
-      </div>
-      <!-- buttons example -->
-      <q-card-actions align="right">
-        <q-btn
-          color="secondary"
-          label="OK"
-          @click="onOKClick"
-        />
-        <q-btn
-          color="secondary"
-          label="Cancel"
-          @click="onCancelClick"
-        />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+    </q-dialog>
+  </div>
 </template>
 
 <script>
@@ -64,7 +68,7 @@ export default {
   },
   emits: [
     // REQUIRED
-    'ok', 'hide', 'data',
+    'ok', 'hide', 'data', 'show',
   ],
   setup() {
     return {
@@ -88,7 +92,6 @@ export default {
     ...mapActions('user', ['addWalletAction']),
     displaydata() {
       this.$q.notify(JSON.stringify(this.form));
-      console.log(this.form);
       this.addWalletAction(JSON.stringify(this.form));
     },
     // following method is REQUIRED
