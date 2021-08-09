@@ -5,56 +5,54 @@
       ref="categoryAddRef"
       @hide="onDialogHide"
     >
-      <div
-        class="q-gutter-y-md column"
-        style="max-width: 400px"
-      >
-        <q-card class="q-dialog-plugin">
-          <q-card-section class="justify-center items-center content-center">
-            <div>Adding new Category</div>
-            <q-select
-              v-model="form.category_type_id"
-              class="row q-mb-md"
-              :options="category_type_id"
-              label="Type of new category"
-              emit-value
-              map-options
-              :rules="[val => !!val || 'Field is required']"
-            />
-            <q-input
-              v-model="form.name"
-              class="row q-mb-md"
-              label="Name of new category"
-              type="text"
-              float-label="Name of new category"
-              :rules="[val => !!val || 'Field is required']"
-            />
-            <q-input
-              v-model="form.budget"
-              class="row q-mb-md"
-              label="Enter budget for new category"
-              type="number"
-              float-label="Budget of new category"
-              required
-            />
-          </q-card-section>
-          <q-card-actions
-            class="row q-mb-md"
-            align="center"
-          >
-            <q-btn
-              color="secondary"
-              label="OK"
-              @click="onOKClick"
-            />
-            <q-btn
-              color="secondary"
-              label="Cancel"
-              @click="onCancelClick"
-            />
-          </q-card-actions>
-        </q-card>
-      </div>
+      <!-- <div
+      > -->
+      <q-card class="q-dialog-plugin q-pa-md">
+        <!-- <q-card-section class="justify-center items-center content-center"> -->
+        <div>Adding new Category</div>
+        <q-select
+          v-model="form.category_type_id"
+          class="q-mb-md"
+          :options="category_type_id"
+          label="Type of new category"
+          emit-value
+          map-options
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input
+          v-model="form.name"
+          class="q-mb-md"
+          label="Name of new category"
+          type="text"
+          float-label="Name of new category"
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input
+          v-model="form.budget"
+          class="q-mb-md"
+          label="Enter budget for new category"
+          type="number"
+          float-label="Budget of new category"
+          required
+        />
+        <!-- </q-card-section> -->
+        <q-card-actions
+          class="q-mb-md"
+          align="center"
+        >
+          <q-btn
+            color="secondary"
+            label="OK"
+            @click="onOKClick"
+          />
+          <q-btn
+            color="secondary"
+            label="Cancel"
+            @click="onCancelClick"
+          />
+        </q-card-actions>
+      </q-card>
+      <!-- </div> -->
     </q-dialog>
   </div>
 </template>

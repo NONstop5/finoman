@@ -29,6 +29,7 @@ const parseList = (response) => {
 
 const getWallets = async () => {
   try {
+    console.log(state.token);
     const response = await axios.get('/api/wallets', {}, {
       headers: {
         'Content-Type': 'application/json',

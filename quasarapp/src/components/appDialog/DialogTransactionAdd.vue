@@ -1,60 +1,52 @@
 <template>
-  <!-- notice dialogRef here -->
   <div>
     <q-dialog
       ref="transactionAddRef"
       @hide="onDialogHide"
     >
-      <div
-        class="q-gutter-y-md column"
-        style="max-width: 400px"
-      >
-        <q-card class="q-dialog-plugin">
-          <q-card-section class="justify-center items-center content-center">
-            <div>Transaction</div>
-            <q-select
-              v-model="form.category_type_id"
-              class="row q-mb-md"
-              :options="category_type_id"
-              label="Test"
-              emit-value
-              map-options
-              :rules="[val => !!val || 'Field is required']"
-            />
-            <q-input
-              v-model="form.name"
-              class="row q-mb-md"
-              label="test"
-              type="text"
-              float-label="Name of new category"
-              :rules="[val => !!val || 'Field is required']"
-            />
-            <q-input
-              v-model="form.budget"
-              class="row q-mb-md"
-              label="test"
-              type="number"
-              float-label="Budget of new category"
-              required
-            />
-          </q-card-section>
-          <q-card-actions
-            class="row q-mb-md"
-            align="center"
-          >
-            <q-btn
-              color="secondary"
-              label="OK"
-              @click="onOKClick"
-            />
-            <q-btn
-              color="secondary"
-              label="Cancel"
-              @click="onCancelClick"
-            />
-          </q-card-actions>
-        </q-card>
-      </div>
+      <q-card class="q-dialog-plugin q-pa-md">
+        <div>Add new transaction</div>
+        <q-select
+          v-model="form.category_type_id"
+          class="q-mb-md"
+          :options="category_type_id"
+          label="Test"
+          emit-value
+          map-options
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input
+          v-model="form.name"
+          class="q-mb-md"
+          label="test"
+          type="text"
+          float-label="Name of new category"
+          :rules="[val => !!val || 'Field is required']"
+        />
+        <q-input
+          v-model="form.budget"
+          class="q-mb-md"
+          label="test"
+          type="number"
+          float-label="Budget of new category"
+          required
+        />
+        <q-card-actions
+          class="q-mb-md"
+          align="center"
+        >
+          <q-btn
+            color="secondary"
+            label="OK"
+            @click="onOKClick"
+          />
+          <q-btn
+            color="secondary"
+            label="Cancel"
+            @click="onCancelClick"
+          />
+        </q-card-actions>
+      </q-card>
     </q-dialog>
   </div>
 </template>

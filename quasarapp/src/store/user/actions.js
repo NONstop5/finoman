@@ -25,7 +25,7 @@ function login({ commit }, payload) {
       commit('setToken', response.data.token);
 
       showSuccessNotification('You\'ve been authenticated!');
-      this.$router.push('/index');
+      this.$router.push('/hello');
     })
     .catch(() => {
       showErrorNotification('You\'re not authenticated!');
