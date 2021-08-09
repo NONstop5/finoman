@@ -59,6 +59,7 @@
           glossy
           color="secondary"
           icon="fas fa-plus"
+          @click="dialogCategoryAdd"
         />
       </div>
       <q-separator
@@ -101,10 +102,12 @@
             <q-item-label
               v-if="transaction.transaction_type_id !== transactionType.TRANSFER"
             >
-              {{ transaction.category.name }}
+              <!-- {{ transaction.category.name }} accessing sucessfully but throw error?-->
             </q-item-label>
             <q-item-label
-              v-else> Transfer
+              v-else
+            >
+              Transfer
             </q-item-label>
             <q-item-label class="text-secondary">
               {{ transaction.transacted_at }}
@@ -139,7 +142,8 @@
 <script>
 import { defineComponent } from 'vue';
 import { mapActions, mapState } from 'vuex';
-import DialogForm from '../components/appDialog/DialogForm.vue';
+import DialogCategoryAdd from '../components/appDialog/DialogCategoryAdd.vue';
+import DialogWalletAdd from '../components/appDialog/DialogWalletAdd.vue';
 
 const transactionType = {
   INCOME: 1,
@@ -167,7 +171,13 @@ export default defineComponent({
     },
     openDialog() {
       this.$q.dialog({
-        component: DialogForm,
+        component: DialogWalletAdd,
+        parent: this,
+      });
+    },
+    dialogCategoryAdd() {
+      this.$q.dialog({
+        component: DialogCategoryAdd,
         parent: this,
       });
     },

@@ -5,41 +5,58 @@
       ref="dialogRef"
       @hide="onDialogHide"
     >
-      <div>
+      <div
+        class="q-gutter-y-md column"
+        style="max-width: 400px"
+      >
         <q-card class="q-dialog-plugin">
           <!--
         ...content
         ... use q-card-section for it?
       -->
-          <q-select
-            v-model="form.options"
-            :options="options"
-            label="Standard"
-            emit-value
-            map-options
-          />
-          <div class="row q-mb-md">
+          <q-card-section class="justify-center items-center content-center">
+            <div>Adding new Wallet</div>
+            <q-select
+              v-model="form.options"
+              class="row q-mb-md"
+              :options="options"
+              label="Type of new wallet"
+              emit-value
+              map-options
+              :rules="[val => !!val || 'Field is required']"
+            />
             <q-input
               v-model="form.name"
+              class="row q-mb-md"
+              label="Name of new wallet"
               type="text"
               float-label="Name of new wallet"
+              :rules="[val => !!val || 'Field is required']"
             />
-          </div>
-          <div class="row q-mb-md">
-            <q-input
-              v-model="form.icon"
+            <q-select
+              v-model="form.icons"
+              class="row q-mb-md"
+              label="Choose an icon"
+              :options="icons"
+              emit-value
+              map-options
               float-label="Icon for new wallet"
+              required
             />
-          </div>
-          <div class="row q-mb-md">
             <q-input
               v-model="form.ballance"
+              class="row q-mb-md"
+              label="Enter balance for new wallet"
               type="number"
               float-label="Balance of new wallet"
+              required
             />
-          </div>
           <!-- buttons example -->
-          <q-card-actions align="right">
+          </q-card-section>
+          <q-card-actions
+            class="row q-mb-md"
+            align="center"
+          >
             <q-btn
               color="secondary"
               label="OK"
@@ -60,9 +77,12 @@
 <script>
 import { mapActions } from 'vuex';
 import { ref } from 'vue';
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
+import { showErrorNotification } from '../../functions/function-show-notifications';
 
 export default {
-  name: 'DialogForm',
+  name: 'DialogWalletAdd',
   props: {
     // ...your custom props
   },
@@ -72,7 +92,9 @@ export default {
   ],
   setup() {
     return {
+      v$: useVuelidate(),
       options: [{ label: 'Debit', value: '1' }, { label: 'Credit', value: '2' }],
+      icons: [{ label: 'Cash', value: 'fas fa-money-bill-wave' }, { label: 'Card', value: 'far fa-credit-card' }, { label: 'Bank Account', value: 'fas fa-university' }, { label: 'Savings', value: 'fas fa-piggy-bank' }],
     };
   },
   data() {
@@ -81,9 +103,19 @@ export default {
       form: {
         options: ref(null),
         name: null,
-        icon: null,
+        icons: ref(null),
         ballance: null,
         ballance_date: Date.now(),
+      },
+    };
+  },
+  validations() {
+    return {
+      form: {
+        options: { required },
+        name: { required },
+        icons: { required },
+        ballance: { required },
       },
     };
   },
@@ -116,12 +148,18 @@ export default {
       // on OK, it is REQUIRED to
       // emit "ok" event (with optional payload)
       // before hiding the QDialog
-      this.displaydata(); // DELETE AFTER CONFIREMED VERSION FOR DEMO ONLY
-      this.$emit('ok');
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        this.displaydata(); // DELETE AFTER CONFIREMED VERSION FOR DEMO ONLY
+        this.$emit('ok');
+        this.hide();
+      } else {
+        showErrorNotification('Complete all fields');
+      }
+
       // or with payload: this.$emit('ok', { ... })
 
       // then hiding dialog
-      this.hide();
     },
 
     onCancelClick() {
