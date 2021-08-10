@@ -1,4 +1,4 @@
-import { api } from 'boot/axios';
+import { api, axios } from 'boot/axios';
 import {
   Loading,
   LocalStorage,
@@ -38,16 +38,11 @@ function login({ commit }, payload) {
     });
 }
 
-function logout({ commit, state }) {
+function logout({ commit }) {
   Loading.show();
 
   api
-    .post('/api/logout', {}, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.token}`,
-      },
-    })
+    .post('/api/logout', {})
     .then(() => {
       showSuccessNotification('You\'ve been logged out!');
     })
@@ -76,7 +71,7 @@ function getState({ commit }) {
 function register({ commit }, payload) {
   Loading.show();
 
-  api
+  axios
     .post('/api/register', {
       name: payload.name,
       email: payload.email,
@@ -94,7 +89,7 @@ function register({ commit }, payload) {
 }
 
 async function addWalletAction({ commit }, wallet) {
-  // const addedWallet =
+  // const addedWallet = CHANGE BACK WHEN WORKS
   await dataService.addWallet(wallet);
   commit('ADD_WALLET', wallet);
 }
@@ -118,8 +113,9 @@ async function getCategoriesAction({ commit }) {
   commit('GET_CATEGORIES', categories);
 }
 async function addCategoryAction({ commit }, category) {
-  const addedCategory = await dataService.addCategory(category);
-  commit('ADD_CATEGORY', addedCategory);
+  // const addedCategory = UNCOMMENT WHEN WORKS
+  await dataService.addCategory(category);
+  commit('ADD_CATEGORY', category);
 }
 async function updateCategoryAction({ commit }, category) {
   const updatedCategory = await dataService.updateCategory(category);

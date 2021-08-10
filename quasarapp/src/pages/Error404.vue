@@ -2,8 +2,7 @@
   <div class="fullscreen bg-dark text-white text-center q-pa-md flex flex-center">
     <div class="column justify-around">
       <div
-        style="font-size: 20px"
-        class="text-secondary"
+        class="text-secondary text-h4"
       >
         Your Logo can be here...
       </div>
