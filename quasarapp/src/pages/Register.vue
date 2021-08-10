@@ -101,12 +101,10 @@ export default {
   },
   validations() {
     return {
-      // ATTENTION! FIX VALIDATION AFTER SERVER SIDE ACCEPTS NAME NOT AS EMAIL.
-      formData: {
         name: {
           required,
-          email,
           maxLength: maxLength(16),
+          alphaNum,
         },
         email: {
           required,
