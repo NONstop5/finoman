@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -44,11 +45,21 @@ class CategoryController extends Controller
      *
      * @param Request $request
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request):JsonResponse
     {
-        //
+        return response()->json(
+            Category::query()
+            ->create([
+                'user_id' => Auth::id(),
+                'category_type_id' => $request['category_type_id'],
+                'name' => $request['name'],
+                'budget' => $request['budget'],
+                'icon' => 'tag'
+            ]),
+            Response::HTTP_CREATED
+        );
     }
 
     /**
