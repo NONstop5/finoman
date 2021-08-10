@@ -1,12 +1,12 @@
-import axios from 'axios';
+import { api } from 'src/boot/axios';
 import { showErrorNotification } from 'src/functions/function-show-notifications';
-import state from '../user/state';
 
 const parseItem = (response, code) => {
   if (response.status !== code) {
     throw Error(response.message);
   }
   let item = response.data;
+  debugger;
   if (typeof item !== 'object') {
     item = undefined;
   }
@@ -18,7 +18,6 @@ const parseItemConfig = (response, code) => {
     throw Error(response.message);
   }
   let item = JSON.parse(response.config.data);
-  debugger;
   if (typeof item !== 'object') {
     item = undefined;
   }
@@ -41,15 +40,10 @@ const parseList = (response) => {
 
 const getWallets = async () => {
   try {
-    const response = await axios.get('/api/wallets', {}, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.token}`,
-      },
-    });
+    const response = await api.get('/api/wallets');
     return parseList(response);
     // const wallets = data.map(w => )
-    //  filter might be needed here
+    // filter might be needed here
   } catch (error) {
     showErrorNotification(error);
     return [];
@@ -58,7 +52,7 @@ const getWallets = async () => {
 
 const getWallet = async (typeId) => {
   try {
-    const response = await axios.get(`/api/wallets/${typeId}`);
+    const response = await api.get(`/api/wallets/${typeId}`);
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -68,7 +62,7 @@ const getWallet = async (typeId) => {
 
 const updateWallet = async (wallet) => {
   try {
-    const response = await axios.put(`/api/wallets/${wallet.id}`, wallet);
+    const response = await api.put(`/api/wallets/${wallet.id}`, wallet);
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -78,8 +72,8 @@ const updateWallet = async (wallet) => {
 
 const addWallet = async (wallet) => {
   try {
-    const response = await axios.post('api/wallets', wallet);
-    return parseItem(response, 200);
+    const response = await api.post('api/wallets', wallet);
+    return response;// parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return null;
@@ -88,7 +82,7 @@ const addWallet = async (wallet) => {
 
 const deleteWallet = async (wallet) => {
   try {
-    const response = await axios.delete(`api/wallets/${wallet.id}`);
+    const response = await api.delete(`api/wallets/${wallet.id}`);
     parseItem(response, 200);
     return wallet.id;
   } catch (error) {
@@ -98,18 +92,25 @@ const deleteWallet = async (wallet) => {
 };
 async function getCategories() {
   try {
-    const response = await axios.get('api/categories');
+    const response = await api.get('api/categories');
     return parseList(response);
   } catch (error) {
     showErrorNotification(error);
     return [];
   }
 }
-
+const addCategory = async (category) => {
+  try {
+    const response = await api.post('api/categories', category);
+    return parseItemConfig(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return null;
+  }
+};
 const updateCategory = async (category) => {
   try {
-    const response = await axios.put(`/api/categories/${category.id}`, category);
-    debugger;
+    const response = await api.put(`/api/categories/${category.id}`, category);
     return parseItemConfig(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -119,7 +120,7 @@ const updateCategory = async (category) => {
 
 async function getTran() {
   try {
-    const response = await axios.get('api/transactions'); // test change last part of url later
+    const response = await api.get('api/transactions'); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -134,6 +135,7 @@ export const dataService = {
   addWallet,
   deleteWallet,
   getCategories,
+  addCategory,
   updateCategory,
   getTran,
   parseItem,
