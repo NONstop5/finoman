@@ -18,4 +18,9 @@ class Wallet extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
