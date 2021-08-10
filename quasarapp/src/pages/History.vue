@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex column ">
     <div class="flex justify-between items-center q-ma-lg">
-      <span class="text-h5">History: {{ date }}</span>
+      <span class="text-h5">History: {{ getDate(date) }}</span>
       <q-btn
         icon="event"
         round
@@ -18,6 +18,7 @@
             color="secondary"
             class="text-secondary"
             model-value=""
+            @click="save"
           >
             <div
               class="row items-center justify-end q-gutter-sm"
@@ -33,7 +34,7 @@
                 label="OK"
                 color="secondary"
                 flat
-                @click="save"
+                @click="getSortTran(date)"
               />
             </div>
           </q-date>
@@ -57,75 +58,32 @@
           <div
             class="text-h4 text-positive"
           >
-            5000  ₽
+            {{this.transactions.total}}  ₽
           </div>
           <div
             class="text-h5"
           >
-            January
+            {{getMonth(date)}}
           </div>
         </div>
       </q-circular-progress>
     </div>
-    <q-card
-      v-for="transaction in transactions"
-      :key="transaction.name"
-      class="bg-dark flex justify-between items-center q-mb-lg"
-    >
-      <q-item>
-        <q-item-section
-          avatar
-        >
-          <q-avatar>
-            <q-icon
-              v-if="transaction.spending"
-              name="fas fa-chevron-down"
-              :size="'1.5em'"
-            />
-            <q-icon
-              v-else
-              name="fas fa-chevron-up"
-              :size="'1.5em'"
-            />
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>
-            {{ transaction.name }}
-          </q-item-label>
-          <q-item-label
-            class="text-secondary"
-          >
-            {{ transaction.date }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-label
-          v-if="transaction.spending"
-          class="q-pt-sm"
-        >
-          -{{ transaction.price }} ₽
-        </q-item-label>
-        <q-item-label
-          v-else
-          class="q-pt-sm text-positive"
-        >
-          +{{ transaction.price }} ₽
-        </q-item-label>
-      </q-item>
-    </q-card>
+    <ListTransaction :transactions="transactions"/>
   </q-page>
 </template>
 
 <script>
+import { date as qdate } from 'quasar';
 import { defineComponent, ref } from 'vue';
+import { mapActions, mapState } from 'vuex';
+import ListTransaction from '../components/ListTransaction.vue';
 
 export default defineComponent({
   name: 'History',
+  components: { ListTransaction },
   setup() {
-    const date = ref('2021/07/29');
-    const proxyDate = ref('2021/07/29');
+    const date = ref(Date.now());
+    const proxyDate = ref(Date.now());
 
     return {
       date,
@@ -140,44 +98,28 @@ export default defineComponent({
       },
     };
   },
-  data() {
-    return {
-      cards: [
-        {
-          name: 'card.name',
-          balanse: 'card.balanse',
-        },
-      ],
-      accounts: null,
-      categories: [
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-        {
-          title: 'Product',
-          name: 'fas fa-hamburger',
-        },
-      ],
-      transactions: [
-        {
-          name: 'Products',
-          date: '10 Jan, 10:55',
-          price: 1500,
-          spending: true,
-        },
-        {
-          name: 'Products',
-          date: '10 Jan, 10:55',
-          price: 1500,
-          spending: false,
-        },
-      ],
-    };
+  computed: {
+    ...mapState('user', ['transactions']),
+
+  },
+  async created() {
+    await this.loadInfo();
+  },
+  methods: {
+    ...mapActions('user', ['getSortTransactionsAction']),
+    async loadInfo(date = '') {
+      await this.getSortTransactionsAction(date);
+    },
+    getDate(timeStamp) {
+      return qdate.formatDate(timeStamp, 'YYYY-MM-DD');
+    },
+    getMonth(timeStamp) {
+      return qdate.formatDate(timeStamp, 'MMMM');
+    },
+    getSortTran(date) {
+      console.log(this.getDate(date));
+      this.loadInfo(`transacted_at_from=${this.getDate(date)}`);
+    },
   },
 });
 </script>
