@@ -112,7 +112,7 @@ export default {
   },
   async created() {
     await this.loadInfo();
-    console.log(this.categories);
+    // console.log(this.categories);
   },
   methods: {
     ...mapActions('user', ['getCategoriesAction', 'updateCategoryAction']),
