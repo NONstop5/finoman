@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Wallet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -44,11 +45,23 @@ class WalletController extends Controller
      *
      * @param Request $request
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        return response()->json(
+            Wallet::query()
+                ->create([
+                    'user_id' => Auth::id(),
+                    'currency_id' => 1,
+                    'wallet_type_id' => $request['wallet_type_id'],
+                    'name' => $request['name'],
+                    'balance' => $request['ballance'],
+                    'balance_date' => $request['ballance_date'],
+                    'icon' => $request['icon'],
+                ]),
+            Response::HTTP_CREATED
+        );
     }
 
     /**
@@ -60,7 +73,7 @@ class WalletController extends Controller
      */
     public function show(Wallet $wallet)
     {
-        //
+
     }
 
     /**
