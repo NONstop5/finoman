@@ -25,7 +25,7 @@ function login({ commit }, payload) {
       commit('setToken', response.data.token);
 
       showSuccessNotification('You\'ve been authenticated!');
-      this.$router.push('/hello');
+      this.$router.push('/index');
     })
     .catch(() => {
       showErrorNotification('You\'re not authenticated!');
@@ -38,16 +38,11 @@ function login({ commit }, payload) {
     });
 }
 
-function logout({ commit, state }) {
+function logout({ commit }) {
   Loading.show();
 
   api
-    .post('/api/logout', {}, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.token}`,
-      },
-    })
+    .post('/api/logout', {})
     .then(() => {
       showSuccessNotification('You\'ve been logged out!');
     })
