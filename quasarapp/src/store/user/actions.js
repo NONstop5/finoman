@@ -1,4 +1,4 @@
-import { api } from 'boot/axios';
+import { api, axios } from 'boot/axios';
 import {
   Loading,
   LocalStorage,
@@ -71,7 +71,7 @@ function getState({ commit }) {
 function register({ commit }, payload) {
   Loading.show();
 
-  api
+  axios
     .post('/api/register', {
       name: payload.name,
       email: payload.email,
