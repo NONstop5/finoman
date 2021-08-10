@@ -12,6 +12,17 @@ const parseItem = (response, code) => {
   return item;
 };
 
+const parseItemConfig = (response, code) => {
+  if (response.status !== code) {
+    throw Error(response.message);
+  }
+  let item = JSON.parse(response.config.data);
+  if (typeof item !== 'object') {
+    item = undefined;
+  }
+  return item;
+};
+
 const parseList = (response) => {
   if (response.status !== 200) {
     throw Error(response.message);
@@ -61,7 +72,7 @@ const updateWallet = async (wallet) => {
 const addWallet = async (wallet) => {
   try {
     const response = await api.post('api/wallets', wallet);
-    return response; // parseItem(response, 200);
+    return response;// parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return null;
@@ -87,18 +98,38 @@ async function getCategories() {
     return [];
   }
 }
-async function addCategory() {
+const addCategory = async (category) => {
   try {
-    const response = await api.post('api/categories');
-    return response; // parseItem(response, 200);
+    const response = await api.post('api/categories', category);
+    return parseItemConfig(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return null;
   }
-}
+};
+const updateCategory = async (category) => {
+  try {
+    const response = await api.put(`/api/categories/${category.id}`, category);
+    return parseItemConfig(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return null;
+  }
+};
+
 async function getTran() {
   try {
     const response = await api.get('api/transactions'); // test change last part of url later
+    return parseItem(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return [];
+  }
+}
+
+async function getSortTran(date) {
+  try {
+    const response = await api.get(`api/transactions?${date}`); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
@@ -114,7 +145,9 @@ export const dataService = {
   deleteWallet,
   getCategories,
   addCategory,
+  updateCategory,
   getTran,
+  getSortTran,
   parseItem,
   parseList,
 };

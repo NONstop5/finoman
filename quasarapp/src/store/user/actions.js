@@ -1,4 +1,4 @@
-import { api, axios } from 'boot/axios';
+import { api } from 'boot/axios';
 import {
   Loading,
   LocalStorage,
@@ -38,11 +38,16 @@ function login({ commit }, payload) {
     });
 }
 
-function logout({ commit }) {
+function logout({ commit, state }) {
   Loading.show();
 
   api
-    .post('/api/logout', {})
+    .post('/api/logout', {}, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${state.token}`,
+      },
+    })
     .then(() => {
       showSuccessNotification('You\'ve been logged out!');
     })
@@ -71,7 +76,7 @@ function getState({ commit }) {
 function register({ commit }, payload) {
   Loading.show();
 
-  axios
+  api
     .post('/api/register', {
       name: payload.name,
       email: payload.email,
@@ -89,9 +94,8 @@ function register({ commit }, payload) {
 }
 
 async function addWalletAction({ commit }, wallet) {
-  // const addedWallet = CHANGE BACK WHEN WORKS
-  await dataService.addWallet(wallet);
-  commit('ADD_WALLET', wallet);
+  const addedWallet = await dataService.addWallet(wallet);
+  commit('ADD_WALLET', addedWallet);
 }
 
 async function getWalletsAction({ commit }) {
@@ -113,9 +117,8 @@ async function getCategoriesAction({ commit }) {
   commit('GET_CATEGORIES', categories);
 }
 async function addCategoryAction({ commit }, category) {
-  // const addedCategory = UNCOMMENT WHEN WORKS
-  await dataService.addCategory(category);
-  commit('ADD_CATEGORY', category);
+  const addedCategory = await dataService.addCategory(category);
+  commit('ADD_CATEGORY', addedCategory);
 }
 async function updateCategoryAction({ commit }, category) {
   const updatedCategory = await dataService.updateCategory(category);
@@ -127,6 +130,11 @@ async function deleteCategoryAction({ commit }, category) {
 }
 async function getTransactionsAction({ commit }) {
   const transactions = await dataService.getTran();
+  commit('GET_TRANSACTIONS', transactions);
+}
+
+async function getSortTransactionsAction({ commit }, date) {
+  const transactions = await dataService.getSortTran(date);
   commit('GET_TRANSACTIONS', transactions);
 }
 
@@ -162,4 +170,5 @@ export {
   addCategoryAction,
   updateCategoryAction,
   deleteCategoryAction,
+  getSortTransactionsAction,
 };
