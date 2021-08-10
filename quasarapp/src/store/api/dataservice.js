@@ -6,7 +6,6 @@ const parseItem = (response, code) => {
     throw Error(response.message);
   }
   let item = response.data;
-  debugger;
   if (typeof item !== 'object') {
     item = undefined;
   }
