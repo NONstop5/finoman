@@ -127,6 +127,16 @@ async function getTran() {
   }
 }
 
+async function getSortTran(date) {
+  try {
+    const response = await api.get(`api/transactions?${date}`); // test change last part of url later
+    return parseItem(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return [];
+  }
+}
+
 export const dataService = {
   getWallets,
   getWallet,
@@ -137,6 +147,7 @@ export const dataService = {
   addCategory,
   updateCategory,
   getTran,
+  getSortTran,
   parseItem,
   parseList,
 };
