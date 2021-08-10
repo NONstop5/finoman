@@ -101,25 +101,24 @@ export default {
   },
   validations() {
     return {
-        name: {
-          required,
-          maxLength: maxLength(16),
-          alphaNum,
-        },
-        email: {
-          required,
-          email,
-        },
-        password: {
-          alphaNum,
-          required,
-          minLength: minLength(8),
-          maxLength: maxLength(32),
-        },
-        password_confirmation: {
-          required,
-          sameAsPassword: sameAs(this.formData.password),
-        },
+      name: {
+        required,
+        maxLength: maxLength(16),
+        alphaNum,
+      },
+      email: {
+        required,
+        email,
+      },
+      password: {
+        alphaNum,
+        required,
+        minLength: minLength(8),
+        maxLength: maxLength(32),
+      },
+      password_confirmation: {
+        required,
+        sameAsPassword: sameAs(this.formData.password),
       },
     };
   },
