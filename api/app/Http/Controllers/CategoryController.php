@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\WalletRequest;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -47,15 +49,17 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
      */
-    public function store(Request $request):JsonResponse
+    public function store(CategoryRequest $request):JsonResponse
     {
+        $validated = $request->validated();
+
         return response()->json(
             Category::query()
             ->create([
                 'user_id' => Auth::id(),
-                'category_type_id' => $request['category_type_id'],
-                'name' => $request['name'],
-                'budget' => $request['budget'],
+                'category_type_id' => $validated['category_type_id'],
+                'name' => $validated['name'],
+                'budget' => $validated['budget'],
                 'icon' => 'tag'
             ]),
             Response::HTTP_CREATED
@@ -67,11 +71,11 @@ class CategoryController extends Controller
      *
      * @param Category $category
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function show(Category $category)
+    public function show(Category $category): JsonResponse
     {
-        //
+        return response()->json($category->toArray());
     }
 
     /**
@@ -80,11 +84,18 @@ class CategoryController extends Controller
      * @param Request $request
      * @param Category $category
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category): JsonResponse
     {
-        //
+        $validated = $request->validated();
+
+        return response()->json($category->update([
+            'category_type_id' => $validated['category_type_id'],
+            'name' => $validated['name'],
+            'budget' => $validated['budget'],
+            'icon' => 'tag'
+        ]));
     }
 
     /**
@@ -92,10 +103,11 @@ class CategoryController extends Controller
      *
      * @param Category $category
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
-        //
+        $category->delete();
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
