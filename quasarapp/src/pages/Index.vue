@@ -106,7 +106,6 @@
                 v-if="transaction.transaction_type_id !== transactionType.TRANSFER"
               >
                 {{ transaction.category.name }}
-              <!-- //accessing sucessfully but throw error? -->
               </q-item-label>
               <q-item-label
                 v-else

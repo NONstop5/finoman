@@ -1,5 +1,4 @@
 <template>
-  <!-- notice dialogRef here -->
   <div>
     <q-dialog
       ref="dialogRef"
@@ -68,14 +67,13 @@ import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { showErrorNotification } from '../../functions/function-show-notifications';
+import { formatedTimestamp } from '../../functions/formatedTimestamp';
 
 export default {
   name: 'DialogWalletAdd',
   props: {
-    // ...your custom props
   },
   emits: [
-    // REQUIRED
     'ok', 'hide', 'data', 'show',
   ],
   setup() {
@@ -93,7 +91,7 @@ export default {
         name: null,
         icon: ref(null),
         ballance: null,
-        ballance_date: Date.now(),
+        ballance_date: formatedTimestamp(),
       },
     };
   },
@@ -107,35 +105,22 @@ export default {
       },
     };
   },
-
   methods: {
     ...mapActions('user', ['addWalletAction']),
     displaydata() {
       this.$q.notify(JSON.stringify(this.form));
       this.addWalletAction(JSON.stringify(this.form));
     },
-    // following method is REQUIRED
-    // (don't change its name --> "show")
     show() {
       this.$refs.dialogRef.show();
     },
-
-    // following method is REQUIRED
-    // (don't change its name --> "hide")
     hide() {
       this.$refs.dialogRef.hide();
     },
-
     onDialogHide() {
-      // required to be emitted
-      // when QDialog emits "hide" event
       this.$emit('hide');
     },
-
     onOKClick() {
-      // on OK, it is REQUIRED to
-      // emit "ok" event (with optional payload)
-      // before hiding the QDialog
       this.v$.$validate();
       if (!this.v$.$error) {
         this.displaydata(); // DELETE AFTER CONFIREMED VERSION FOR DEMO ONLY
@@ -144,14 +129,8 @@ export default {
       } else {
         showErrorNotification('Complete all fields');
       }
-
-      // or with payload: this.$emit('ok', { ... })
-
-      // then hiding dialog
     },
-
     onCancelClick() {
-      // we just need to hide the dialog
       this.hide();
     },
   },

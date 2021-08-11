@@ -58,17 +58,17 @@
           <div
             class="text-h4 text-positive"
           >
-            {{this.transactions.total}}  ₽
+            {{ transactions.total }}  ₽
           </div>
           <div
             class="text-h5"
           >
-            {{getMonth(date)}}
+            {{ getMonth(date) }}
           </div>
         </div>
       </q-circular-progress>
     </div>
-    <ListTransaction :transactions="transactions"/>
+    <ListTransaction :transactions="transactions" />
   </q-page>
 </template>
 

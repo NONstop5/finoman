@@ -1,14 +1,10 @@
 <template>
-  <!-- notice dialogRef here -->
   <div>
     <q-dialog
       ref="categoryAddRef"
       @hide="onDialogHide"
     >
-      <!-- <div
-      > -->
       <q-card class="q-dialog-plugin q-pa-md">
-        <!-- <q-card-section class="justify-center items-center content-center"> -->
         <div>Adding new Category</div>
         <q-select
           v-model="form.category_type_id"
@@ -35,7 +31,6 @@
           float-label="Budget of new category"
           required
         />
-        <!-- </q-card-section> -->
         <q-card-actions
           class="q-mb-md"
           align="center"
@@ -52,7 +47,6 @@
           />
         </q-card-actions>
       </q-card>
-      <!-- </div> -->
     </q-dialog>
   </div>
 </template>
