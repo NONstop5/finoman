@@ -22,11 +22,11 @@
         />
         <q-card
           v-for="category in categories"
-          :key="category.name"
+          :key="category.id"
           flat
         >
           <div
-            v-if="category.category_type_id === model"
+            v-if="category.category_type_id == model"
             class="flex justify-start items-center q-mb-sm"
           >
             <q-icon
@@ -57,6 +57,15 @@
               class="q-ml-lg"
               icon="edit"
               @click="openChangeMode(category.id)"
+            />
+            <q-btn
+              v-if="!idButtons.some(id => id == category.id)"
+              round
+              color="primary"
+              size="xs"
+              class="q-ml-lg"
+              icon="delete"
+              @click="deleteCategory(category.id)"
             />
           </div>
         </q-card>
@@ -112,10 +121,9 @@ export default {
   },
   async created() {
     await this.loadInfo();
-    // console.log(this.categories);
   },
   methods: {
-    ...mapActions('user', ['getCategoriesAction', 'updateCategoryAction']),
+    ...mapActions('user', ['getCategoriesAction', 'updateCategoryAction', 'deleteCategoryAction']),
     async loadInfo() {
       await this.getCategoriesAction();
     },
@@ -123,8 +131,6 @@ export default {
       await this.updateCategoryAction(category);
     },
     onSubmit() {
-      // console.log(this.text);
-      // console.log(this.opt.value);
       this.fab2 = false;
     },
     openChangeMode(id) {
@@ -137,6 +143,9 @@ export default {
         name: this.changeName,
       };
       this.updateCategory(ex);
+    },
+    deleteCategory(id) {
+      this.deleteCategoryAction(id);
     },
     openDialogCat() {
       this.$q.dialog({
