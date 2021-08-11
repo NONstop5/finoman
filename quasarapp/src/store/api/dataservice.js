@@ -72,7 +72,7 @@ const updateWallet = async (wallet) => {
 const addWallet = async (wallet) => {
   try {
     const response = await api.post('api/wallets', wallet);
-    return response;// parseItem(response, 200);
+    return parseItemConfig(response, 201);
   } catch (error) {
     showErrorNotification(error);
     return null;
@@ -101,7 +101,7 @@ async function getCategories() {
 const addCategory = async (category) => {
   try {
     const response = await api.post('api/categories', category);
-    return parseItemConfig(response, 200);
+    return parseItem(response, 201);
   } catch (error) {
     showErrorNotification(error);
     return null;
