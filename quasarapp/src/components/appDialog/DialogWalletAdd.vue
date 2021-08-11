@@ -34,7 +34,7 @@
           required
         />
         <q-input
-          v-model="form.ballance"
+          v-model="form.balance"
           class="q-mb-md"
           label="Enter balance for new wallet"
           type="number"
@@ -90,8 +90,8 @@ export default {
         wallet_type_id: ref(null),
         name: null,
         icon: ref(null),
-        ballance: null,
-        ballance_date: formatedTimestamp(),
+        balance: null,
+        balance_date: formatedTimestamp(),
       },
     };
   },
@@ -101,7 +101,7 @@ export default {
         wallet_type_id: { required },
         name: { required },
         icon: { required },
-        ballance: { required },
+        balance: { required },
       },
     };
   },
