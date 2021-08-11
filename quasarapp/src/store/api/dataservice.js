@@ -116,7 +116,17 @@ const updateCategory = async (category) => {
     return null;
   }
 };
-
+const deletedCategory = async (id) => {
+  try {
+    const response = await api.delete(`api/categories/${id}`);
+    if (response.status === 204) {
+      return id;
+    } return null;
+  } catch (error) {
+    showErrorNotification(error);
+    return null;
+  }
+};
 async function getTran() {
   try {
     const response = await api.get('api/transactions'); // test change last part of url later
@@ -146,6 +156,7 @@ export const dataService = {
   getCategories,
   addCategory,
   updateCategory,
+  deletedCategory,
   getTran,
   getSortTran,
   parseItem,
