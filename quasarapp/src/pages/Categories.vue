@@ -138,10 +138,14 @@ export default {
     },
     closeChangeMode(id) {
       this.idButtons = [];
-      const ex = {
-        ...this.categories[id - 1],
-        name: this.changeName,
-      };
+      console.log(this.categories);
+      let ex = {};
+      this.categories.map((index) => {
+        if (index.id === id) {
+          ex = index;
+        } return index;
+      });
+      ex.name = this.changeName;
       this.updateCategory(ex);
     },
     deleteCategory(id) {
