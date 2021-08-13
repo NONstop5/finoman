@@ -128,6 +128,7 @@ export default {
       await this.getCategoriesAction();
     },
     async updateCategory(category) {
+      debugger;
       await this.updateCategoryAction(category);
     },
     onSubmit() {
@@ -143,9 +144,13 @@ export default {
       this.categories.map((index) => {
         if (index.id === id) {
           ex = index;
-        } return index;
+        } return null;
       });
-      ex.name = this.changeName;
+      ex = {
+        ...ex,
+        name: this.changeName,
+      };
+      debugger;
       this.updateCategory(ex);
     },
     deleteCategory(id) {
