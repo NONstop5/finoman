@@ -56,7 +56,7 @@ import { mapActions } from 'vuex';
 import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
-import { showErrorNotification } from '../../functions/function-show-notifications';
+import { showErrorNotification } from 'src/functions/function-show-notifications';
 
 export default {
   name: 'DialogCategoryAdd',
