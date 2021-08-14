@@ -115,7 +115,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
-import DialogTransactionAdd from '../components/appDialog/DialogTransactionAdd.vue';
+import DialogTransactionAdd from 'src/components/appDialog/DialogTransactionAdd.vue';
 
 export default {
   name: 'FormLayout',
