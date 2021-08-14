@@ -104,6 +104,7 @@
         color="secondary"
         padding="sm"
         glossy
+        @click="newTransaction"
       />
     </q-page-sticky>
   </q-layout>
@@ -114,6 +115,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
+import DialogTransactionAdd from '../components/appDialog/DialogTransactionAdd.vue';
 
 export default {
   name: 'FormLayout',
@@ -125,6 +127,12 @@ export default {
     ...mapActions('user', ['logout']),
     onSubmit() {
       this.logout();
+    },
+    newTransaction() {
+      this.$q.dialog({
+        component: DialogTransactionAdd,
+        parent: this,
+      });
     },
   },
 };

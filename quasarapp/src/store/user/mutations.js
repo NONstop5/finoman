@@ -42,8 +42,8 @@ function UPDATE_CATEGORY(state, category) {
   state.categories.splice(index, 1, category);
   state.categories = [...state.categories];
 }
-function DELETE_CATEGORY(state, category) {
-  state.categories = [...state.categories.filter((p) => p.id !== category.id)];
+function DELETE_CATEGORY(state, id) {
+  state.categories = [...state.categories.filter((p) => p.id !== id)];
 }
 function GET_TRANSACTIONS(state, payload) {
   state.transactions = payload;

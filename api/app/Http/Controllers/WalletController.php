@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WalletRequest;
 use App\Models\Wallet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -44,11 +46,25 @@ class WalletController extends Controller
      *
      * @param Request $request
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(WalletRequest $request): JsonResponse
     {
-        //
+        $validated = $request->validated();
+
+        return response()->json(
+            Wallet::query()
+                ->create([
+                    'user_id' => Auth::id(),
+                    'currency_id' => 1,
+                    'wallet_type_id' => $validated['wallet_type_id'],
+                    'name' => $validated['name'],
+                    'balance' => $validated['balance'],
+                    'balance_date' => $validated['balance_date'],
+                    'icon' => $validated['icon'],
+                ]),
+            Response::HTTP_CREATED
+        );
     }
 
     /**
@@ -56,11 +72,11 @@ class WalletController extends Controller
      *
      * @param Wallet $wallet
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function show(Wallet $wallet)
+    public function show(Wallet $wallet): JsonResponse
     {
-        //
+        return response()->json($wallet->toArray());
     }
 
     /**
@@ -69,11 +85,19 @@ class WalletController extends Controller
      * @param Request $request
      * @param Wallet $wallet
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function update(Request $request, Wallet $wallet)
+    public function update(WalletRequest $request, Wallet $wallet): JsonResponse
     {
-        //
+        $validated = $request->validated();
+
+        return response()->json($wallet->update([
+            'wallet_type_id' => $validated['wallet_type_id'],
+            'name' => $validated['name'],
+            'balance' => $validated['balance'],
+            'balance_date' => $validated['balance_date'],
+            'icon' => $validated['icon'],
+        ]));
     }
 
     /**
@@ -81,10 +105,11 @@ class WalletController extends Controller
      *
      * @param Wallet $wallet
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function destroy(Wallet $wallet)
+    public function destroy(Wallet $wallet): JsonResponse
     {
-        //
+        $wallet->delete();
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
