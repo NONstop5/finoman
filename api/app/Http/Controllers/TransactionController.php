@@ -4,45 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Filter\TransactionFilter;
 use App\Models\Transaction;
-use App\Models\Wallet;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\JoinClause;
+use App\Repositories\Interfaces\TransactionRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
 {
+    private $transactionRepository;
+
+    public function __construct(TransactionRepositoryInterface $transactionRepository)
+    {
+        $this->transactionRepository = $transactionRepository;
+    }
 
     public function index(TransactionFilter $filters): JsonResponse
     {
-        $transactions = Transaction::filter($filters)->select(
-            [
-                'id',
-                'user_id',
-                'wallet_from_id',
-                'wallet_to_id',
-                'category_id',
-                'amount',
-                'transacted_at',
-                'transaction_type_id'
-            ]
-        )
-            ->with(
-                [
-                    'walletFrom:id,name',
-                    'walletTo:id,name',
-                    'category:id,name',
-                    'transactionType:id,name'
-                ]
-            )
-            ->where('user_id', Auth::id())
-            ->get();
-
-        $transactions['total'] = $transactions->sum('amount');
-        return response()->json($transactions);
+        $allTransaction = $this->transactionRepository->allFiltered($filters);
+        return response()->json($allTransaction);
     }
 
     /**

@@ -43,3 +43,5 @@ Route::group(
     }
 );
 
+Route::get('transactions', [TransactionController::class, 'index']);
+
