@@ -84,7 +84,12 @@ const transactionType = {
 
 export default defineComponent({
   name: 'ListTransaction',
-  props: ['transactions'],
+  props: {
+    transactions: {
+      type: Array,
+      required: true,
+    },
+  },
   data: () => ({
     transactionType,
   }),

@@ -26,7 +26,7 @@
           flat
         >
           <div
-            v-if="category.category_type_id == model"
+            v-if="category.category_type_id === model"
             class="flex justify-start items-center q-mb-sm"
           >
             <q-icon
@@ -34,13 +34,13 @@
               :size="'1.5em'"
             />
             <div
-              v-if="!idButtons.some(id => id == category.id)"
+              v-if="!idButtons.some(id => id === category.id)"
               class="text-subtitle2 q-ml-lg"
             >
               {{ category.name }}
             </div>
             <q-input
-              v-if="idButtons.some(id => id == category.id)"
+              v-if="idButtons.some(id => id === category.id)"
               v-model="changeName"
               autofocus
               :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -50,7 +50,7 @@
               @blur="closeChangeMode(category.id)"
             />
             <q-btn
-              v-if="!idButtons.some(id => id == category.id)"
+              v-if="!idButtons.some(id => id === category.id)"
               round
               color="primary"
               size="xs"
@@ -59,7 +59,7 @@
               @click="openChangeMode(category.id)"
             />
             <q-btn
-              v-if="!idButtons.some(id => id == category.id)"
+              v-if="!idButtons.some(id => id === category.id)"
               round
               color="primary"
               size="xs"
@@ -93,7 +93,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
-import DialogCategoryAdd from '../components/appDialog/DialogCategoryAdd.vue';
+import DialogCategoryAdd from 'src/components/appDialog/DialogCategoryAdd.vue';
 
 export default {
   name: 'Categories',
@@ -128,7 +128,6 @@ export default {
       await this.getCategoriesAction();
     },
     async updateCategory(category) {
-      debugger;
       await this.updateCategoryAction(category);
     },
     onSubmit() {
@@ -139,7 +138,6 @@ export default {
     },
     closeChangeMode(id) {
       this.idButtons = [];
-      console.log(this.categories);
       let ex = {};
       this.categories.map((index) => {
         if (index.id === id) {

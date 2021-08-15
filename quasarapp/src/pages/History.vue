@@ -117,7 +117,6 @@ export default defineComponent({
       return qdate.formatDate(timeStamp, 'MMMM');
     },
     getSortTran(date) {
-      console.log(this.getDate(date));
       this.loadInfo(`transacted_at_from=${this.getDate(date)}`);
     },
   },
