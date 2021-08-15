@@ -11,7 +11,7 @@
       />
       <q-tabs
         v-model="selectedWalletType"
-        class="bg-grey-2 text-teal"
+        class="bg-grey-2 text-teal q-mb-sm"
         dense
         align="justify"
       >
@@ -31,22 +31,41 @@
           v-for="toggleOption in toggleOptions"
           :key="toggleOption.id"
           :name="toggleOption.name"
+          class="q-pa-none"
         >
-          <div class="row items-center q-gutter-sm q-mb-lg">
-            <q-card
+          <q-list
+            bordered
+            separator
+          >
+            <q-slide-item
               v-for="wallet in wallets.filter((wallet) => wallet.wallet_type_id === toggleOption.id)"
               :key="wallet.id"
-              class="text-center bg-primary glossy text-white q-pa-xs"
+              left-color="green"
+              right-color="red"
+              @left="onEdit"
+              @right="onDelete"
             >
-              <q-icon
-                :name="wallet.icon"
-                :size="'1.5em'"
-              />
-              <div class="text-subtitle2">
-                {{ wallet.name }}
-              </div>
-            </q-card>
-          </div>
+              <template #left>
+                <q-icon name="edit" />
+              </template>
+              <template #right>
+                <q-icon name="delete" />
+              </template>
+
+              <q-item>
+                <q-item-section avatar>
+                  <q-avatar
+                    color="primary"
+                    text-color="white"
+                    :icon="wallet.icon"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  {{ wallet.name }}
+                </q-item-section>
+              </q-item>
+            </q-slide-item>
+          </q-list>
         </q-tab-panel>
       </q-tab-panels>
 
@@ -76,6 +95,7 @@ const walletType = {
   DEBIT: 1,
   CREDIT: 2,
 };
+
 const toggleOptions = [
   {
     id: walletType.DEBIT,
@@ -101,12 +121,18 @@ export default {
     ...mapState('user', ['wallets']),
   },
   async created() {
-    await this.loadInfo();
+    await this.getWalletList();
   },
   methods: {
     ...mapActions('user', ['getWalletsAction']),
-    async loadInfo() {
+    async getWalletList() {
       await this.getWalletsAction();
+    },
+    onEdit({ reset }) {
+      reset();
+    },
+    onDelete({ reset }) {
+      reset();
     },
   },
 };
