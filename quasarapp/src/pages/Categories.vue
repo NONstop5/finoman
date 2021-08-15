@@ -128,7 +128,6 @@ export default {
       await this.getCategoriesAction();
     },
     async updateCategory(category) {
-      debugger;
       await this.updateCategoryAction(category);
     },
     onSubmit() {
