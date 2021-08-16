@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Transaction;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionService
@@ -34,5 +35,21 @@ class TransactionService
 
         $transactions['total'] = $transactions->sum('amount');
         return $transactions;
+    }
+
+    public function create(array $data)
+    {
+        $data = Arr::add($data, 'user_id', Auth::id());
+
+        return Transaction::query()
+            ->create($data);
+    }
+
+    public function update(array $data)
+    {
+        $data = Arr::add($data, 'user_id', Auth::id());
+
+        return Transaction::query()
+            ->update($data);
     }
 }

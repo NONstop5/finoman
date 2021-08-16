@@ -9,7 +9,6 @@ use App\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
@@ -37,22 +36,7 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request): JsonResponse
     {
-        $validated = $request->validated();
-
-        return response()->json(
-            Transaction::query()
-            ->create(
-            [
-                'user_id' => Auth::id(),
-                'transaction_type_id' => $validated['transaction_type_id'],
-                'wallet_from_id' => $validated['wallet_from_id'],
-                'wallet_to_id' => $validated['wallet_to_id'],
-                'amount' => $validated['amount'],
-                'category_id' => $validated['category_id'],
-                'transacted_at' => $validated['transacted_at'],
-            ]),
-            Response::HTTP_CREATED
-        );
+        return response()->json($this->transactionsService->create($request->validated()), Response::HTTP_CREATED);
     }
 
     /**
@@ -76,19 +60,9 @@ class TransactionController extends Controller
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function update(TransactionRequest $request, Transaction $transaction): JsonResponse
+    public function update(TransactionRequest $request): JsonResponse
     {
-        $validated = $request->validated();
-
-        return response()->json($transaction->update([
-            'user_id' => Auth::id(),
-            'transaction_type_id' => $validated['transaction_type_id'],
-            'wallet_from_id' => $validated['wallet_from_id'],
-            'wallet_to_id' => $validated['wallet_to_id'],
-            'amount' => $validated['amount'],
-            'category_id' => $validated['category_id'],
-            'transacted_at' => $validated['transacted_at'],
-        ]));
+        return response()->json($this->transactionsService->update($request->validated()));
     }
 
     /**
@@ -101,7 +75,6 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction): JsonResponse
     {
         $transaction->delete();
-
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
