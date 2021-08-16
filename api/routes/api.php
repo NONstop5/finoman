@@ -42,4 +42,3 @@ Route::group(
         Route::post('/logout', [UserController::class, 'logout']);
     }
 );
-
