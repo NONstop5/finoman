@@ -44,12 +44,4 @@ class TransactionService
         return Transaction::query()
             ->create($data);
     }
-
-    public function update(array $data)
-    {
-        $data = Arr::add($data, 'user_id', Auth::id());
-
-        return Transaction::query()
-            ->update($data);
-    }
 }

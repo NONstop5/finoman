@@ -60,9 +60,9 @@ class TransactionController extends Controller
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function update(TransactionRequest $request): JsonResponse
+    public function update(TransactionRequest $request, Transaction $transaction): JsonResponse
     {
-        return response()->json($this->transactionsService->update($request->validated()));
+        return response()->json($transaction->update($request->validated()), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -75,6 +75,7 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction): JsonResponse
     {
         $transaction->delete();
+
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
