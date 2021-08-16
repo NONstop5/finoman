@@ -36,6 +36,7 @@ class WalletRequest extends FormRequest
             {
                 return [
                     'wallet_type_id' => 'required|integer|exists:wallet_types,id',
+                    'currency_id' => 'required|integer|exists:currencies,id',
                     'name' => 'required|string|max:100',
                     'icon' => 'required|string|max:50',
                     'balance' => 'required|numeric',
