@@ -42,14 +42,6 @@
       class="text-center"
       elevated
     >
-      <q-btn
-        to="/transaction"
-        round
-        glossy
-        size="lg"
-        icon="fas fa-plus"
-        color="secondary"
-      />
       <q-tabs class="row justify-center">
         <q-route-tab
           to="/index"
@@ -100,6 +92,21 @@
     >
       Finoman 2021г.
     </q-footer>
+    <q-page-sticky
+      v-if="$route.path === '/index'"
+      position="bottom"
+      :offset="[10, 10]"
+    >
+      <q-btn
+        round
+        size="lg"
+        icon="fas fa-plus"
+        color="secondary"
+        padding="sm"
+        glossy
+        to="/transaction"
+      />
+    </q-page-sticky>
   </q-layout>
 </template>
 

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Http\Filter\QueryFilter;
 use App\Models\Relations\User\BelongsToUser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+
 
 /**
  * @package App\Models
@@ -38,4 +42,10 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionType::class);
     }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
+    {
+        return $filters->apply($builder);
+    }
+
 }

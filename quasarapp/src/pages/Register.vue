@@ -104,7 +104,6 @@ export default {
       formData: {
         name: {
           required,
-          alphaNum,
           maxLength: maxLength(16),
         },
         email: {
@@ -112,6 +111,7 @@ export default {
           email,
         },
         password: {
+          alphaNum,
           required,
           minLength: minLength(8),
           maxLength: maxLength(32),

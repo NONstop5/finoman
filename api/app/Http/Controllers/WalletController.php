@@ -2,53 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WalletRequest;
 use App\Models\Wallet;
+use App\Services\WalletService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Response;
 
 class WalletController extends Controller
 {
     /**
+     * @var WalletService
+     */
+    protected $walletService;
+
+    public function __construct(WalletService $walletService)
+    {
+        $this->walletService = $walletService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param WalletRequest $request
      *
      * @return JsonResponse
-     * @throws ValidationException
      */
-    public function index(Request $request)
+    public function index(WalletRequest $request)
     {
-        $validated = $this->validate(
-            $request,
-            [
-                'wallet_type_id' => 'nullable|integer|exists:wallet_types,id',
-            ]
-        );
-
-        $qb = Wallet::query()
-            ->where('user_id', Auth::id());
-
-        if (isset($validated['wallet_type_id'])) {
-            $qb->where('wallet_type_id', $validated['wallet_type_id']);
-        }
-
-        $walletsList = $qb->get();
-
-        return response()->json($walletsList);
+        return response()->json($this->walletService->getList($request->validated()));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param WalletRequest $request
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(WalletRequest $request): JsonResponse
     {
-        //
+        return response()->json($this->walletService->create($request->validated()), Response::HTTP_CREATED);
     }
 
     /**
@@ -56,24 +49,24 @@ class WalletController extends Controller
      *
      * @param Wallet $wallet
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function show(Wallet $wallet)
+    public function show(Wallet $wallet): JsonResponse
     {
-        //
+        return response()->json($wallet->toArray());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param WalletRequest $request
      * @param Wallet $wallet
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function update(Request $request, Wallet $wallet)
+    public function update(WalletRequest $request, Wallet $wallet): JsonResponse
     {
-        //
+        return response()->json($wallet->update($request->validated()), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -81,10 +74,12 @@ class WalletController extends Controller
      *
      * @param Wallet $wallet
      *
-     * @return void
+     * @return JsonResponse
      */
-    public function destroy(Wallet $wallet)
+    public function destroy(Wallet $wallet): JsonResponse
     {
-        //
+        $wallet->delete();
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
