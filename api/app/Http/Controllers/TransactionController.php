@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filter\TransactionFilter;
+use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
@@ -33,21 +35,24 @@ class TransactionController extends Controller
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(TransactionRequest $request): JsonResponse
     {
-        $validated = $this->validate(
-            $request,
+        $validated = $request->validated();
+
+        return response()->json(
+            Transaction::query()
+            ->create(
             [
-                'account_from_id' => 'required|integer|exists:transactions',
-                'account_to_id' => 'required|integer|exists:transactions',
-                'amount' => 'required|numeric',
-                'transacted_at' => 'required|date',
-            ]
+                'user_id' => Auth::id(),
+                'transaction_type_id' => $validated['transaction_type_id'],
+                'wallet_from_id' => $validated['wallet_from_id'],
+                'wallet_to_id' => $validated['wallet_to_id'],
+                'amount' => $validated['amount'],
+                'category_id' => $validated['category_id'],
+                'transacted_at' => $validated['transacted_at'],
+            ]),
+            Response::HTTP_CREATED
         );
-
-        Transaction::query()->create($validated);
-
-        return response()->json(Transaction::query()->create($validated));
     }
 
     /**
@@ -71,19 +76,19 @@ class TransactionController extends Controller
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function update(Request $request, Transaction $transaction): JsonResponse
+    public function update(TransactionRequest $request, Transaction $transaction): JsonResponse
     {
-        $validated = $this->validate(
-            $request,
-            [
-                'account_from_id' => 'nullable|integer|exists:transactions',
-                'account_to_id' => 'nullable|integer|exists:transactions',
-                'amount' => 'nullable|numeric',
-                'transacted_at' => 'nullable|date',
-            ]
-        );
+        $validated = $request->validated();
 
-        return response()->json($transaction->update($validated));
+        return response()->json($transaction->update([
+            'user_id' => Auth::id(),
+            'transaction_type_id' => $validated['transaction_type_id'],
+            'wallet_from_id' => $validated['wallet_from_id'],
+            'wallet_to_id' => $validated['wallet_to_id'],
+            'amount' => $validated['amount'],
+            'category_id' => $validated['category_id'],
+            'transacted_at' => $validated['transacted_at'],
+        ]));
     }
 
     /**
