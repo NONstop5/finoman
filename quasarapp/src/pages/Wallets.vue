@@ -1,9 +1,11 @@
 <template>
   <q-page class="row justify-center items-center content-start">
     <div class="col">
+       <q-pull-to-refresh @refresh='refresh'>
       <div class="row">
         <h4 class="text-primary q-my-sm">
           Wallets
+          <h4 v-if="!wallets[0]">Pull-down to Refresh</h4>
         </h4>
       </div>
       <q-separator
@@ -79,8 +81,10 @@
           color="secondary"
           padding="sm"
           glossy
+          @click="openDialog"
         />
       </q-page-sticky>
+      </q-pull-to-refresh>
     </div>
   </q-page>
 </template>
@@ -90,6 +94,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
+import DialogWalletAdd from '../components/appDialog/DialogWalletAdd.vue';
 
 const walletType = {
   DEBIT: 1,
@@ -113,26 +118,34 @@ const toggleOptions = [
 
 export default {
   name: 'Wallets',
+  setup: () => ({
+    
+  }),
   data: () => ({
     selectedWalletType: 'debit',
     toggleOptions,
+    
   }),
   computed: {
     ...mapState('user', ['wallets']),
   },
-  async created() {
-    await this.getWalletList();
-  },
   methods: {
     ...mapActions('user', ['getWalletsAction']),
-    async getWalletList() {
-      await this.getWalletsAction();
+    openDialog() {
+      this.$q.dialog({
+        component: DialogWalletAdd,
+        parent: this,
+      });
     },
     onEdit({ reset }) {
       reset();
     },
     onDelete({ reset }) {
       reset();
+    },
+    async refresh(done) {
+      await this.getWalletsAction();
+      done();
     },
   },
 };
