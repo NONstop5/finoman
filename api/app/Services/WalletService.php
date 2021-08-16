@@ -6,6 +6,7 @@ use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class WalletService
@@ -38,38 +39,9 @@ class WalletService
      */
     public function create(array $data)
     {
-        return Wallet::query()
-            ->create(
-                [
-                    'user_id' => Auth::id(),
-                    'currency_id' => 1,
-                    'wallet_type_id' => $data['wallet_type_id'],
-                    'name' => $data['name'],
-                    'balance' => $data['balance'],
-                    'balance_date' => $data['balance_date'],
-                    'icon' => $data['icon'],
-                ]
-            );
-    }
+        $data = Arr::add($data, 'user_id', Auth::id());
 
-    /**
-     * Update existed wallet
-     *
-     * @param array $data
-     * @param Wallet $wallet
-     *
-     * @return bool
-     */
-    public function update(array $data, Wallet $wallet)
-    {
-        return $wallet->update(
-            [
-                'wallet_type_id' => $data['wallet_type_id'],
-                'name' => $data['name'],
-                'balance' => $data['balance'],
-                'balance_date' => $data['balance_date'],
-                'icon' => $data['icon'],
-            ]
-        );
+        return Wallet::query()
+            ->create($data);
     }
 }
