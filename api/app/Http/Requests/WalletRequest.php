@@ -23,25 +23,25 @@ class WalletRequest extends FormRequest
      */
     public function rules()
     {
-        switch($this->method()) {
-            case 'POST': {
+        switch ($this->method()) {
+            case 'GET':
+            {
                 return [
+                    'wallet_type_id' => 'nullable|integer|exists:wallet_types,id',
+                ];
+            }
+            case 'POST':
+            case 'PUT':
+            case 'PATCH':
+            {
+                return [
+                    'wallet_type_id' => 'required|integer|exists:wallet_types,id',
                     'name' => 'required|string|max:100',
                     'icon' => 'required|string|max:50',
                     'balance' => 'required|numeric',
-                    'wallet_type_id' => 'required|numeric',
-                    'balance_date' => 'nullable'
+                    'balance_date' => 'required|date',
                 ];
             }
-            case 'PUT':
-            case 'PATCH': {
-            return  [
-                'name' => 'required|string|max:100',
-                'icon' => 'required|string|max:50',
-                'balance' => 'required|numeric',
-                'wallet_type_id' => 'required|numeric'
-            ];
-        }
             default:
                 break;
         }
