@@ -20,7 +20,7 @@
           <q-select
             v-model="form.category_id"
             class="q-mb-md"
-            :options="categoriesList"
+            :options="CATEGORIES_LIST"
             label="Choose category"
             emit-value
             map-options
@@ -29,7 +29,7 @@
           <q-select
             v-model="form.wallet_from_id"
             class="q-mb-md"
-            :options="walletsList"
+            :options="WALLETS_LIST"
             label="Choose wallet"
             emit-value
             map-options
@@ -90,7 +90,7 @@
           <q-select
             v-model="form.wallet_from_id"
             class="q-mb-md"
-            :options="walletsList"
+            :options="WALLETS_LIST"
             label="Wallet from"
             emit-value
             map-options
@@ -99,7 +99,7 @@
           <q-select
             v-model="form.wallet_to_id"
             class="q-mb-md"
-            :options="walletsList"
+            :options="WALLETS_LIST"
             label="Wallet to"
             emit-value
             map-options
@@ -182,7 +182,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import { date as qdate } from 'quasar';
 import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
@@ -214,7 +214,6 @@ export default {
   },
   data() {
     return {
-      categoriesList: [],
       dt: null,
       form: {
         category_id: ref(null),
@@ -235,21 +234,11 @@ export default {
   },
   computed: {
     ...mapState('user', ['wallets', 'categories', 'transactions']),
-  },
-  async created() {
-    await this.loadInfo();
-    this.getCategoriesList();
-    this.getWalletList();
+    ...mapGetters('user', ['WALLETS_LIST', 'CATEGORIES_LIST']),
   },
   methods: {
-    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction', 'addTransactionAction']),
-    async loadInfo() {
-      await this.getWalletsAction();
-      await this.getCategoriesAction();
-      await this.getTransactionsAction();
-    },
+    ...mapActions('user', ['addTransactionAction']),
     displaydata() {
-      // console.log(this.form);
       this.createTransObj();
       this.addTransactionAction({
         wallet_from_id: 1,
@@ -258,20 +247,6 @@ export default {
         amount: '2.66',
         transacted_at: '1987-09-24 14:08:54',
       });
-    },
-    getCategoriesList() {
-      this.categoriesList = this.categories.map((index) => ({
-        label: index.name,
-        value: index.id,
-      }
-      ));
-    },
-    getWalletList() {
-      this.walletsList = this.wallets.map((index) => ({
-        label: index.name,
-        value: index.id,
-      }
-      ));
     },
     getDate(timeStamp) {
       debugger;
