@@ -66,7 +66,7 @@ class WalletController extends Controller
      */
     public function update(WalletRequest $request, Wallet $wallet): JsonResponse
     {
-        return response()->json($this->walletService->update($request->validated(), $wallet), Response::HTTP_ACCEPTED);
+        return response()->json($wallet->update($request->validated()), Response::HTTP_ACCEPTED);
     }
 
     /**
