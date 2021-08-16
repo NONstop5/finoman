@@ -23,30 +23,13 @@ class TransactionRequest extends FormRequest
      */
     public function rules()
     {
-        switch($this->method()) {
-            case 'POST': {
-                return [
-                    'wallet_from_id' => 'required|integer|exists:transactions',
-                    'wallet_to_id' => 'required|integer|exists:transactions',
-                    'transaction_type_id' => 'required|integer|exists:transactions',
-                    'category_id' => 'required|integer',
-                    'amount' => 'required|numeric',
-                    'transacted_at' => 'required|date',
-                ];
-            }
-            case 'PUT':
-            case 'PATCH': {
-                return  [
-                    'wallet_from_id' => 'required|integer|exists:transactions',
-                    'wallet_to_id' => 'required|integer|exists:transactions',
-                    'transaction_type_id' => 'required|integer|exists:transactions',
-                    'category_id' => 'required|integer',
-                    'amount' => 'required|numeric',
-                    'transacted_at' => 'required|date',
-                ];
-            }
-            default:
-                break;
-        }
+        return [
+            'wallet_from_id' => 'required|integer|exists:transactions',
+            'wallet_to_id' => 'required|integer|exists:transactions',
+            'transaction_type_id' => 'required|integer|exists:transactions',
+            'category_id' => 'required|integer',
+            'amount' => 'required|numeric',
+            'transacted_at' => 'required|date',
+        ];
     }
 }
