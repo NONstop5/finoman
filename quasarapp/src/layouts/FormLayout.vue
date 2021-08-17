@@ -42,6 +42,14 @@
       class="text-center"
       elevated
     >
+      <q-btn
+        round
+        glossy
+        size="lg"
+        icon="fas fa-plus"
+        color="secondary"
+        @click="newTransaction"
+      />
       <q-tabs class="row justify-center">
         <q-route-tab
           to="/index"
@@ -92,21 +100,6 @@
     >
       Finoman 2021г.
     </q-footer>
-    <q-page-sticky
-      v-if="$route.path === '/index'"
-      position="bottom"
-      :offset="[10, 10]"
-    >
-      <q-btn
-        round
-        size="lg"
-        icon="fas fa-plus"
-        color="secondary"
-        padding="sm"
-        glossy
-        to="/transaction"
-      />
-    </q-page-sticky>
   </q-layout>
 </template>
 
@@ -115,6 +108,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
+import DialogTransactionAdd from '../components/appDialog/DialogTransactionAdd.vue';
 
 export default {
   name: 'FormLayout',
@@ -126,6 +120,12 @@ export default {
     ...mapActions('user', ['logout']),
     onSubmit() {
       this.logout();
+    },
+    newTransaction() {
+      this.$q.dialog({
+        component: DialogTransactionAdd,
+        parent: this,
+      });
     },
   },
 };
