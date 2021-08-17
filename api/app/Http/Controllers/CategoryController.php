@@ -3,67 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\WalletRequest;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
     /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param CategoryRequest $request
      *
      * @return JsonResponse
-     * @throws ValidationException
      */
-    public function index(Request $request)
+    public function index(CategoryRequest $request)
     {
-        $validated = $this->validate(
-            $request,
-            [
-                'category_type_id' => 'nullable|integer|exists:category_types,id',
-            ]
-        );
-
-        $qb = Category::query()
-            ->where('user_id', Auth::id());
-
-        if (isset($validated['category_type_id'])) {
-            $qb->where('category_type_id', $validated['category_type_id']);
-        }
-
-        $categoriesList = $qb->get();
-
-        return response()->json($categoriesList);
+        return response()->json($this->categoryService->getList($request->validated()));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CategoryRequest $request
      *
      * @return JsonResponse
      */
-    public function store(CategoryRequest $request):JsonResponse
+    public function store(CategoryRequest $request): JsonResponse
     {
-        $validated = $request->validated();
-
-        return response()->json(
-            Category::query()
-            ->create([
-                'user_id' => Auth::id(),
-                'category_type_id' => $validated['category_type_id'],
-                'name' => $validated['name'],
-                'budget' => $validated['budget'],
-                'icon' => 'tag'
-            ]),
-            Response::HTTP_CREATED
-        );
+        return response()->json($this->categoryService->create($request->validated()), Response::HTTP_CREATED);
     }
 
     /**
@@ -81,21 +59,14 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CategoryRequest $request
      * @param Category $category
      *
      * @return JsonResponse
      */
     public function update(CategoryRequest $request, Category $category): JsonResponse
     {
-        $validated = $request->validated();
-
-        return response()->json($category->update([
-            'category_type_id' => $validated['category_type_id'],
-            'name' => $validated['name'],
-            'budget' => $validated['budget'],
-            'icon' => 'tag'
-        ]));
+        return response()->json($category->update($request->validated()), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -108,6 +79,7 @@ class CategoryController extends Controller
     public function destroy(Category $category): JsonResponse
     {
         $category->delete();
+
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
