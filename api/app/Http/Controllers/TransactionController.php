@@ -7,9 +7,7 @@ use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
 {
@@ -23,16 +21,16 @@ class TransactionController extends Controller
     public function index(TransactionFilter $filters): JsonResponse
     {
         $transactions = $this->transactionsService->getFilteredTransactions($filters);
+
         return response()->json($transactions);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param TransactionRequest $request
      *
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function store(TransactionRequest $request): JsonResponse
     {
@@ -54,11 +52,10 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param TransactionRequest $request
      * @param Transaction $transaction
      *
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function update(TransactionRequest $request, Transaction $transaction): JsonResponse
     {
