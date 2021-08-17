@@ -108,6 +108,7 @@ const addCategory = async (category) => {
   }
 };
 const updateCategory = async (category) => {
+  debugger;
   try {
     const response = await api.put(`/api/categories/${category.id}`, category);
     return parseItemConfig(response, 200);
@@ -147,6 +148,16 @@ async function getSortTran(date) {
   }
 }
 
+const addTran = async (tran) => {
+  try {
+    const response = await api.post('api/transactions', tran);
+    return parseItem(response, 201);
+  } catch (error) {
+    showErrorNotification(error);
+    return null;
+  }
+};
+
 export const dataService = {
   getWallets,
   getWallet,
@@ -161,4 +172,5 @@ export const dataService = {
   getSortTran,
   parseItem,
   parseList,
+  addTran,
 };
