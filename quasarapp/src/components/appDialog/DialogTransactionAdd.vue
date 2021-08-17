@@ -16,8 +16,9 @@
               {label: 'Outcome', value: 2}
             ]"
           />
-        <div v-if="category_type_id === 1 || category_type_id === 2">
+        <div>
           <q-select
+            v-if="category_type_id === 1 || category_type_id === 2"
             v-model="form.category_id"
             class="q-mb-md"
             :options="CATEGORIES_LIST"
@@ -27,6 +28,7 @@
             :rules="[val => !!val || 'Field is required']"
           />
           <q-select
+            v-if="category_type_id === 1 || category_type_id === 2"
             v-model="form.wallet_from_id"
             class="q-mb-md"
             :options="WALLETS_LIST"
@@ -35,59 +37,8 @@
             map-options
             :rules="[val => !!val || 'Field is required']"
           />
-          <q-input
-            v-model="form.transacted_at"
-            class="text-secondary q-my-lg"
-            outlined
-            mask="##-##-####"
-            :rules="[ val => val && val.length > 9 || 'Incorrect date']"
-          >
-            <q-icon
-              name="event"
-              size="md"
-              class="cursor-pointer q-pt-md"
-            >
-              <q-popup-proxy
-                ref="qDateProxy"
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date
-                  v-model="form.transacted_at"
-                  v-close-popup
-                  color="secondary"
-                  class="text-secondary"
-                  mask="DD-MM-YYYY"
-                />
-              </q-popup-proxy>
-            </q-icon>
-          </q-input>
-          <q-input
-            v-model="form.amount"
-            class="q-mb-md"
-            label="Amount"
-            type="number"
-            float-label="Amount"
-            required
-          />
-          <q-card-actions
-            class="q-mb-md"
-            align="center"
-          >
-            <q-btn
-              color="secondary"
-              label="OK"
-              @click="onOKClick"
-            />
-            <q-btn
-              color="secondary"
-              label="Cancel"
-              @click="onCancelClick"
-            />
-          </q-card-actions>
-        </div>
-        <div v-if="category_type_id === 3">
           <q-select
+            v-if="category_type_id === 3"
             v-model="form.wallet_from_id"
             class="q-mb-md"
             :options="WALLETS_LIST"
@@ -97,6 +48,7 @@
             :rules="[val => !!val || 'Field is required']"
           />
           <q-select
+            v-if="category_type_id === 3"
             v-model="form.wallet_to_id"
             class="q-mb-md"
             :options="WALLETS_LIST"
@@ -128,7 +80,7 @@
                   color="secondary"
                   class="text-secondary"
                   model-value=""
-                  @click="save"
+                  @click="save; getDate(date)"
                   mask="YYYY-MM-DD"
                 >
                   <div
@@ -209,12 +161,12 @@ export default {
         date.value = proxyDate.value;
       },
       v$: useVuelidate(),
-      category_type_id: ref(1),
     };
   },
   data() {
     return {
       dt: null,
+      category_type_id: ref(1),
       form: {
         category_id: ref(null),
         wallet_from_id: ref(null),
@@ -237,19 +189,15 @@ export default {
     ...mapGetters('user', ['WALLETS_LIST', 'CATEGORIES_LIST']),
   },
   methods: {
-    ...mapActions('user', ['addTransactionAction']),
-    displaydata() {
+    ...mapActions('user', ['getTransactionsAction', 'addTransactionAction']),
+    async displaydata() {
       this.createTransObj();
-      this.addTransactionAction({
-        wallet_from_id: 1,
-        wallet_to_id: 4,
-        category_id: 1,
-        amount: '2.66',
-        transacted_at: '1987-09-24 14:08:54',
-      });
+      await this.loadInfo();
+    },
+    async loadInfo() {
+      await this.getTransactionsAction();
     },
     getDate(timeStamp) {
-      debugger;
       this.dt = qdate.formatDate(timeStamp, 'YYYY-MM-DD HH:mm:ss');
     },
     createTransObj() {
@@ -259,8 +207,9 @@ export default {
         wallet_to_id: this.form.wallet_to_id,
         transacted_at: this.dt,
         amount: this.form.amount,
+        transaction_type_id: this.category_type_id,
       };
-      console.log(transObj);
+      this.addTransactionAction(transObj);
     },
     show() {
       this.$refs.transactionAddRef.show();
@@ -274,7 +223,6 @@ export default {
     onOKClick() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        debugger;
         this.displaydata(); // DELETE AFTER CONFIREMED VERSION FOR DEMO ONLY
         this.$emit('ok');
         this.hide();
