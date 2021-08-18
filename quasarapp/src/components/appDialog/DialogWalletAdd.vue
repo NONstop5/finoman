@@ -33,6 +33,12 @@
           float-label="Icon for new wallet"
           required
         />
+        <q-select
+          v-model="form.currency"
+          class="q-mb-md"
+          label="Currency"
+          :options="currency_id"
+        />
         <q-input
           v-model="form.balance"
           class="q-mb-md"
@@ -80,6 +86,7 @@ export default {
     return {
       v$: useVuelidate(),
       wallet_type_id: [{ label: 'Debit', value: '1' }, { label: 'Credit', value: '2' }],
+      currency_id: [{ label: '₽ - Рубль', value: '1' }],
       icon: [{ label: 'Cash', value: 'fas fa-money-bill-wave' }, { label: 'Card', value: 'far fa-credit-card' }, { label: 'Bank Account', value: 'fas fa-university' }, { label: 'Savings', value: 'fas fa-piggy-bank' }],
     };
   },
@@ -88,6 +95,7 @@ export default {
       showDialog: false,
       form: {
         wallet_type_id: ref(null),
+        currency_id: ref(1),
         name: null,
         icon: ref(null),
         balance: null,
@@ -107,10 +115,6 @@ export default {
   },
   methods: {
     ...mapActions('user', ['addWalletAction']),
-    displaydata() {
-      this.$q.notify(JSON.stringify(this.form));
-      this.addWalletAction(JSON.stringify(this.form));
-    },
     show() {
       this.$refs.dialogRef.show();
     },
@@ -123,7 +127,7 @@ export default {
     onOKClick() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.displaydata(); // DELETE AFTER CONFIREMED VERSION FOR DEMO ONLY
+        this.addWalletAction(JSON.stringify(this.form));
         this.$emit('ok');
         this.hide();
       } else {

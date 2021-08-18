@@ -10,6 +10,12 @@ function WALLETS(state) {
   return state.wallets;
 }
 
+function WALLETS_TYPE_DEBIT(state) {
+  return state.wallets.filter(
+    (wallet) => wallet.wallet_type_id === 1,
+  );
+}
+
 function CATEGORY_PROFIT(state) {
   return state.category_profit;
 }
@@ -22,6 +28,7 @@ export {
   userLoggedIn,
   getToken,
   WALLETS,
+  WALLETS_TYPE_DEBIT,
   CATEGORY_PROFIT,
   CATEGORY_LOSE,
 };
