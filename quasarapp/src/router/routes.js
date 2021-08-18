@@ -10,7 +10,6 @@ const routes = [
       { path: '/register', component: () => import('pages/Register.vue') },
       { path: '/wallets', component: () => import('pages/Wallets') },
       { path: '/categories', component: () => import('pages/Categories.vue') },
-      { path: '/transaction', component: () => import('pages/Transaction') },
       { path: '/history', component: () => import('pages/History.vue') },
     ],
   },
