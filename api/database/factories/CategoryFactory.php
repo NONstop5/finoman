@@ -34,7 +34,14 @@ class CategoryFactory extends Factory
                 ]
             ),
             'budget' => 10000,
-            'icon' => 'tag',
+            'icon' => $this->faker->randomElement(
+                [
+                    'home',
+                    'pets',
+                    'fitness_center',
+                    'restaurant',
+                ]
+            ),
         ];
     }
 }
