@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Relations\Category\HasManyCategories;
+use App\Models\Relations\Transaction\HasManyTransactions;
 use App\Models\Relations\Wallet\HasManyWallets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,6 +22,7 @@ class User extends Authenticatable
     use Notifiable;
     use HasManyWallets;
     use HasManyCategories;
+    use HasManyTransactions;
 
     /**
      * The attributes that are mass assignable.
