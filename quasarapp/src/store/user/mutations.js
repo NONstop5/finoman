@@ -29,7 +29,7 @@ function UPDATE_WALLET(state, wallet) {
   state.wallets = [...state.wallets];
 }
 function DELETE_WALLET(state, wallet) {
-  state.wallets = [...state.wallets.filter((p) => p.id !== wallet.id)];
+  state.wallets = [...state.wallets.filter((p) => p.id !== wallet)];
 }
 function GET_CATEGORIES(state, categories) {
   state.categories = categories;

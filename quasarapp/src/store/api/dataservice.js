@@ -81,9 +81,9 @@ const addWallet = async (wallet) => {
 
 const deleteWallet = async (wallet) => {
   try {
-    const response = await api.delete(`api/wallets/${wallet.id}`);
-    parseItem(response, 200);
-    return wallet.id;
+    const response = await api.delete(`api/wallets/${wallet}`);
+    parseItem(response, 204);
+    return wallet;
   } catch (error) {
     showErrorNotification(error);
     return null;
