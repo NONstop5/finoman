@@ -148,7 +148,6 @@ export default {
         ...ex,
         name: this.changeName,
       };
-      debugger;
       this.updateCategory(ex);
     },
     deleteCategory(id) {
