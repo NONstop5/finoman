@@ -73,25 +73,49 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
-import { showErrorNotification } from 'src/functions/function-show-notifications';
 import { formatedTimestamp } from 'src/functions/formatedTimestamp';
+import { showErrorNotification } from 'src/functions/function-show-notifications';
+import { ref } from 'vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'DialogWalletAdd',
-  props: {
-  },
+  props: {},
   emits: [
     'ok', 'hide', 'data', 'show',
   ],
   setup() {
     return {
       v$: useVuelidate(),
-      wallet_type_id: [{ label: 'Debit', value: '1' }, { label: 'Credit', value: '2' }],
-      icon: [{ label: 'Cash', value: 'fas fa-money-bill-wave' }, { label: 'Card', value: 'far fa-credit-card' }, { label: 'Bank Account', value: 'fas fa-university' }, { label: 'Savings', value: 'fas fa-piggy-bank' }],
+      wallet_type_id: [
+        {
+          label: 'Debit',
+          value: '1',
+        },
+        {
+          label: 'Credit',
+          value: '2',
+        },
+      ],
+      icon: [
+        {
+          label: 'Cash',
+          value: 'account_balance_wallet',
+        },
+        {
+          label: 'Card',
+          value: 'credit_card',
+        },
+        {
+          label: 'Bank Account',
+          value: 'account_balance',
+        }, {
+          label: 'Savings',
+          value: 'savings',
+        },
+      ],
     };
   },
   data() {

@@ -29,6 +29,16 @@
             float-label="Name of new category"
             :rules="[val => !!val || 'Field is required']"
           />
+          <q-select
+            v-model="form.icon"
+            class="q-mb-md"
+            label="Choose an icon"
+            :options="icon"
+            emit-value
+            map-options
+            float-label="Icon for new wallet"
+            required
+          />
           <q-input
             v-model="form.budget"
             class="q-mb-md"
@@ -63,23 +73,34 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { showErrorNotification } from 'src/functions/function-show-notifications';
+import { ref } from 'vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'DialogCategoryAdd',
-  props: {
-  },
+  props: {},
   emits: [
-    'ok', 'hide', 'data', 'show',
+    'ok',
+    'hide',
+    'data',
+    'show',
   ],
   setup() {
     return {
       v$: useVuelidate(),
-      category_type_id: [{ label: 'Income', value: '1' }, { label: 'Expenses', value: '2' }],
+      category_type_id: [
+        {
+          label: 'Income',
+          value: '1',
+        },
+        {
+          label: 'Expenses',
+          value: '2',
+        },
+      ],
     };
   },
   data() {
@@ -89,6 +110,23 @@ export default {
         name: null,
         budget: null,
       },
+      icon: [
+        {
+          label: 'Home',
+          value: 'home',
+        },
+        {
+          label: 'Pets',
+          value: 'pets',
+        },
+        {
+          label: 'Sport',
+          value: 'fitness_center',
+        }, {
+          label: 'Cafe',
+          value: 'restaurant',
+        },
+      ],
     };
   },
   validations() {
@@ -97,6 +135,7 @@ export default {
         category_type_id: { required },
         name: { required },
         budget: { required },
+        icon: { required },
       },
     };
   },

@@ -66,9 +66,10 @@
         <q-input
           v-model="proxyDate"
           class="text-secondary q-my-lg"
+          label="Transaction date"
           outlined
           mask="####-##-##"
-          :rules="[ val => val && val.length > 9 || 'Incorrect date']"
+          :rules="[val => val && val.length > 9 || 'Incorrect date']"
         >
           <q-icon
             name="event"
