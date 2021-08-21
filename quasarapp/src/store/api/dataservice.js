@@ -23,6 +23,13 @@ const parseItemConfig = (response, code) => {
   return item;
 };
 
+const parseTrueFalse = (response, wallet) => {
+  if (response) {
+    return wallet;
+  }
+  return showErrorNotification('not updated');
+};
+
 const parseList = (response) => {
   if (response.status !== 200) {
     throw Error(response.message);
@@ -61,8 +68,8 @@ const getWallet = async (typeId) => {
 
 const updateWallet = async (wallet) => {
   try {
-    const response = await api.put(`/api/wallets/${wallet.id}`, wallet);
-    return parseItem(response, 200);
+    const response = await api.put(`/api/wallets/${wallet.id}`, JSON.stringify(wallet));
+    return parseTrueFalse(response, wallet);
   } catch (error) {
     showErrorNotification(error);
     return null;

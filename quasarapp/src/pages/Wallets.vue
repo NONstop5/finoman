@@ -41,9 +41,11 @@
               <q-slide-item
                 v-for="wallet in wallets.filter((wallet) => wallet.wallet_type_id === toggleOption.id)"
                 :key="wallet.id"
+                ref="someData"
                 left-color="green"
                 right-color="red"
-                @left="onEdit"
+                :wallet="wallet"
+                @left="onEdit(wallet)"
                 @right="onDelete(wallet.id)"
               >
                 <template #left>
@@ -94,6 +96,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
+import DialogWalletEdit from '../components/appDialog/DialogWalletEdit.vue';
 
 const walletType = {
   DEBIT: 1,
@@ -137,8 +140,15 @@ export default {
         parent: this,
       });
     },
-    onEdit({ reset }) {
-      reset();
+    onEdit(wallet) {
+      this.$q.dialog({
+        component: DialogWalletEdit,
+        componentProps:
+          {
+            wallet,
+          },
+        parent: this,
+      });
     },
     onDelete(id) {
       this.deleteWalletAction(id);
