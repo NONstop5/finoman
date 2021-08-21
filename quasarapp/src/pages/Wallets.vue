@@ -41,10 +41,9 @@
               <q-slide-item
                 v-for="wallet in wallets.filter((wallet) => wallet.wallet_type_id === toggleOption.id)"
                 :key="wallet.id"
-                ref="someData"
+                ref="wallet"
                 left-color="green"
                 right-color="red"
-                :wallet="wallet"
                 @left="onEdit(wallet)"
                 @right="onDelete(wallet.id)"
               >
@@ -149,6 +148,8 @@ export default {
           },
         parent: this,
       });
+      console.log(this.$refs.wallet);
+      this.$refs.wallet.reset();
     },
     onDelete(id) {
       this.deleteWalletAction(id);
