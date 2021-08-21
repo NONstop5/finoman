@@ -6,7 +6,7 @@
     >
       <q-card class="q-dialog-plugin">
         <q-card-section class="text-h6 text-secondary">
-          Add new Wallet
+          Update selected Wallet
         </q-card-section>
 
         <q-separator />
