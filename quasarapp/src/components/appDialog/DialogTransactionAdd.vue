@@ -199,13 +199,9 @@ export default {
     ...mapGetters('user', ['WALLETS_LIST', 'CATEGORIES_LIST']),
   },
   methods: {
-    ...mapActions('user', ['getTransactionsAction', 'addTransactionAction']),
+    ...mapActions('user', ['addTransactionAction']),
     async displayData() {
       this.createTransObj();
-      await this.loadInfo();
-    },
-    async loadInfo() {
-      await this.getTransactionsAction();
     },
     getDate(timeStamp) {
       this.dt = qdate.formatDate(timeStamp, 'YYYY-MM-DD HH:mm:ss');

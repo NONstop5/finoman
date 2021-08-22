@@ -140,7 +140,9 @@ async function getSortTransactionsAction({ commit }, date) {
 
 async function addTransactionAction({ commit }, transaction) {
   const addedTransaction = await dataService.addTran(transaction);
-  commit('ADD_TRANSACTION', addedTransaction);
+  const transactions = await dataService.getTran();
+  commit('GET_TRANSACTIONS', transactions);
+  commit('ADD_TRANSACTIONS', addedTransaction);
 }
 
 async function deleteTransactionAction({ commit }, transaction) {
