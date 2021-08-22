@@ -130,7 +130,7 @@ const deletedCategory = async (id) => {
 };
 async function getTran() {
   try {
-    const response = await api.get('api/transactions'); // test change last part of url later
+    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
