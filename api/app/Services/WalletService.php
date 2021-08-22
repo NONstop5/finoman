@@ -21,6 +21,22 @@ class WalletService
     public function getList(array $filters = null)
     {
         $qb = Wallet::query()
+            ->select(
+                [
+                    'id',
+                    'wallet_type_id',
+                    'currency_id',
+                    'name',
+                    'balance',
+                    'icon',
+                ]
+            )
+            ->with(
+                [
+                    'walletType:id,name',
+                    'currency:id,name',
+                ]
+            )
             ->where('user_id', Auth::id());
 
         if (isset($filters['wallet_type_id'])) {
