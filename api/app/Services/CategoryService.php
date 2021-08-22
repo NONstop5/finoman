@@ -21,6 +21,21 @@ class CategoryService
     public function getList(array $filters = null)
     {
         $qb = Category::query()
+            ->select(
+                [
+                    'id',
+                    'category_type_id',
+                    'name',
+                    'budget',
+                    'name',
+                    'icon',
+                ]
+            )
+            ->with(
+                [
+                    'categoryType:id,name',
+                ]
+            )
             ->where('user_id', Auth::id());
 
         if (isset($filters['category_type_id'])) {
