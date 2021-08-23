@@ -43,7 +43,7 @@
                 :key="category.id"
                 left-color="green"
                 right-color="red"
-                @left="onEdit"
+                @left="onLeft => onEdit(onLeft, category)"
                 @right="onDelete(category.id)"
               >
                 <template #left>
@@ -95,6 +95,7 @@ import {
   mapActions,
   mapState,
 } from 'vuex';
+import DialogCategoryEdit from '../components/appDialog/DialogCategoryEdit.vue';
 
 const categoryType = {
   INCOME: 1,
@@ -140,7 +141,15 @@ export default {
         parent: this,
       });
     },
-    onEdit({ reset }) {
+    onEdit({ reset }, category) {
+      this.$q.dialog({
+        component: DialogCategoryEdit,
+        componentProps:
+          {
+            category,
+          },
+        parent: this,
+      });
       reset();
     },
     onDelete(id) {
