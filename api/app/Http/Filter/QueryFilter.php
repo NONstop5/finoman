@@ -33,11 +33,10 @@ abstract class QueryFilter
     public function filters()
     {
         if(!$this->request->has('amount')) {
-            return $this->request->merge(['amount' => 5])->query();
+            return $this->request->merge(['amount' => 5, 'data_order' => 'asc'])->query();
+        } else {
+            return $this->request->merge(['data_order' => 'asc'])->query();
         }
-
-        return $this->request->query();
-
     }
 
     protected function paramToArray($param)
