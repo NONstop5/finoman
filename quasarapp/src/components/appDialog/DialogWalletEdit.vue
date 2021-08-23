@@ -6,7 +6,7 @@
     >
       <q-card class="q-dialog-plugin">
         <q-card-section class="text-h6 text-secondary">
-          Add new Wallet
+          Update selected Wallet
         </q-card-section>
 
         <q-separator />
@@ -16,7 +16,7 @@
             v-model="form.wallet_type_id"
             class="q-mb-md"
             :options="wallet_type_id"
-            label="Type of new wallet"
+            label="Type of wallet"
             emit-value
             map-options
             :rules="[val => !!val || 'Field is required']"
@@ -24,9 +24,8 @@
           <q-input
             v-model="form.name"
             class="q-mb-md"
-            label="Name of new wallet"
+            label="Name of wallet"
             type="text"
-            float-label="Name of new wallet"
             :rules="[val => !!val || 'Field is required']"
           />
           <q-select
@@ -36,7 +35,6 @@
             :options="icon"
             emit-value
             map-options
-            float-label="Icon for new wallet"
             required
           />
           <q-select
@@ -44,16 +42,15 @@
             class="q-mb-md"
             label="Currency"
             :options="currency_id"
-            required
             emit-value
             map-options
+            required
           />
           <q-input
             v-model="form.balance"
             class="q-mb-md"
-            label="Enter balance for new wallet"
+            label="Enter new balance"
             type="number"
-            float-label="Balance of new wallet"
             required
           />
         </q-card-section>
@@ -86,12 +83,18 @@ import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { formatedTimestamp } from 'src/functions/formatedTimestamp';
 import { showErrorNotification } from 'src/functions/function-show-notifications';
-import { ref } from 'vue';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'DialogWalletAdd',
-  props: {},
+  props: {
+    wallet: {
+      type: Object,
+      default() {
+        return { msg: 'hello' };
+      },
+    },
+  },
   emits: [
     'ok', 'hide', 'data', 'show',
   ],
@@ -132,11 +135,12 @@ export default {
     return {
       showDialog: false,
       form: {
-        wallet_type_id: ref(null),
-        currency_id: ref(1),
-        name: null,
-        icon: ref(null),
-        balance: null,
+        id: this.wallet.id,
+        wallet_type_id: null,
+        currency_id: this.wallet.currency_id,
+        name: this.wallet.name,
+        icon: this.wallet.icon,
+        balance: this.wallet.balance,
         balance_date: formatedTimestamp(),
       },
     };
@@ -153,7 +157,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('user', ['addWalletAction']),
+    ...mapActions('user', ['updateWalletAction']),
     show() {
       this.$refs.dialogRef.show();
     },
@@ -166,7 +170,7 @@ export default {
     onOKClick() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.addWalletAction(JSON.stringify(this.form));
+        this.updateWalletAction(this.form);
         this.$emit('ok');
         this.hide();
       } else {

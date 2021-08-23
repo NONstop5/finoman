@@ -48,7 +48,8 @@ function DELETE_CATEGORY(state, id) {
 function GET_TRANSACTIONS(state, payload) {
   state.transactions = payload;
 }
-function ADD_TRANSACTION() {
+function ADD_TRANSACTION(state, transaction) {
+  state.transactions.push(transaction);
 }
 function UPDATE_TRANSACTION(state, transaction) {
   const index = state.transactions.findIndex((h) => h.id === transaction.id);
