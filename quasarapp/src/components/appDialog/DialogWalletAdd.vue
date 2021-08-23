@@ -44,6 +44,9 @@
             class="q-mb-md"
             label="Currency"
             :options="currency_id"
+            required
+            emit-value
+            map-options
           />
           <q-input
             v-model="form.balance"
@@ -99,11 +102,11 @@ export default {
       wallet_type_id: [
         {
           label: 'Debit',
-          value: '1',
+          value: 1,
         },
         {
           label: 'Credit',
-          value: '2',
+          value: 2,
         },
       ],
       icon: [
@@ -145,6 +148,7 @@ export default {
         name: { required },
         icon: { required },
         balance: { required },
+        currency_id: { required },
       },
     };
   },

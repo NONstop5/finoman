@@ -44,7 +44,7 @@
                 ref="wallet"
                 left-color="green"
                 right-color="red"
-                @left="onEdit(wallet)"
+                @left="onLeft => onEdit(onLeft, wallet)"
                 @right="onDelete(wallet.id)"
               >
                 <template #left>
@@ -139,7 +139,7 @@ export default {
         parent: this,
       });
     },
-    onEdit(wallet) {
+    onEdit({ reset }, wallet) {
       this.$q.dialog({
         component: DialogWalletEdit,
         componentProps:
@@ -148,8 +148,7 @@ export default {
           },
         parent: this,
       });
-      console.log(this.$refs.wallet);
-      this.$refs.wallet.reset();
+      reset();
     },
     onDelete(id) {
       this.deleteWalletAction(id);

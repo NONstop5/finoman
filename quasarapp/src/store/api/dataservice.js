@@ -79,7 +79,7 @@ const updateWallet = async (wallet) => {
 const addWallet = async (wallet) => {
   try {
     const response = await api.post('api/wallets', wallet);
-    return parseItemConfig(response, 201);
+    return parseItem(response, 201);
   } catch (error) {
     showErrorNotification(error);
     return null;

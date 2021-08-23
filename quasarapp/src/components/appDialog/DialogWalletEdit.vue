@@ -42,6 +42,9 @@
             class="q-mb-md"
             label="Currency"
             :options="currency_id"
+            emit-value
+            map-options
+            required
           />
           <q-input
             v-model="form.balance"
@@ -80,7 +83,6 @@ import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { formatedTimestamp } from 'src/functions/formatedTimestamp';
 import { showErrorNotification } from 'src/functions/function-show-notifications';
-import { ref } from 'vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -103,11 +105,11 @@ export default {
       wallet_type_id: [
         {
           label: 'Debit',
-          value: '1',
+          value: 1,
         },
         {
           label: 'Credit',
-          value: '2',
+          value: 2,
         },
       ],
       icon: [
@@ -135,7 +137,7 @@ export default {
       form: {
         id: this.wallet.id,
         wallet_type_id: null,
-        currency_id: ref(1),
+        currency_id: this.wallet.currency_id,
         name: this.wallet.name,
         icon: this.wallet.icon,
         balance: this.wallet.balance,
@@ -150,6 +152,7 @@ export default {
         name: { required },
         icon: { required },
         balance: { required },
+        currency_id: { required },
       },
     };
   },
