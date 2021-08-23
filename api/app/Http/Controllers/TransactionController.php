@@ -21,6 +21,7 @@ class TransactionController extends Controller
     public function index(TransactionFilter $filters): JsonResponse
     {
         $transactions = $this->transactionsService->getFilteredTransactions($filters);
+//        dd($filters);
 
         return response()->json($transactions);
     }

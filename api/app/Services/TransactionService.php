@@ -33,7 +33,7 @@ class TransactionService
             ->where('user_id', Auth::id())
             ->get();
 
-        $transactions['total'] = $transactions->sum('amount');
+//        $transactions['total'] = $transactions->sum('amount');
         return $transactions;
     }
 
