@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-dialog
-      ref="categoryAddRef"
+      ref="categoryEditRef"
       @hide="onDialogHide"
     >
       <q-card class="q-dialog-plugin">
@@ -76,7 +76,7 @@ import { showErrorNotification } from 'src/functions/function-show-notifications
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'DialogCategoryAdd',
+  name: 'DialogCategoryEdit',
   props: {
     category: {
       type: Object,
@@ -147,10 +147,10 @@ export default {
   methods: {
     ...mapActions('user', ['updateCategoryAction']),
     show() {
-      this.$refs.categoryAddRef.show();
+      this.$refs.categoryEditRef.show();
     },
     hide() {
-      this.$refs.categoryAddRef.hide();
+      this.$refs.categoryEditRef.hide();
     },
     onDialogHide() {
       this.$emit('hide');

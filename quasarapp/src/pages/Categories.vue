@@ -84,7 +84,6 @@
           />
         </q-page-sticky>
       </div>
-      <DialogFormCat />
     </q-page>
   </q-pull-to-refresh>
 </template>
@@ -119,12 +118,10 @@ const toggleOptions = [
 
 export default {
   name: 'Categories',
-  data() {
-    return {
-      selectedCategoryType: 'income',
-      toggleOptions,
-    };
-  },
+  data: () => ({
+    selectedCategoryType: 'income',
+    toggleOptions,
+  }),
   computed: {
     ...mapState('user', ['categories']),
   },
@@ -154,9 +151,6 @@ export default {
     },
     onDelete(id) {
       this.deleteCategoryAction(id);
-    },
-    async updateCategory(category) {
-      await this.updateCategoryAction(category);
     },
     async refresh(done) {
       await this.getCategoriesAction();

@@ -76,7 +76,6 @@
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { showErrorNotification } from 'src/functions/function-show-notifications';
-import { ref } from 'vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -106,7 +105,7 @@ export default {
   data() {
     return {
       form: {
-        category_type_id: ref(null),
+        category_type_id: null,
         name: null,
         budget: null,
       },

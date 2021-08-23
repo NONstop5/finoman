@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-dialog
-      ref="dialogRef"
+      ref="dialogRefEdit"
       @hide="onDialogHide"
     >
       <q-card class="q-dialog-plugin">
@@ -159,10 +159,10 @@ export default {
   methods: {
     ...mapActions('user', ['updateWalletAction']),
     show() {
-      this.$refs.dialogRef.show();
+      this.$refs.dialogRefEdit.show();
     },
     hide() {
-      this.$refs.dialogRef.hide();
+      this.$refs.dialogRefEdit.hide();
     },
     onDialogHide() {
       this.$emit('hide');
