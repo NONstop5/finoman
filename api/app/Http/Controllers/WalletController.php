@@ -29,7 +29,10 @@ class WalletController extends Controller
      */
     public function index(WalletRequest $request)
     {
-        return response()->json($this->walletService->getList($request->validated()));
+        $validated = $request->validated();
+        $wallets = $this->walletService->getList($validated);
+
+        return response()->json($wallets);
     }
 
     /**
@@ -41,7 +44,10 @@ class WalletController extends Controller
      */
     public function store(WalletRequest $request): JsonResponse
     {
-        return response()->json($this->walletService->create($request->validated()), Response::HTTP_CREATED);
+        $validated = $request->validated();
+        $wallet = $this->walletService->create($validated);
+
+        return response()->json($wallet, Response::HTTP_CREATED);
     }
 
     /**
@@ -66,7 +72,10 @@ class WalletController extends Controller
      */
     public function update(WalletRequest $request, Wallet $wallet): JsonResponse
     {
-        return response()->json($wallet->update($request->validated()), Response::HTTP_ACCEPTED);
+        $validated = $request->validated();
+        $wallet = $wallet->update($validated);
+
+        return response()->json($wallet, Response::HTTP_ACCEPTED);
     }
 
     /**

@@ -19,14 +19,10 @@ function WALLETS_LIST(state) {
 }
 
 function WALLETS_TYPE_CREDIT(state) {
-  return state.wallets.filter(
-    (wallet) => wallet.wallet_type_id === 1,
-  );
+  return state.wallets.filter((w) => w.wallet_type_id === 2);
 }
 function WALLETS_TYPE_DEBIT(state) {
-  return state.wallets.filter(
-    (wallet) => wallet.wallet_type_id === 2,
-  );
+  return state.wallets.filter((w) => w.wallet_type_id === 1);
 }
 
 function CATEGORIES(state) {

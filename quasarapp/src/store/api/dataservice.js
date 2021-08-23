@@ -12,15 +12,22 @@ const parseItem = (response, code) => {
   return item;
 };
 
-const parseItemConfig = (response, code) => {
-  if (response.status !== code) {
-    throw Error(response.message);
+// const parseItemConfig = (response, code) => {
+//   if (response.status !== code) {
+//     throw Error(response.message);
+//   }
+//   let item = JSON.parse(response.config.data);
+//   if (typeof item !== 'object') {
+//     item = undefined;
+//   }
+//   return item;
+// };
+
+const parseTrueFalse = (response, wallet) => {
+  if (response) {
+    return wallet;
   }
-  let item = JSON.parse(response.config.data);
-  if (typeof item !== 'object') {
-    item = undefined;
-  }
-  return item;
+  return showErrorNotification('not updated');
 };
 
 const parseList = (response) => {
@@ -61,8 +68,8 @@ const getWallet = async (typeId) => {
 
 const updateWallet = async (wallet) => {
   try {
-    const response = await api.put(`/api/wallets/${wallet.id}`, wallet);
-    return parseItem(response, 200);
+    const response = await api.put(`/api/wallets/${wallet.id}`, JSON.stringify(wallet));
+    return parseTrueFalse(response, wallet);
   } catch (error) {
     showErrorNotification(error);
     return null;
@@ -72,7 +79,7 @@ const updateWallet = async (wallet) => {
 const addWallet = async (wallet) => {
   try {
     const response = await api.post('api/wallets', wallet);
-    return parseItemConfig(response, 201);
+    return parseItem(response, 201);
   } catch (error) {
     showErrorNotification(error);
     return null;
@@ -108,10 +115,9 @@ const addCategory = async (category) => {
   }
 };
 const updateCategory = async (category) => {
-  debugger;
   try {
-    const response = await api.put(`/api/categories/${category.id}`, category);
-    return parseItemConfig(response, 200);
+    const response = await api.put(`/api/categories/${category.id}`, JSON.stringify(category));
+    return parseTrueFalse(response, category);
   } catch (error) {
     showErrorNotification(error);
     return null;
@@ -130,14 +136,22 @@ const deletedCategory = async (id) => {
 };
 async function getTran() {
   try {
-    const response = await api.get('api/transactions'); // test change last part of url later
+    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return [];
   }
 }
-
+async function get5LastTran() {
+  try {
+    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
+    return parseItem(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return [];
+  }
+}
 async function getSortTran(date) {
   try {
     const response = await api.get(`api/transactions?${date}`); // test change last part of url later
@@ -169,6 +183,7 @@ export const dataService = {
   updateCategory,
   deletedCategory,
   getTran,
+  get5LastTran,
   getSortTran,
   parseItem,
   parseList,

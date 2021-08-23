@@ -1,12 +1,12 @@
 <template>
   <div>
     <q-dialog
-      ref="categoryAddRef"
+      ref="categoryEditRef"
       @hide="onDialogHide"
     >
       <q-card class="q-dialog-plugin">
         <q-card-section class="text-h6 text-secondary">
-          Add new Category
+          Update selected Category
         </q-card-section>
 
         <q-separator />
@@ -16,7 +16,7 @@
             v-model="form.category_type_id"
             class="q-mb-md"
             :options="category_type_id"
-            label="Type of new category"
+            label="Type of category"
             emit-value
             map-options
             :rules="[val => !!val || 'Field is required']"
@@ -24,9 +24,8 @@
           <q-input
             v-model="form.name"
             class="q-mb-md"
-            label="Name of new category"
+            label="Name of category"
             type="text"
-            float-label="Name of new category"
             :rules="[val => !!val || 'Field is required']"
           />
           <q-select
@@ -36,15 +35,13 @@
             :options="icon"
             emit-value
             map-options
-            float-label="Icon for new wallet"
             required
           />
           <q-input
             v-model="form.budget"
             class="q-mb-md"
-            label="Enter budget for new category"
+            label="Enter new budget"
             type="number"
-            float-label="Budget of new category"
             required
           />
         </q-card-section>
@@ -79,8 +76,15 @@ import { showErrorNotification } from 'src/functions/function-show-notifications
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'DialogCategoryAdd',
-  props: {},
+  name: 'DialogCategoryEdit',
+  props: {
+    category: {
+      type: Object,
+      default() {
+        return { msg: 'hello' };
+      },
+    },
+  },
   emits: [
     'ok',
     'hide',
@@ -100,15 +104,6 @@ export default {
           value: 2,
         },
       ],
-    };
-  },
-  data() {
-    return {
-      form: {
-        category_type_id: null,
-        name: null,
-        budget: null,
-      },
       icon: [
         {
           label: 'Home',
@@ -128,6 +123,17 @@ export default {
       ],
     };
   },
+  data() {
+    return {
+      form: {
+        category_type_id: null,
+        name: this.category.name,
+        icon: this.category.icon,
+        budget: this.category.budget,
+        id: this.category.id,
+      },
+    };
+  },
   validations() {
     return {
       form: {
@@ -139,12 +145,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions('user', ['addCategoryAction']),
+    ...mapActions('user', ['updateCategoryAction']),
     show() {
-      this.$refs.categoryAddRef.show();
+      this.$refs.categoryEditRef.show();
     },
     hide() {
-      this.$refs.categoryAddRef.hide();
+      this.$refs.categoryEditRef.hide();
     },
     onDialogHide() {
       this.$emit('hide');
@@ -152,7 +158,7 @@ export default {
     onOKClick() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.addCategoryAction(JSON.stringify(this.form));
+        this.updateCategoryAction(this.form);
         this.$emit('ok');
         this.hide();
       } else {

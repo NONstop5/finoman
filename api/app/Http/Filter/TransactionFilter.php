@@ -2,9 +2,6 @@
 
 namespace App\Http\Filter;
 
-use App\Models\TransactionType;
-use Illuminate\Database\Eloquent\Builder;
-
 class TransactionFilter extends QueryFilter
 {
     public function category_id($ids)
@@ -46,5 +43,4 @@ class TransactionFilter extends QueryFilter
     {
         return $this->builder->whereDate('transacted_at', '<=', $date);
     }
-
 }

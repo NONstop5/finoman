@@ -1,13 +1,10 @@
 <template>
-  <q-page class="row justify-center items-center content-start">
-    <div class="col">
-      <q-pull-to-refresh @refresh="refresh">
+  <q-pull-to-refresh @refresh="refresh">
+    <q-page class="row justify-center items-center content-start">
+      <div class="col">
         <div class="row">
           <h4 class="text-primary q-my-sm">
             Wallets
-            <h4 v-if="!wallets[0]">
-              Pull-down to Refresh
-            </h4>
           </h4>
         </div>
         <q-separator
@@ -44,9 +41,10 @@
               <q-slide-item
                 v-for="wallet in wallets.filter((wallet) => wallet.wallet_type_id === toggleOption.id)"
                 :key="wallet.id"
+                ref="wallet"
                 left-color="green"
                 right-color="red"
-                @left="onEdit"
+                @left="onLeft => onEdit(onLeft, wallet)"
                 @right="onDelete(wallet.id)"
               >
                 <template #left>
@@ -83,20 +81,21 @@
             color="secondary"
             padding="sm"
             glossy
-            @click="openDialog"
+            @click="onAdd"
           />
         </q-page-sticky>
-      </q-pull-to-refresh>
-    </div>
-  </q-page>
+      </div>
+    </q-page>
+  </q-pull-to-refresh>
 </template>
 
 <script>
+import DialogWalletAdd from 'src/components/appDialog/DialogWalletAdd.vue';
 import {
   mapActions,
   mapState,
 } from 'vuex';
-import DialogWalletAdd from '../components/appDialog/DialogWalletAdd.vue';
+import DialogWalletEdit from '../components/appDialog/DialogWalletEdit.vue';
 
 const walletType = {
   DEBIT: 1,
@@ -127,20 +126,32 @@ export default {
   computed: {
     ...mapState('user', ['wallets']),
   },
+  created() {
+    if (!this.wallets[0]) {
+      this.getWalletsAction();
+    }
+  },
   methods: {
-    ...mapActions('user', ['getWalletsAction', 'deleteWalletAction']),
-    openDialog() {
+    ...mapActions('user', ['getWalletsAction', 'updateWalletAction', 'deleteWalletAction']),
+    onAdd() {
       this.$q.dialog({
         component: DialogWalletAdd,
         parent: this,
       });
     },
-
-    onEdit({ reset }) {
+    onEdit({ reset }, wallet) {
+      this.$q.dialog({
+        component: DialogWalletEdit,
+        componentProps:
+          {
+            wallet,
+          },
+        parent: this,
+      });
       reset();
     },
-    onDelete(wallet) {
-      this.deleteWalletAction(wallet);
+    onDelete(id) {
+      this.deleteWalletAction(id);
     },
     async refresh(done) {
       await this.getWalletsAction();
