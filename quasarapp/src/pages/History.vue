@@ -58,7 +58,7 @@
           <div
             class="text-h4 text-positive"
           >
-            {{ transactions.total }}  ₽
+            {{ transactions.total.toFixed(2) }}  ₽
           </div>
           <div
             class="text-h5"

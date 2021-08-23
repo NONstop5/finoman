@@ -46,6 +46,7 @@ class CreateCategoriesTable extends Migration
                     ->string('icon')
                     ->comment('Иконка категории');
 
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

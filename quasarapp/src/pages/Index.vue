@@ -7,59 +7,65 @@
       <q-separator
         class="q-mb-lg"
       />
-      <div class="flex items-center q-gutter-sm q-mb-lg">
-        <q-card
-          v-for="wallet in wallets"
-          :key="wallet.id"
-          class="text-center bg-primary glossy text-white q-pa-xs"
-        >
-          <q-icon
-            :name="wallet.icon"
-            :size="'1.5em'"
-          />
-          <div class="text-subtitle2">
-            {{ wallet.name }}
-          </div>
-        </q-card>
-        <q-space />
-        <q-btn
-          round
-          glossy
-          color="secondary"
-          @click="openDialog"
-        >
-          <q-icon
-            name="fas fa-plus"
-            :size="'1.5em'"
-          />
-        </q-btn>
+      <div class="row q-mb-lg">
+        <div class="row col-10 q-gutter-sm">
+          <q-card
+            v-for="wallet in wallets"
+            :key="wallet.id"
+            class="text-center bg-primary glossy text-white q-pa-xs"
+          >
+            <q-icon
+              :name="wallet.icon"
+              :size="'1.5em'"
+            />
+            <div class="text-subtitle2">
+              {{ wallet.name }}
+            </div>
+          </q-card>
+        </div>
+        <div class="col text-right">
+          <q-btn
+            round
+            glossy
+            color="secondary"
+            @click="openDialog"
+          >
+            <q-icon
+              name="fas fa-plus"
+              :size="'1.5em'"
+            />
+          </q-btn>
+        </div>
       </div>
       <q-separator
         class="q-mb-lg"
       />
-      <div class="flex items-center q-gutter-sm q-mb-lg">
-        <q-card
-          v-for="category in categories"
-          :key="category.id"
-          class="text-center q-mr-lg q-mb-md"
-        >
-          <q-icon
-            :name="category.icon"
-            :size="'1.5em'"
-          />
+      <div class="row q-mb-lg">
+        <div class="row col-10 q-gutter-sm">
+          <q-card
+            v-for="category in categories"
+            :key="category.id"
+            class="text-center q-pa-xs"
+          >
+            <q-icon
+              :name="category.icon"
+              :size="'1.5em'"
+            />
 
-          <div class="text-subtitle2">
-            {{ category.name }}
-          </div>
-        </q-card>
-        <q-space />
-        <q-btn
-          round
-          glossy
-          color="secondary"
-          icon="fas fa-plus"
-          @click="dialogCategoryAdd"
-        />
+            <div class="text-subtitle2">
+              {{ category.name }}
+            </div>
+          </q-card>
+        </div>
+        <div class="col text-right">
+          <q-btn
+            round
+            glossy
+            color="secondary"
+            icon="fas fa-plus"
+            @click="dialogCategoryAdd"
+          />
+        </div>
       </div>
       <q-separator
         class="q-mb-lg"
@@ -167,11 +173,11 @@ export default defineComponent({
     await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'get5LastTransactionsAction']),
     async loadInfo() {
       await this.getWalletsAction();
       await this.getCategoriesAction();
-      await this.getTransactionsAction();
+      await this.get5LastTransactionsAction();
     },
     openDialog() {
       this.$q.dialog({

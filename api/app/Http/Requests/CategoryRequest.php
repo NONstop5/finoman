@@ -23,22 +23,22 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        switch($this->method()) {
-            case 'POST': {
+        switch ($this->method()) {
+            case 'GET':
+            {
                 return [
-                    'name' => 'required|string|max:100',
-                    'budget' => 'required|numeric',
-                    'category_type_id' => 'required|numeric',
-                    'icon' => 'string|max:50'
+                    'category_type_id' => 'nullable|integer|exists:category_types,id',
                 ];
             }
+            case 'POST':
             case 'PUT':
-            case 'PATCH': {
-                return  [
+            case 'PATCH':
+            {
+                return [
+                    'category_type_id' => 'required|integer|exists:category_types,id',
                     'name' => 'required|string|max:100',
+                    'icon' => 'string|max:50',
                     'budget' => 'required|numeric',
-                    'category_type_id' => 'required|numeric',
-                    'icon' => 'string|max:50'
                 ];
             }
             default:

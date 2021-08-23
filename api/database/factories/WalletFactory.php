@@ -36,7 +36,14 @@ class WalletFactory extends Factory
             ),
             'balance' => $this->faker->randomFloat(2, 0, 8),
             'balance_date' => now(),
-            'icon' => 'wallet',
+            'icon' => $this->faker->randomElement(
+                [
+                    'account_balance_wallet',
+                    'credit_card',
+                    'account_balance',
+                    'savings',
+                ]
+            ),
         ];
     }
 }
