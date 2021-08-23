@@ -130,14 +130,22 @@ const deletedCategory = async (id) => {
 };
 async function getTran() {
   try {
-    const response = await api.get('api/transactions'); // test change last part of url later
+    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return [];
   }
 }
-
+async function get5LastTran() {
+  try {
+    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
+    return parseItem(response, 200);
+  } catch (error) {
+    showErrorNotification(error);
+    return [];
+  }
+}
 async function getSortTran(date) {
   try {
     const response = await api.get(`api/transactions?${date}`); // test change last part of url later
@@ -169,6 +177,7 @@ export const dataService = {
   updateCategory,
   deletedCategory,
   getTran,
+  get5LastTran,
   getSortTran,
   parseItem,
   parseList,

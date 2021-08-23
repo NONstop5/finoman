@@ -19,7 +19,7 @@ class TransactionService
                 'category_id',
                 'amount',
                 'transacted_at',
-                'transaction_type_id'
+                'transaction_type_id',
             ]
         )
             ->with(
@@ -27,13 +27,16 @@ class TransactionService
                     'walletFrom:id,name',
                     'walletTo:id,name',
                     'category:id,name',
-                    'transactionType:id,name'
+                    'transactionType:id,name',
                 ]
             )
             ->where('user_id', Auth::id())
             ->get();
 
-//        $transactions['total'] = $transactions->sum('amount');
+
+        $transactions['total'] = round($transactions->sum('amount'), 2);
+
+
         return $transactions;
     }
 

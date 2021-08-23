@@ -132,7 +132,10 @@ async function getTransactionsAction({ commit }) {
   const transactions = await dataService.getTran();
   commit('GET_TRANSACTIONS', transactions);
 }
-
+async function get5LastTransactionsAction({ commit }) {
+  const transactions = await dataService.get5LastTran();
+  commit('GET_TRANSACTIONS', transactions);
+}
 async function getSortTransactionsAction({ commit }, date) {
   const transactions = await dataService.getSortTran(date);
   commit('GET_TRANSACTIONS', transactions);
@@ -140,7 +143,8 @@ async function getSortTransactionsAction({ commit }, date) {
 
 async function addTransactionAction({ commit }, transaction) {
   const addedTransaction = await dataService.addTran(transaction);
-  commit('ADD_TRANSACTION', addedTransaction);
+  commit('ADD_TRANSACTIONS', addedTransaction);
+  getTransactionsAction({ commit });
 }
 
 async function deleteTransactionAction({ commit }, transaction) {
@@ -159,6 +163,7 @@ export {
   getState,
   register,
   getTransactionsAction,
+  get5LastTransactionsAction,
   addTransactionAction,
   updateTransactionAction,
   deleteTransactionAction,

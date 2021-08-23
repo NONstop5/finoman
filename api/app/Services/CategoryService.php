@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\Wallet;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
-class WalletService
+class CategoryService
 {
     /**
-     * Get filtered wallet list
+     * Get filtered category list
      *
      * @param array|null $filters
      *
@@ -20,34 +20,33 @@ class WalletService
      */
     public function getList(array $filters = null)
     {
-        $qb = Wallet::query()
+        $qb = Category::query()
             ->select(
                 [
                     'id',
-                    'wallet_type_id',
-                    'currency_id',
+                    'category_type_id',
                     'name',
-                    'balance',
+                    'budget',
+                    'name',
                     'icon',
                 ]
             )
             ->with(
                 [
-                    'walletType:id,name',
-                    'currency:id,name',
+                    'categoryType:id,name',
                 ]
             )
             ->where('user_id', Auth::id());
 
-        if (isset($filters['wallet_type_id'])) {
-            $qb->where('wallet_type_id', $filters['wallet_type_id']);
+        if (isset($filters['category_type_id'])) {
+            $qb->where('category_type_id', $filters['category_type_id']);
         }
 
         return $qb->get();
     }
 
     /**
-     * Create new wallet
+     * Create new category
      *
      * @param array $data
      *
@@ -57,7 +56,7 @@ class WalletService
     {
         $data = Arr::add($data, 'user_id', Auth::id());
 
-        return Wallet::query()
+        return Category::query()
             ->create($data);
     }
 }

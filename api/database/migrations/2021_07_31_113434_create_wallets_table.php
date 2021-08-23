@@ -47,17 +47,18 @@ class CreateWalletsTable extends Migration
                     ->comment('Название кошелька');
 
                 $table
-                    ->string('balance')
+                    ->float('balance')
                     ->comment('Начальный баланс кошелька');
 
                 $table
-                    ->string('balance_date')
+                    ->date('balance_date')
                     ->comment('Дата начального баланса кошелька');
 
                 $table
                     ->string('icon')
                     ->comment('Иконка кошелька');
 
+                $table->softDeletes();
                 $table->timestamps();
             }
         );
