@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex column ">
     <div class="flex justify-between items-center q-ma-lg">
-      <span class="text-h5">History: {{ getDate(date) }}</span>
+      <span class="text-h5">History: {{ getDate(date.from) }} {{ date.to == date.from ? '' : '- ' + getDate(date.to) }}</span>
       <q-btn
         icon="event"
         round
