@@ -173,11 +173,11 @@ export default defineComponent({
     await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'get5LastTransactionsAction']),
+    ...mapActions('user', ['getWalletsAction', 'getCategoriesAction', 'getTransactionsAction']),
     async loadInfo() {
       await this.getWalletsAction();
       await this.getCategoriesAction();
-      await this.get5LastTransactionsAction();
+      await this.getTransactionsAction({ amount: 5 });
     },
     openDialog() {
       this.$q.dialog({

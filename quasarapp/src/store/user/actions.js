@@ -128,19 +128,10 @@ async function deleteCategoryAction({ commit }, id) {
   const deletedCategory = await dataService.deletedCategory(id);
   commit('DELETE_CATEGORY', deletedCategory);
 }
-async function getTransactionsAction({ commit }) {
-  const transactions = await dataService.getTran();
+async function getTransactionsAction({ commit }, obj) {
+  const transactions = await dataService.getTran(obj);
   commit('GET_TRANSACTIONS', transactions);
 }
-async function get5LastTransactionsAction({ commit }) {
-  const transactions = await dataService.get5LastTran();
-  commit('GET_TRANSACTIONS', transactions);
-}
-async function getSortTransactionsAction({ commit }, date) {
-  const transactions = await dataService.getSortTran(date);
-  commit('GET_TRANSACTIONS', transactions);
-}
-
 async function addTransactionAction({ commit }, transaction) {
   const addedTransaction = await dataService.addTran(transaction);
   commit('ADD_TRANSACTIONS', addedTransaction);
@@ -163,7 +154,6 @@ export {
   getState,
   register,
   getTransactionsAction,
-  get5LastTransactionsAction,
   addTransactionAction,
   updateTransactionAction,
   deleteTransactionAction,
@@ -175,5 +165,4 @@ export {
   addCategoryAction,
   updateCategoryAction,
   deleteCategoryAction,
-  getSortTransactionsAction,
 };
