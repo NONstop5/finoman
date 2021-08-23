@@ -12,16 +12,16 @@ const parseItem = (response, code) => {
   return item;
 };
 
-const parseItemConfig = (response, code) => {
-  if (response.status !== code) {
-    throw Error(response.message);
-  }
-  let item = JSON.parse(response.config.data);
-  if (typeof item !== 'object') {
-    item = undefined;
-  }
-  return item;
-};
+// const parseItemConfig = (response, code) => {
+//   if (response.status !== code) {
+//     throw Error(response.message);
+//   }
+//   let item = JSON.parse(response.config.data);
+//   if (typeof item !== 'object') {
+//     item = undefined;
+//   }
+//   return item;
+// };
 
 const parseTrueFalse = (response, wallet) => {
   if (response) {
@@ -115,10 +115,9 @@ const addCategory = async (category) => {
   }
 };
 const updateCategory = async (category) => {
-  debugger;
   try {
-    const response = await api.put(`/api/categories/${category.id}`, category);
-    return parseItemConfig(response, 200);
+    const response = await api.put(`/api/categories/${category.id}`, JSON.stringify(category));
+    return parseTrueFalse(response, category);
   } catch (error) {
     showErrorNotification(error);
     return null;
