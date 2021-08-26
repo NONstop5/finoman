@@ -4,6 +4,11 @@ namespace App\Http\Filter;
 
 class TransactionFilter extends QueryFilter
 {
+    public function without_params($amount = 5, $order = 'asc')
+    {
+        return $this->builder->orderBy('id', $order)->limit($amount);
+    }
+
     public function category_id($ids)
     {
         return $this->builder->whereIn('category_id', $ids);
@@ -24,12 +29,12 @@ class TransactionFilter extends QueryFilter
         return $this->builder->whereIn('transaction_type_id', $ids);
     }
 
-    public function data_order($order = 'asc')
+    public function data_order($order)
     {
         return $this->builder->orderBy('id', $order);
     }
 
-    public function amount($amount = 3)
+    public function amount($amount)
     {
         return $this->builder->limit($amount);
     }

@@ -17,19 +17,25 @@ abstract class QueryFilter
         $this->request = $request;
     }
 
+    /* Перибираем параметры из адресной строки и вызываем соответствующие методы, модифицируя builder */
     public function apply(Builder $builder)
     {
         $this->builder = $builder;
 
-        foreach ($this->filters() as $field => $value) {
-            if (method_exists($this, $field)) {
-                call_user_func_array([$this, $field], array_filter([$value]));
+        if(!$this->filters()) {
+            call_user_func([$this, 'without_params']);
+        } else {
+            foreach ($this->filters() as $field => $value) {
+                if (method_exists($this, $field)) {
+                    call_user_func_array([$this, $field], array_filter([$value]));
+                }
             }
         }
 
         return $this->builder;
     }
 
+    /* Метод получения данных из строки */
     public function filters()
     {
         return $this->request->query();
