@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex column ">
     <div class="flex justify-between items-center q-ma-lg">
-      <span class="text-h5">History: {{ getDate(date) }}</span>
+      <span class="text-h5">History: {{ getDate(date.from) }} {{ date.to == date.from ? '' : '- ' + getDate(date.to) }}</span>
       <q-btn
         icon="event"
         round
@@ -15,6 +15,7 @@
         >
           <q-date
             v-model="proxyDate"
+            range
             color="secondary"
             class="text-secondary"
             model-value=""
@@ -58,7 +59,7 @@
           <div
             class="text-h4 text-positive"
           >
-            {{ transactions.total.toFixed(2) }}  ₽
+            {{ total }}  ₽
           </div>
           <div
             class="text-h5"
@@ -82,8 +83,8 @@ export default defineComponent({
   name: 'History',
   components: { ListTransaction },
   setup() {
-    const date = ref(Date.now());
-    const proxyDate = ref(Date.now());
+    const date = ref({ from: Date.now(), to: Date.now() });
+    const proxyDate = ref({ from: Date.now(), to: Date.now() });
 
     return {
       date,
@@ -100,15 +101,19 @@ export default defineComponent({
   },
   computed: {
     ...mapState('user', ['transactions']),
-
+    total() {
+      if (this.transactions.total) {
+        return this.transactions.total.toFixed(2);
+      } return '0.00';
+    },
   },
   async created() {
     await this.loadInfo();
   },
   methods: {
-    ...mapActions('user', ['getSortTransactionsAction']),
-    async loadInfo(date = '') {
-      await this.getSortTransactionsAction(date);
+    ...mapActions('user', ['getTransactionsAction']),
+    async loadInfo(date = {}) {
+      await this.getTransactionsAction(date);
     },
     getDate(timeStamp) {
       return qdate.formatDate(timeStamp, 'YYYY-MM-DD');
@@ -117,7 +122,10 @@ export default defineComponent({
       return qdate.formatDate(timeStamp, 'MMMM');
     },
     getSortTran(date) {
-      this.loadInfo(`transacted_at_from=${this.getDate(date)}`);
+      this.loadInfo({
+        transacted_at_from: this.getDate(date.from),
+        transacted_at_to: this.getDate(date.to),
+      });
     },
   },
 });
