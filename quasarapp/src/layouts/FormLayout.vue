@@ -22,7 +22,7 @@
           :model-value="false"
           @update:model-value="toggleDarkMode"
         />
-        <q-space/>
+        <q-space />
         <div class="q-mr-sm text-bold text-no-wrap">
           {{ details.name }}
         </div>
