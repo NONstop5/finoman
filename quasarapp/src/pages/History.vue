@@ -47,7 +47,7 @@
         show-value
         font-size="10px"
         class="q-ma-md"
-        value="100"
+        :value="diagramValue"
         size="280px"
         color="light-blue"
         track-color="grey-3"
@@ -59,7 +59,7 @@
           <div
             class="text-h4 text-positive"
           >
-            {{ total }}  ₽
+            {{ transactions.total }}  ₽
           </div>
           <div
             class="text-h5"
@@ -69,7 +69,7 @@
         </div>
       </q-circular-progress>
     </div>
-    <ListTransaction :transactions="transactions" />
+    <ListTransaction :transactions="transactions.transactions" />
   </q-page>
 </template>
 
@@ -89,6 +89,7 @@ export default defineComponent({
     return {
       date,
       proxyDate,
+      diagramValue: 100,
 
       updateProxy() {
         proxyDate.value = date.value;
@@ -102,8 +103,8 @@ export default defineComponent({
   computed: {
     ...mapState('user', ['transactions']),
     total() {
-      if (this.transactions.total) {
-        return this.transactions.total.toFixed(2);
+      if (this.transactions.transactions.total) {
+        return this.transactions.transactions.total.toFixed(2);
       } return '0.00';
     },
   },

@@ -74,7 +74,7 @@
         Last transaction
       </h5>
       <q-card
-        v-for="transaction in transactions"
+        v-for="transaction in transactions.transactions"
         :key="transaction.id"
         flat
         bordered
