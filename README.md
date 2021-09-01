@@ -1,4 +1,6 @@
-## Finoman
+## Finoman App
+
+### [Demo video](https://drive.google.com/file/d/1iKa-HgSIDy93TNk5l8OFqzhEhbIF93Bz/view?usp=sharing)
 
 ### Requirements
 - PHP 7.3 or higher
