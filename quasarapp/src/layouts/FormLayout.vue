@@ -3,13 +3,25 @@
     <q-header
       elevated
     >
+      <div class="row justify-center" />
       <q-toolbar v-if="loggedIn">
         <q-icon
           class="q-mr-sm"
           name="fas fa-coins"
           size="1.5rem"
         />
-        <q-toolbar-title>Finoman</q-toolbar-title>
+        <q-toolbar-title>
+          Finoman
+        </q-toolbar-title>
+        <q-toggle
+          v-model="isDarkMode"
+          color="white"
+          icon-color="black"
+          checked-icon="light_mode"
+          unchecked-icon="dark_mode"
+          :model-value="false"
+          @update:model-value="toggleDarkMode"
+        />
         <q-space />
         <div class="q-mr-sm text-bold text-no-wrap">
           {{ details.name }}
@@ -111,6 +123,7 @@
 </template>
 
 <script>
+import { Dark } from 'quasar';
 import {
   mapActions,
   mapState,
@@ -119,12 +132,17 @@ import DialogTransactionAdd from 'src/components/appDialog/DialogTransactionAdd.
 
 export default {
   name: 'FormLayout',
-  data: () => ({}),
+  data: () => ({
+    isDarkMode: false,
+  }),
   computed: {
     ...mapState('user', ['loggedIn', 'details']),
   },
   methods: {
     ...mapActions('user', ['logout']),
+    toggleDarkMode(isDark) {
+      Dark.set(isDark);
+    },
     onSubmit() {
       this.logout();
     },

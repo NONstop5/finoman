@@ -134,34 +134,23 @@ const deletedCategory = async (id) => {
     return null;
   }
 };
-async function getTran() {
+async function getTran(obj) {
+  const categoryId = obj.category_id ? `category_id=${obj.category_id}` : '';
+  const walletFromId = obj.wallet_from_id ? `wallet_from_id=${obj.wallet_from_id}` : '';
+  const walletToId = obj.wallet_to_id ? `wallet_to_id=${obj.wallet_to_id}` : '';
+  const transactionTypeId = obj.transaction_type_id ? `transaction_type_id=${obj.transaction_type_id}` : '';
+  const amount = obj.amount ? `amount=${obj.amount}` : '';
+  const dataOrder = obj.data_order ? 'data_order=desc' : '';
+  const transactedAtFrom = obj.transacted_at_from ? `transacted_at_from=${obj.transacted_at_from}` : '';
+  const transactedAtTo = obj.transacted_at_to ? `transacted_at_to=${obj.transacted_at_to}` : '';
   try {
-    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
+    const response = await api.get(`api/transactions?${categoryId}&${walletFromId}&${walletToId}&${transactionTypeId}&${amount}&${dataOrder}&${transactedAtFrom}&${transactedAtTo}`);
     return parseItem(response, 200);
   } catch (error) {
     showErrorNotification(error);
     return [];
   }
 }
-async function get5LastTran() {
-  try {
-    const response = await api.get('api/transactions?amount=5&data_order=desc'); // test change last part of url later
-    return parseItem(response, 200);
-  } catch (error) {
-    showErrorNotification(error);
-    return [];
-  }
-}
-async function getSortTran(date) {
-  try {
-    const response = await api.get(`api/transactions?${date}`); // test change last part of url later
-    return parseItem(response, 200);
-  } catch (error) {
-    showErrorNotification(error);
-    return [];
-  }
-}
-
 const addTran = async (tran) => {
   try {
     const response = await api.post('api/transactions', tran);
@@ -183,8 +172,6 @@ export const dataService = {
   updateCategory,
   deletedCategory,
   getTran,
-  get5LastTran,
-  getSortTran,
   parseItem,
   parseList,
   addTran,

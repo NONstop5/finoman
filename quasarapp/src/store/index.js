@@ -12,16 +12,12 @@ import user from './user';
  * with the Store instance.
  */
 
-export default store((/* { ssrContext } */) => {
-  const Store = createStore({
-    modules: {
-      user,
-    },
+export default store((/* { ssrContext } */) => createStore({
+  modules: {
+    user,
+  },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode and --debug builds only
-    strict: process.env.DEBUGGING,
-  });
-
-  return Store;
-});
+  // enable strict mode (adds overhead!)
+  // for dev mode and --debug builds only
+  strict: process.env.DEBUGGING,
+}));

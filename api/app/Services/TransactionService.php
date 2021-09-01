@@ -33,9 +33,10 @@ class TransactionService
             ->where('user_id', Auth::id())
             ->get();
 
-        $transactions['total'] = round($transactions->sum('amount'), 2);
-
-        return $transactions;
+        return [
+            'transactions' => $transactions->toArray(),
+            'total' => round($transactions->sum('amount'), 2),
+        ];
     }
 
     public function create(array $data)

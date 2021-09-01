@@ -12,7 +12,7 @@
         />
         <q-tabs
           v-model="selectedWalletType"
-          class="bg-grey-2 text-teal q-mb-sm"
+          class="text-teal q-mb-sm"
           dense
           align="justify"
         >
