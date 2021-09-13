@@ -22,10 +22,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CategoryType newModelQuery()
  * @method static Builder|CategoryType newQuery()
  * @method static Builder|CategoryType query()
- * @method static Builder|CategoryType whereCreatedAt($value)
- * @method static Builder|CategoryType whereId($value)
- * @method static Builder|CategoryType whereName($value)
- * @method static Builder|CategoryType whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class CategoryType extends Model

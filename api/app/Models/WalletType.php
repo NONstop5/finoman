@@ -22,10 +22,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|WalletType newModelQuery()
  * @method static Builder|WalletType newQuery()
  * @method static Builder|WalletType query()
- * @method static Builder|WalletType whereCreatedAt($value)
- * @method static Builder|WalletType whereId($value)
- * @method static Builder|WalletType whereName($value)
- * @method static Builder|WalletType whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class WalletType extends Model

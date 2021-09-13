@@ -23,11 +23,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Currency newModelQuery()
  * @method static Builder|Currency newQuery()
  * @method static Builder|Currency query()
- * @method static Builder|Currency whereCode($value)
- * @method static Builder|Currency whereCreatedAt($value)
- * @method static Builder|Currency whereId($value)
- * @method static Builder|Currency whereName($value)
- * @method static Builder|Currency whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class Currency extends Model

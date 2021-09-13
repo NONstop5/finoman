@@ -22,10 +22,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|TransactionType newModelQuery()
  * @method static Builder|TransactionType newQuery()
  * @method static Builder|TransactionType query()
- * @method static Builder|TransactionType whereCreatedAt($value)
- * @method static Builder|TransactionType whereId($value)
- * @method static Builder|TransactionType whereName($value)
- * @method static Builder|TransactionType whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class TransactionType extends Model

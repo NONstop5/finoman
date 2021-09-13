@@ -22,7 +22,6 @@ use Illuminate\Support\Carbon;
  * @property int $currency_id Связь с валютами
  * @property int $wallet_type_id Связь с типами кошельков
  * @property string $name Название кошелька
- * @mixin Eloquent
  * @property float $balance Начальный баланс кошелька
  * @property string $balance_date Дата начального баланса кошелька
  * @property string $icon Иконка кошелька
@@ -39,19 +38,9 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Wallet newQuery()
  * @method static Builder|Wallet onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Wallet query()
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereBalance($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereBalanceDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereCurrencyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereIcon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereWalletTypeId($value)
  * @method static Builder|Wallet withTrashed()
  * @method static Builder|Wallet withoutTrashed()
+ * @mixin Eloquent
  */
 class Wallet extends Model
 {

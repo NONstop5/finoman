@@ -16,7 +16,6 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\Transaction
  *
- * @package App\Models
  * @property int $id
  * @property int $user_id Связь с пользователями
  * @property int $transaction_type_id Связь с типами транзакций
@@ -39,17 +38,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Transaction newQuery()
  * @method static \Illuminate\Database\Query\Builder|Transaction onlyTrashed()
  * @method static Builder|Transaction query()
- * @method static Builder|Transaction whereAmount($value)
- * @method static Builder|Transaction whereCategoryId($value)
- * @method static Builder|Transaction whereCreatedAt($value)
- * @method static Builder|Transaction whereDeletedAt($value)
- * @method static Builder|Transaction whereId($value)
- * @method static Builder|Transaction whereTransactedAt($value)
- * @method static Builder|Transaction whereTransactionTypeId($value)
- * @method static Builder|Transaction whereUpdatedAt($value)
- * @method static Builder|Transaction whereUserId($value)
- * @method static Builder|Transaction whereWalletFromId($value)
- * @method static Builder|Transaction whereWalletToId($value)
  * @method static \Illuminate\Database\Query\Builder|Transaction withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Transaction withoutTrashed()
  * @mixin Eloquent
