@@ -13,7 +13,7 @@ const routes = [
       { path: '/history', component: () => import('pages/History.vue') },
     ],
   },
-
+  { path: '/api-doc', component: () => import('pages/ApiDoc.vue') },
   // Always leave this as last one,
   // but you can also remove it
   {
