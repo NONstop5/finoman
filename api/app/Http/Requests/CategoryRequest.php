@@ -45,4 +45,14 @@ class CategoryRequest extends FormRequest
                 break;
         }
     }
+
+    public function attributes()
+    {
+        return [
+            'category_type_id' => 'тип категории',
+            'name' => 'название категории',
+            'icon' => 'иконка категории',
+            'budget' => 'бюджет категории',
+        ];
+    }
 }
